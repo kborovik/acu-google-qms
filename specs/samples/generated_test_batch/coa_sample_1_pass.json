@@ -1,0 +1,91 @@
+{
+  "document_metadata": {
+    "document_type": "Certificate of Analysis (CoA)",
+    "document_id": "COA-2026-HC-61351",
+    "issued_date": "2026-09-01",
+    "standards_compliance": [
+      "Health Canada Good Manufacturing Practices (GUI-0001)",
+      "Natural Health Products Regulations (SOR/2003-196)",
+      "USP <2021> / <2022>",
+      "ISO/IEC 17025:2017 Accredited Laboratory"
+    ],
+    "acumatica_erp_mapping": {
+      "acumatica_po_number": "PO-010716",
+      "acumatica_receipt_number": "PR-099569",
+      "inventory_item_id": "RAW-ECH-EXT4",
+      "lot_serial_number": "LOT-CA2670-637-A",
+      "vendor_id": "VEND-NORTH-BIO"
+    }
+  },
+  "issuer_information": {
+    "laboratory_name": "Pacific Rim Material Sciences Labs Inc.",
+    "accreditation_number": "CALA-ISO17025-2805",
+    "address": "361 King St W, Winnipeg, MB R3C 1A5, Canada",
+    "contact": "qa@pacificrimma.ca"
+  },
+  "product_information": {
+    "product_name": "Organic Botanical Raw Extract 4% Standardized",
+    "lot_number": "LOT-CA2670-637-A",
+    "batch_size_kg": 826.3,
+    "manufacturing_date": "2026-07-05",
+    "expiry_date": "2029-07-04",
+    "country_of_origin": "Canada"
+  },
+  "test_results": [
+    {
+      "parameter": "Active Potency Assay",
+      "test_method": "HPLC-DAD (USP Monograph)",
+      "specification_min": 4.0,
+      "specification_max": null,
+      "unit": "% (w/w)",
+      "actual_result": 4.19,
+      "status": "PASS"
+    },
+    {
+      "parameter": "Loss on Drying (Moisture)",
+      "test_method": "USP <731>",
+      "specification_min": null,
+      "specification_max": 5.0,
+      "unit": "%",
+      "actual_result": 2.87,
+      "status": "PASS"
+    },
+    {
+      "parameter": "Heavy Metals - Lead (Pb)",
+      "test_method": "ICP-MS (USP <2232>)",
+      "specification_min": null,
+      "specification_max": 0.5,
+      "unit": "ppm (mg/kg)",
+      "actual_result": 0.124,
+      "status": "PASS"
+    },
+    {
+      "parameter": "Heavy Metals - Arsenic (As)",
+      "test_method": "ICP-MS (USP <2232>)",
+      "specification_min": null,
+      "specification_max": 1.0,
+      "unit": "ppm (mg/kg)",
+      "actual_result": 0.124,
+      "status": "PASS"
+    },
+    {
+      "parameter": "Total Aerobic Microbial Count (TAMC)",
+      "test_method": "USP <2021>",
+      "specification_min": null,
+      "specification_max": 10000,
+      "unit": "CFU/g",
+      "actual_result": 485,
+      "status": "PASS"
+    }
+  ],
+  "authorization": {
+    "signatory_name": "Dr. Jean-Marc Boucher, Ph.D.",
+    "title": "Director of Quality Control & Analytical Validation",
+    "approval_date": "2026-09-01T11:23:18.403705"
+  },
+  "acumatica_action_directive": {
+    "auto_approve_lot": true,
+    "lot_status": "Released",
+    "create_ncr_ticket": false
+  }
+}

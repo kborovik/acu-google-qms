@@ -1,0 +1,150 @@
+{
+  "document_metadata": {
+    "document_type": "Certificate of Analysis (CoA)",
+    "document_id": "COA-2026-HC-88412",
+    "issued_date": "2026-02-14",
+    "standards_compliance": [
+      "Health Canada Good Manufacturing Practices (GUI-0001)",
+      "Natural Health Products Regulations (SOR/2003-196)",
+      "USP <2021> / <2022>",
+      "ISO/IEC 17025:2017 Accredited Laboratory"
+    ],
+    "acumatica_erp_mapping": {
+      "acumatica_po_number": "PO-009842",
+      "acumatica_receipt_number": "PR-014520",
+      "inventory_item_id": "RAW-ECH-EXT4",
+      "lot_serial_number": "LOT-EC2602-09A",
+      "vendor_id": "VEND-NORTH-BIO"
+    }
+  },
+  "issuer_information": {
+    "laboratory_name": "Great Lakes Bio-Analytical Services Inc.",
+    "accreditation_number": "CALA-ISO17025-9481",
+    "address": "450 University Ave, Toronto, ON M5G 1V2, Canada",
+    "contact": "qa-lab@greatlakesbio.ca | +1 (416) 555-0199"
+  },
+  "product_information": {
+    "product_name": "Organic Echinacea Purpurea Extract 4% Polyphenols",
+    "botanical_source": "Echinacea purpurea (L.) Moench (Aerial parts)",
+    "lot_number": "LOT-EC2602-09A",
+    "batch_size_kg": 1500.0,
+    "manufacturing_date": "2026-02-01",
+    "expiry_date": "2029-01-31",
+    "country_of_origin": "Canada",
+    "health_canada_nph_license": "NPN-80029384"
+  },
+  "test_results": [
+    {
+      "test_category": "Physical & Chemical Assay",
+      "parameter": "Active Polyphenols Content",
+      "test_method": "HPLC-DAD (USP Monograph)",
+      "specification_min": 4.0,
+      "specification_max": null,
+      "unit": "% (w/w)",
+      "actual_result": 4.32,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Physical & Chemical Assay",
+      "parameter": "Loss on Drying (Moisture)",
+      "test_method": "USP <731> (105°C for 3h)",
+      "specification_min": null,
+      "specification_max": 5.0,
+      "unit": "%",
+      "actual_result": 3.45,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Physical & Chemical Assay",
+      "parameter": "Heavy Metals - Lead (Pb)",
+      "test_method": "ICP-MS (USP <2232>)",
+      "specification_min": null,
+      "specification_max": 0.5,
+      "unit": "ppm (mg/kg)",
+      "actual_result": 0.08,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Physical & Chemical Assay",
+      "parameter": "Heavy Metals - Arsenic (As)",
+      "test_method": "ICP-MS (USP <2232>)",
+      "specification_min": null,
+      "specification_max": 1.0,
+      "unit": "ppm (mg/kg)",
+      "actual_result": 0.12,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Physical & Chemical Assay",
+      "parameter": "Heavy Metals - Cadmium (Cd)",
+      "test_method": "ICP-MS (USP <2232>)",
+      "specification_min": null,
+      "specification_max": 0.3,
+      "unit": "ppm (mg/kg)",
+      "actual_result": 0.02,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Physical & Chemical Assay",
+      "parameter": "Heavy Metals - Mercury (Hg)",
+      "test_method": "ICP-MS (USP <2232>)",
+      "specification_min": null,
+      "specification_max": 0.1,
+      "unit": "ppm (mg/kg)",
+      "actual_result": 0.01,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Microbiological Assay",
+      "parameter": "Total Aerobic Microbial Count (TAMC)",
+      "test_method": "USP <2021>",
+      "specification_min": null,
+      "specification_max": 10000,
+      "unit": "CFU/g",
+      "actual_result": 450,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Microbiological Assay",
+      "parameter": "Total Combined Yeast & Mold (TYMC)",
+      "test_method": "USP <2021>",
+      "specification_min": null,
+      "specification_max": 1000,
+      "unit": "CFU/g",
+      "actual_result": 60,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Microbiological Assay",
+      "parameter": "Escherichia coli",
+      "test_method": "USP <2022>",
+      "specification_min": null,
+      "specification_max": null,
+      "unit": "in 10g",
+      "actual_result": "Absent",
+      "status": "PASS"
+    },
+    {
+      "test_category": "Microbiological Assay",
+      "parameter": "Salmonella spp.",
+      "test_method": "USP <2022>",
+      "specification_min": null,
+      "specification_max": null,
+      "unit": "in 25g",
+      "actual_result": "Absent",
+      "status": "PASS"
+    }
+  ],
+  "authorization": {
+    "signatory_name": "Dr. Élodie Tremblay, Ph.D., C.Chem.",
+    "title": "Director of Quality Assurance & Analytical Chemistry",
+    "signature_status": "Digitally Signed",
+    "approval_date": "2026-02-14T16:30:00-05:00"
+  },
+  "acumatica_action_directive": {
+    "auto_approve_lot": true,
+    "lot_status": "Released",
+    "target_warehouse_location": "MAIN-A02-SHELF3",
+    "qms_inspection_order_id": "INS-004598"
+  }
+}

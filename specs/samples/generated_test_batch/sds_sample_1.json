@@ -1,0 +1,47 @@
+{
+  "document_metadata": {
+    "document_type": "Safety Data Sheet (SDS) / Fiche de Donn\u00e9es de S\u00e9curit\u00e9 (FDS)",
+    "document_id": "SDS-CA-2026-CHEM263",
+    "revision_date": "2026-09-01",
+    "standards_compliance": [
+      "WHMIS 2015 (Hazardous Products Regulations - SOR/2015-17)",
+      "Globally Harmonized System (GHS Rev 7)",
+      "Canadian Environmental Protection Act (CEPA 1999 - DSL Compliant)"
+    ],
+    "acumatica_erp_mapping": {
+      "inventory_item_id": "CHEM-IND-SOLV400",
+      "vendor_id": "VEND-NORTH-CHEM",
+      "hazard_flag": true,
+      "un_number": "UN1993"
+    }
+  },
+  "sections": {
+    "section_1_identification": {
+      "product_identifier": "EcoSolv Industrial Degreaser & Precision Cleaner",
+      "supplier_name": "Northern Industrial Chemicals Ltd.",
+      "supplier_address": "222 Industrial Way, Winnipeg, MB R3C 1A5, Canada",
+      "emergency_telephone": "CANUTEC +1 (613) 996-6666"
+    },
+    "section_2_hazard_identification": {
+      "ghs_classification": [
+        "Flammable Liquids (Category 2)",
+        "Skin Irritation (Category 2)"
+      ],
+      "signal_word": "DANGER",
+      "hazard_pictograms": [
+        "GHS02 (Flame)",
+        "GHS07 (Exclamation Mark)"
+      ]
+    },
+    "section_14_transport_information": {
+      "un_number": "UN1993",
+      "proper_shipping_name": "FLAMMABLE LIQUIDS, N.O.S. (Isopropanol, Heptane)",
+      "tdg_class": "3",
+      "packing_group": "II"
+    }
+  },
+  "acumatica_action_directive": {
+    "update_item_safety_profile": true,
+    "sds_valid_until": "2029-08-31"
+  }
+}

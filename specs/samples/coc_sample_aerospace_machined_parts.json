@@ -1,0 +1,78 @@
+{
+  "document_metadata": {
+    "document_type": "Certificate of Conformance (CoC)",
+    "certificate_id": "COC-2026-AERO-1193",
+    "issued_date": "2026-02-20",
+    "standards_compliance": [
+      "AS9100D / ISO 9001:2015 Aerospace Quality System",
+      "AS9102 Rev B First Article Inspection",
+      "Canadian Controlled Goods Directorate (CGD #28471)",
+      "MIL-STD-130N Identification Marking"
+    ],
+    "acumatica_erp_mapping": {
+      "acumatica_po_number": "PO-012800",
+      "acumatica_receipt_number": "PR-018220",
+      "inventory_item_id": "AERO-BRKT-HYD-7075",
+      "lot_serial_number": "BATCH-2026-0881",
+      "vendor_id": "VEND-APEX-AERO"
+    }
+  },
+  "supplier_information": {
+    "company_name": "Apex Precision Aerospace Machining Inc.",
+    "cage_code": "L3984",
+    "address": "1550 Rue Saint-Amour, Saint-Laurent, QC H4S 1J2, Canada",
+    "quality_contact": "quality@apexmachining.ca | +1 (514) 555-0144"
+  },
+  "order_and_part_details": {
+    "customer_name": "NorthStar Defense Systems Canada Ltd.",
+    "customer_po_number": "PO-012800",
+    "part_number": "AERO-BRKT-HYD-7075",
+    "part_description": "Hydraulic Actuator Mounting Bracket",
+    "drawing_number": "DWG-HYD-7075-801",
+    "drawing_revision": "Rev D",
+    "quantity_shipped": 150,
+    "batch_lot_number": "BATCH-2026-0881",
+    "serial_numbers": ["SN-260881-001", "to", "SN-260881-150"]
+  },
+  "raw_material_and_process_traceability": {
+    "raw_material_alloy": "Aluminum 7075-T651 Bar (AMS-QQ-A-225/9)",
+    "raw_material_mill_mtr_ref": "MTR-ALCOA-2025-99812",
+    "raw_material_heat_lot": "HEAT-AL78401",
+    "special_processes": [
+      {
+        "process_name": "CNC 5-Axis Precision Milling & Dimensional Inspection",
+        "specification": "AS9102 FAIR Package #FAIR-2026-041 on file",
+        "status": "CONFORMS"
+      },
+      {
+        "process_name": "Chemical Conversion Coating (Anodize Type II Class 1)",
+        "specification": "MIL-A-8625F",
+        "cert_reference": "ANOD-CERT-44910",
+        "status": "CONFORMS"
+      },
+      {
+        "process_name": "Non-Destructive Testing: Fluorescent Penetrant Inspection (FPI)",
+        "specification": "ASTM E1417 / AMS 2644 Level 3",
+        "cert_reference": "NDT-FPI-2026-883",
+        "status": "CONFORMS (Zero indications detected)"
+      }
+    ]
+  },
+  "compliance_declarations": {
+    "drawing_and_spec_conformance": "All articles in this shipment have been manufactured, inspected, and tested in accordance with applicable drawings, specifications, and purchase order requirements.",
+    "controlled_goods_statement": "Material processed in strict compliance with the Canadian Controlled Goods Program (SOR/2001-32).",
+    "counterfeit_parts_prevention": "Conforms to AS6174 / AS5553 Anti-Counterfeit Mitigation Plan."
+  },
+  "authorization": {
+    "quality_assurance_manager": "Jean-Pierre Lefebvre, CQE",
+    "title": "Director of Aerospace Quality & Mission Assurance",
+    "digital_signature_stamp": "DIGITALLY SIGNED - AUTH ID: AERO-VAL-99320",
+    "signing_date": "2026-02-20T14:10:00-05:00"
+  },
+  "acumatica_action_directive": {
+    "auto_approve_lot": true,
+    "lot_status": "Released",
+    "serial_tracking_activated": true,
+    "inspection_order_status": "Closed-Conformed"
+  }
+}

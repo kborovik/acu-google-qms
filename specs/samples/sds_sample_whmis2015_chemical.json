@@ -1,0 +1,117 @@
+{
+  "document_metadata": {
+    "document_type": "Safety Data Sheet (SDS) / Fiche de Données de Sécurité (FDS)",
+    "document_id": "SDS-CA-2026-SOLV400",
+    "revision_date": "2026-01-10",
+    "version": "4.1",
+    "standards_compliance": [
+      "WHMIS 2015 (Hazardous Products Regulations - SOR/2015-17)",
+      "Globally Harmonized System (GHS Rev 7)",
+      "Canadian Environmental Protection Act (CEPA 1999 - DSL Compliant)",
+      "Transportation of Dangerous Goods (TDG) Regulations"
+    ],
+    "acumatica_erp_mapping": {
+      "inventory_item_id": "CHEM-IND-SOLV400",
+      "vendor_id": "VEND-NORTH-CHEM",
+      "hazard_flag": true,
+      "un_number": "UN1993",
+      "whmis_class": "Flammable Liquids - Category 2; Eye Irritation - Category 2A"
+    }
+  },
+  "sections": {
+    "section_1_identification": {
+      "product_identifier": "EcoSolv 400 Industrial Degreaser & Precision Cleaner",
+      "synonyms": ["Hydrocarbon Solvent Degreaser", "Solvant de dégraissage industriel"],
+      "recommended_use": "Heavy-duty industrial parts cleaning and degreasing",
+      "supplier_name": "Northern Industrial Chemicals Ltd.",
+      "supplier_address": "880 Industrial Way, Calgary, AB T2C 2N8, Canada",
+      "emergency_telephone_canutec": "+1 (613) 996-6666 (CANUTEC 24-hr Canada)"
+    },
+    "section_2_hazard_identification": {
+      "ghs_classification": [
+        "Flammable Liquids (Category 2) - H225",
+        "Skin Corrosion/Irritation (Category 2) - H315",
+        "Serious Eye Damage/Eye Irritation (Category 2A) - H319",
+        "Specific Target Organ Toxicity - Single Exposure (Category 3, Central Nervous System) - H336"
+      ],
+      "signal_word": "DANGER",
+      "hazard_pictograms": ["GHS02 (Flame)", "GHS07 (Exclamation Mark)"],
+      "hazard_statements": [
+        "H225: Highly flammable liquid and vapour. / Liquide et vapeurs très inflammables.",
+        "H315: Causes skin irritation. / Provoque une irritation cutanée.",
+        "H319: Causes serious eye irritation. / Provoque une sévère irritation des yeux.",
+        "H336: May cause drowsiness or dizziness. / Peut provoquer somnolence ou vertiges."
+      ]
+    },
+    "section_3_composition_ingredients": {
+      "substances": [
+        {
+          "chemical_name": "Isopropanol (Isopropyl Alcohol)",
+          "cas_number": "67-63-0",
+          "concentration_range_percent": "60.0 - 80.0",
+          "dsl_listed": true
+        },
+        {
+          "chemical_name": "Heptane, branched and linear",
+          "cas_number": "142-82-5",
+          "concentration_range_percent": "15.0 - 25.0",
+          "dsl_listed": true
+        },
+        {
+          "chemical_name": "d-Limonene (Citrus Terpenes)",
+          "cas_number": "5989-27-5",
+          "concentration_range_percent": "5.0 - 10.0",
+          "dsl_listed": true
+        }
+      ]
+    },
+    "section_8_exposure_controls": {
+      "canadian_occupational_exposure_limits": [
+        {
+          "substance": "Isopropanol",
+          "jurisdiction_alberta_oel_twa": "200 ppm (492 mg/m3)",
+          "jurisdiction_ontario_oel_twa": "200 ppm",
+          "jurisdiction_quebec_oel_twa": "400 ppm (983 mg/m3)"
+        },
+        {
+          "substance": "Heptane",
+          "jurisdiction_alberta_oel_twa": "400 ppm (1640 mg/m3)",
+          "jurisdiction_ontario_oel_twa": "400 ppm"
+        }
+      ]
+    },
+    "section_9_physical_chemical_properties": {
+      "appearance": "Clear, colorless liquid",
+      "odor": "Mild citrus and alcoholic odor",
+      "flash_point_celsius": 12.0,
+      "flash_point_method": "Closed Cup (Tagliabue)",
+      "boiling_point_celsius": 82.5,
+      "relative_density_water1": 0.785,
+      "voc_content_percent": 100.0
+    },
+    "section_14_transport_information": {
+      "transport_canada_tdg_classification": {
+        "un_number": "UN1993",
+        "proper_shipping_name": "FLAMMABLE LIQUIDS, N.O.S. (Isopropanol, Heptane)",
+        "tdg_class": "3",
+        "packing_group": "II",
+        "special_provisions": "16, 150",
+        "marine_pollutant": false
+      }
+    },
+    "section_15_regulatory_information": {
+      "cepa_dsl_status": "All ingredients are listed on the Canadian Domestic Substances List (DSL).",
+      "whmis_classification_status": "Compliant with WHMIS 2015 Hazardous Products Regulations."
+    }
+  },
+  "acumatica_action_directive": {
+    "update_item_safety_profile": true,
+    "sync_tdg_shipping_data": {
+      "UN_NUMBER": "UN1993",
+      "HAZARD_CLASS": "3",
+      "PACKING_GROUP": "PG II",
+      "FLASH_POINT": "12°C"
+    },
+    "sds_valid_until": "2029-01-10"
+  }
+}

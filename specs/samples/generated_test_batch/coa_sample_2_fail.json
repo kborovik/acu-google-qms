@@ -1,0 +1,91 @@
+{
+  "document_metadata": {
+    "document_type": "Certificate of Analysis (CoA)",
+    "document_id": "COA-2026-HC-84363",
+    "issued_date": "2026-09-01",
+    "standards_compliance": [
+      "Health Canada Good Manufacturing Practices (GUI-0001)",
+      "Natural Health Products Regulations (SOR/2003-196)",
+      "USP <2021> / <2022>",
+      "ISO/IEC 17025:2017 Accredited Laboratory"
+    ],
+    "acumatica_erp_mapping": {
+      "acumatica_po_number": "PO-060726",
+      "acumatica_receipt_number": "PR-094767",
+      "inventory_item_id": "RAW-ECH-EXT4",
+      "lot_serial_number": "LOT-CA2673-809-Q",
+      "vendor_id": "VEND-NORTH-BIO"
+    }
+  },
+  "issuer_information": {
+    "laboratory_name": "St. Lawrence Metallurgical & Chemical Testing Corp.",
+    "accreditation_number": "CALA-ISO17025-5556",
+    "address": "770 King St W, Winnipeg, MB R3C 1A5, Canada",
+    "contact": "qa@st.lawrencem.ca"
+  },
+  "product_information": {
+    "product_name": "Organic Botanical Raw Extract 4% Standardized",
+    "lot_number": "LOT-CA2673-809-Q",
+    "batch_size_kg": 2366.5,
+    "manufacturing_date": "2026-08-16",
+    "expiry_date": "2029-08-15",
+    "country_of_origin": "Canada"
+  },
+  "test_results": [
+    {
+      "parameter": "Active Potency Assay",
+      "test_method": "HPLC-DAD (USP Monograph)",
+      "specification_min": 4.0,
+      "specification_max": null,
+      "unit": "% (w/w)",
+      "actual_result": 4.63,
+      "status": "PASS"
+    },
+    {
+      "parameter": "Loss on Drying (Moisture)",
+      "test_method": "USP <731>",
+      "specification_min": null,
+      "specification_max": 5.0,
+      "unit": "%",
+      "actual_result": 3.73,
+      "status": "PASS"
+    },
+    {
+      "parameter": "Heavy Metals - Lead (Pb)",
+      "test_method": "ICP-MS (USP <2232>)",
+      "specification_min": null,
+      "specification_max": 0.5,
+      "unit": "ppm (mg/kg)",
+      "actual_result": 0.789,
+      "status": "FAIL"
+    },
+    {
+      "parameter": "Heavy Metals - Arsenic (As)",
+      "test_method": "ICP-MS (USP <2232>)",
+      "specification_min": null,
+      "specification_max": 1.0,
+      "unit": "ppm (mg/kg)",
+      "actual_result": 0.135,
+      "status": "PASS"
+    },
+    {
+      "parameter": "Total Aerobic Microbial Count (TAMC)",
+      "test_method": "USP <2021>",
+      "specification_min": null,
+      "specification_max": 10000,
+      "unit": "CFU/g",
+      "actual_result": 497,
+      "status": "PASS"
+    }
+  ],
+  "authorization": {
+    "signatory_name": "Dr. Jean-Marc Boucher, Ph.D.",
+    "title": "Director of Quality Control & Analytical Validation",
+    "approval_date": "2026-09-01T11:23:18.404185"
+  },
+  "acumatica_action_directive": {
+    "auto_approve_lot": false,
+    "lot_status": "Quarantine",
+    "create_ncr_ticket": true
+  }
+}

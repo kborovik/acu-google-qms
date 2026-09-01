@@ -1,0 +1,44 @@
+{
+  "document_metadata": {
+    "document_type": "Certificate of Conformance (CoC)",
+    "certificate_id": "COC-2026-AERO-3142",
+    "issued_date": "2026-09-01",
+    "standards_compliance": [
+      "AS9100D / ISO 9001:2015 Aerospace Quality System",
+      "Canadian Controlled Goods Directorate (CGD)",
+      "AS9102 Rev B FAIR Standards"
+    ],
+    "acumatica_erp_mapping": {
+      "acumatica_po_number": "PO-061662",
+      "acumatica_receipt_number": "PR-072383",
+      "inventory_item_id": "AERO-BRKT-HYD-7075",
+      "lot_serial_number": "BATCH-2026-9935",
+      "vendor_id": "VEND-APEX-AERO"
+    }
+  },
+  "supplier_information": {
+    "company_name": "Ontario Precision Structures Inc.",
+    "cage_code": "L8893",
+    "address": "2774 Blvd Aviation, Calgary, AB T2C 2N8, Canada"
+  },
+  "order_and_part_details": {
+    "customer_po_number": "PO-061662",
+    "part_number": "AERO-BRKT-HYD-7075",
+    "drawing_revision": "Rev D",
+    "quantity_shipped": 200,
+    "batch_lot_number": "BATCH-2026-9935"
+  },
+  "compliance_declarations": {
+    "conformance_statement": "All articles have been manufactured, inspected, and tested in accordance with drawings and purchase specifications.",
+    "controlled_goods_compliant": true,
+    "anti_counterfeit_plan_compliant": true
+  },
+  "authorization": {
+    "signatory": "Jean-Pierre Lefebvre, CQE",
+    "title": "Director of Aerospace Quality"
+  },
+  "acumatica_action_directive": {
+    "auto_approve_lot": true,
+    "lot_status": "Released"
+  }
+}
