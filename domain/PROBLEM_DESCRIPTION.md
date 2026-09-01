@@ -37,7 +37,7 @@ Under Canadian federal regulations (**Health Canada GMP / NHPR** and **CFIA Safe
 Today, mid-market enterprises running **Acumatica Cloud ERP** rely on manual data entry and visual inspection. Quality technicians and receiving clerks spend 15 to 45 minutes per shipment re-keying chemical assays, heavy metals, microbial counts, and lot expiration dates into ERP inspection orders or spreadsheets. This manual workflow creates substantial operational latency ("QC Material Holds"), introduces human transcription errors, and exposes organizations to regulatory penalties, production idle time, or failed Health Canada audits.
 
 ### Reference Implementation Organization: **CanNordic BioNutra Inc.**
-The operational baseline, workflows, test datasets, and Acumatica ERP integration mappings across these specifications are modeled against **CanNordic BioNutra Inc.** (Mississauga, ON)—a Canadian hybrid contract development and manufacturing organization (CDMO) and raw ingredient importer operating under Health Canada Site Licence #302194 and CFIA SFCR regulations. See [`specs/COMPANY_PROFILE.md`](COMPANY_PROFILE.md) for the complete organizational profile.
+The operational baseline, workflows, test datasets, and Acumatica ERP integration mappings across these specifications are modeled against **CanNordic BioNutra Inc.** (Mississauga, ON)—a Canadian hybrid contract development and manufacturing organization (CDMO) and raw ingredient importer operating under Health Canada Site Licence #302194 and CFIA SFCR regulations. See [`domain/COMPANY_PROFILE.md`](COMPANY_PROFILE.md) for the complete organizational profile.
 
 This platform solves this by deploying a **Multimodal AI Ingestion Pipeline** that parses unstructured CoA PDFs, standardizes units, checks values against Acumatica Quality Management tolerance specifications, and automatically releases inventory lots or triggers Non-Conformance Reports (NCR).
 
@@ -205,18 +205,18 @@ The solution connects seamlessly to **Acumatica Cloud ERP (xRP Platform)** using
 
 To test and demonstrate the system without using proprietary client data, the platform includes sample documents and an automated Python generator modeled after CanNordic BioNutra Inc.:
 
-1. **`specs/samples/coa_sample_nutraceutical_health_canada.json` & `.md`:** Canonical sample for Organic Echinacea Purpurea Extract tested against Health Canada NHP guidelines (Active Potency, Loss on Drying, Heavy Metals ICP-MS, Microbial Limits USP <2021>/<2022>, Residual Solvents).
-2. **`specs/samples/COA-2026-HC-88412.pdf`:** Pixel-perfect PDF Certificate of Analysis for visual extraction, OCR, and bounding-box provenance testing.
-3. **`specs/samples/generate_demo_documents.py`:** Automated Python generator producing synthetic CoA documents with configurable pass/fail distributions for CI/CD and Acumatica integration tests.
-4. **`specs/samples/generated_test_batch/`:** Pre-generated test batch containing passing and failing CoA JSON documents for testing automated lot release and NCR triggers.
+1. **`domain/samples/coa_sample_nutraceutical_health_canada.json` & `.md`:** Canonical sample for Organic Echinacea Purpurea Extract tested against Health Canada NHP guidelines (Active Potency, Loss on Drying, Heavy Metals ICP-MS, Microbial Limits USP <2021>/<2022>, Residual Solvents).
+2. **`domain/samples/COA-2026-HC-88412.pdf`:** Pixel-perfect PDF Certificate of Analysis for visual extraction, OCR, and bounding-box provenance testing.
+3. **`domain/samples/generate_demo_documents.py`:** Automated Python generator producing synthetic CoA documents with configurable pass/fail distributions for CI/CD and Acumatica integration tests.
+4. **`domain/samples/generated_test_batch/`:** Pre-generated test batch containing passing and failing CoA JSON documents for testing automated lot release and NCR triggers.
 
 ---
 
 ## 7. Deliverables in This Specification Package
 
-* `specs/PROBLEM_DESCRIPTION.md`: Core problem, regulatory standards, and Acumatica ERP specification.
-* `specs/COMPANY_PROFILE.md`: Reference target enterprise profile (CanNordic BioNutra Inc.).
-* `specs/COA_INGESTION_SPEC.md`: Detailed engineering and API specification for the Certificate of Analysis pipeline.
-* `specs/samples/`: Ready-to-use sample documents in JSON schema, formatted text/markdown, and PDF.
-* `specs/samples/generate_demo_documents.py`: Automated Python generator to produce realistic CoA test/demo documents.
-* `specs/samples/generate_pdf_sample.py`: ReportLab PDF generator for standard CoA documents.
+* `domain/PROBLEM_DESCRIPTION.md`: Core problem, regulatory standards, and Acumatica ERP specification.
+* `domain/COMPANY_PROFILE.md`: Reference target enterprise profile (CanNordic BioNutra Inc.).
+* `domain/COA_INGESTION_SPEC.md`: Detailed engineering and API specification for the Certificate of Analysis pipeline.
+* `domain/samples/`: Ready-to-use sample documents in JSON schema, formatted text/markdown, and PDF.
+* `domain/samples/generate_demo_documents.py`: Automated Python generator to produce realistic CoA test/demo documents.
+* `domain/samples/generate_pdf_sample.py`: ReportLab PDF generator for standard CoA documents.

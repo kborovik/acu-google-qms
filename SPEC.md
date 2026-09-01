@@ -1,7 +1,7 @@
 # GCP Agent Platform
 
 ## §G GOAL
-Implement LLM application per `specs/` (CoA ingestion → Acumatica QMS lot-release).
+Implement LLM application per `domain/` (CoA ingestion → Acumatica QMS lot-release).
 
 ## §C CONSTRAINTS
 - Python 3.14
@@ -12,7 +12,7 @@ Implement LLM application per `specs/` (CoA ingestion → Acumatica QMS lot-rele
 - Provider `hashicorp/google`; resource `google_vertex_ai_reasoning_engine`
 - Exactly 1 agent, 1 store
 - No console-created Agent Platform resources
-- Domain CoA/Acumatica docs stay in `specs/`; not this spec
+- Domain CoA/Acumatica docs stay in `domain/`; not this spec
 - Not provision Vector Search ANN serving nodes
 - `terraform apply` succeeds w/o agent source artifact
 - Local tfstate OK this spec; remote backend later
