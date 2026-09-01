@@ -11,46 +11,118 @@ The primary objective is to automate the extraction of analytical test parameter
 
 ---
 
-## 2. Ingestion Pipeline Architecture
+## 2. Ingestion Pipeline Architecture & Receiving Workflow
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                           CoA INGESTION PIPELINE                            │
+│                      CoA INSPECTION & RECEIVING WORKFLOW                    │
 └─────────────────────────────────────────────────────────────────────────────┘
                                       │
- 1. DOCUMENT INGESTION                ▼
+ 1. PHYSICAL DOCK ARRIVAL             ▼
  ┌───────────────────────────────────────────────────────────────────────────┐
- │ • Inbound Channels: Email webhook, S3/GCS bucket, Acumatica Business Event│
- │ • File Formats: Multi-page PDF, Scanned TIFF/PNG/JPEG                     │
+ │ • Truck docks at warehouse; clerk checks seals, packaging & lot labels.   │
+ │ • Clerk registers `POReceipt` & `POReceiptLineSplit` in Acumatica ERP.    │
+ │ • Acumatica immediately marks lot status as "QC Hold" (Quarantine).       │
+ │ • Physical pallets are staged in quarantine bay with yellow QC Hold tags. │
  └───────────────────────────────────────────────────────────────────────────┘
                                       │
- 2. MULTIMODAL EXTRACTION             ▼
+ 2. CoA DOCUMENT CAPTURE              ▼
  ┌───────────────────────────────────────────────────────────────────────────┐
- │ • Visual Layout & Table Extraction Engine (Vision LLM / Document AI)     │
- │ • Header Metadata: Supplier, Product Name, Lot/Batch #, Mfg/Exp Dates     │
- │ • Tabular Matrix: Parameter, Test Method, Spec Limits, Measured Value, Unit│
+ │ • Supplier CoA PDF is captured via dock scanner, email, or vendor portal. │
+ │ • Pipeline matches document to Vendor, PO Receipt line, and Lot Number.   │
  └───────────────────────────────────────────────────────────────────────────┘
                                       │
- 3. NORMALIZATION & STANDARDIZATION   ▼
+ 3. MULTIMODAL AI PARSING & NORMALIZATION ▼
  ┌───────────────────────────────────────────────────────────────────────────┐
- │ • Analyte Ontology Mapping (e.g., "Heavy Metals - Pb" -> "lead_pb")       │
- │ • Unit Normalization (e.g., "ppm", "mg/kg", "mcg/g" -> standard SI)       │
- │ • Date Parsing (ISO 8601 YYYY-MM-DD)                                      │
+ │ • Vision/Layout parser extracts test matrix (Assays, Heavy Metals, CFUs). │
+ │ • Bilingual terms & synonyms normalized (e.g., Plomb/Pb -> heavy_metal_pb)│
+ │ • Units converted to standard SI (ppm <-> mg/kg, % w/w, CFU/g).           │
+ │ • Visual provenance bounding boxes (x, y, w, h) captured for audit.       │
  └───────────────────────────────────────────────────────────────────────────┘
                                       │
- 4. ACUMATICA SPEC MATCHING & RULES   ▼
+ 4. SPECIFICATION & TOLERANCE MATCHING ▼
  ┌───────────────────────────────────────────────────────────────────────────┐
- │ • Fetch Acumatica Item Profile & QMS Inspection Plan (`QMSInspectionPlan`)│
- │ • Compare Measured Values against Min / Max / Target Tolerances           │
- │ • Verify Expiry Date >= Current Date + Minimum Required Shelf Life        │
+ │ • Engine queries Acumatica `QMSInspectionPlan` for expected item specs.   │
+ │ • Evaluates every analyte against Health Canada limits & internal ranges. │
+ │ • Validates remaining shelf-life against Expiration Date.                 │
  └───────────────────────────────────────────────────────────────────────────┘
                                       │
- 5. DECISION & ERP SYNCHRONIZATION    ▼
- ┌───────────────────────────────────────────────────────────────────────────┐
- │ • Pass: Update `QMSInspectionOrder`, flip Lot to `Released`, attach PDF   │
- │ • Fail: Update Lot to `Quarantine`, generate `QMSNonConformance` (NCR)    │
- └───────────────────────────────────────────────────────────────────────────┘
+ 5. AUTOMATED ERP DECISION & LOT GOVERNOR ▼
+          ├───────────────────────────────────────────┐
+          │ ALL IN-SPEC                               │ OUT-OF-SPEC / CONTAMINATION
+          ▼                                           ▼
+ ┌──────────────────────────────────┐        ┌──────────────────────────────────┐
+ │ • `QMSInspectionOrder` completed │        │ • Lot flagged as "Quarantine"    │
+ │ • Lot status flipped: "Released" │        │ • Acumatica NCR ticket generated │
+ │ • Unblocked for production work  │        │ • QA Manager alerted immediately │
+ │ • PDF attached to ERP Lot record │        │ • Pallet moved to locked storage │
+ └──────────────────────────────────┘        └──────────────────────────────────┘
 ```
+
+### 2.1 Receiving Dock Arrival & Physical/Digital Hand-off
+1. **Physical Unloading & Verification:**
+   * Carrier truck docks at the receiving bay. The receiving clerk inspects trailer condition, temperature compliance (for climate-controlled botanicals), container seals (e.g., tamper-evident 25 kg fiber drums), and cross-checks physical lot tags against the delivery manifest.
+2. **Inbound ERP Registration (`POReceipt`):**
+   * The clerk opens Acumatica Cloud ERP and creates or confirms a `POReceipt` linked to the inbound Purchase Order.
+   * Lot details (`LotSerialNbr`, batch quantity, container count, manufacturer expiration date) are registered via `POReceiptLineSplit`.
+3. **Mandatory Regulatory Quarantine Lock ("QC Hold"):**
+   * Under **Health Canada GMP (GUI-0001 / GUI-0158)** and **CFIA Safe Food for Canadians Regulations**, raw botanical extracts and active ingredients **cannot be released into production or blending** prior to analytical inspection and formal QC authorization.
+   * Acumatica automatically assigns initial state `INLotSerialStatus.LotStatus = 'QC Hold'`. The ERP enforces an automated hard stop preventing any production Work Order or blending recipe from consuming the inventory lot.
+   * Physical pallets are tagged with yellow `QC HOLD` placards and staged in the receiving quarantine bay.
+
+### 2.2 Inbound CoA Capture & PO Association
+* **Ingestion Channels:** The Certificate of Analysis PDF is acquired through:
+  * Dock Scanner: Clerks scan the paper CoA included in the packing slip pouch.
+  * Inbound Email Webhook: Automated ingestion of digital PDF CoAs sent by suppliers prior to shipment.
+  * Supplier Portal Upload: Direct upload by pre-qualified vendors into the platform API.
+* **Entity Association:** The ingestion engine correlates the document header with Acumatica records:
+  * `VendorID` (e.g., `VEND-NORTH-BIO`)
+  * `InventoryID` (e.g., `RAW-ECH-EXT4`)
+  * `LotSerialNbr` (e.g., `LOT-EC2602-09A`)
+  * `ReceiptNbr` (e.g., `PR-2026-00412`)
+
+### 2.3 Automated Analytical Inspection Pipeline
+The inspection engine performs automated four-layer verification:
+1. **Multimodal Layout & Table Extraction:**
+   * Extracts header metadata (Product Name, Botanical Name, Lot #, Mfg Date, Expiry Date, Testing Lab Accreditation).
+   * Extracts tabular test matrix: Raw parameter name, analytical method (HPLC, ICP-MS, USP <2021>), target specifications (Min/Max), and measured values.
+   * Records bounding-box coordinates (`page`, `x_min`, `y_min`, `x_max`, `y_max`) for every extracted data cell for 1-click visual audit verification.
+2. **Semantic Ontology & Unit Normalization:**
+   * Normalizes multilingual synonyms and abbreviations (e.g., *Plomb*, *Pb*, *Heavy Metals (as Pb)* $\longrightarrow$ `heavy_metal_lead`).
+   * Normalizes diverse analytical units into SI standards (e.g., $\text{ppm} \leftrightarrow \text{mg/kg} \leftrightarrow \mu\text{g/g}$, $\% \text{ w/w} \leftrightarrow \text{g/100g}$).
+   * Standardizes text qualifiers (`ND`, `Not Detected`, `< 10 CFU/g`, `Absent in 10g`, `Conforms`).
+3. **Specification Matching & Tolerance Evaluation:**
+   * Retrieves predefined quality limits from the item's Acumatica `QMSInspectionPlan`.
+   * Evaluates each parameter against Health Canada Category 1 limits and internal product tolerances:
+     * **Active Potency & Assays:** e.g., Total Polyphenols $\ge 4.00\%$ (HPLC).
+     * **Heavy Metal Contaminants (ICP-MS):** Lead (Pb) $\le 0.50$ ppm, Arsenic (As) $\le 1.00$ ppm, Cadmium (Cd) $\le 0.30$ ppm, Mercury (Hg) $\le 0.10$ ppm.
+     * **Microbiological Thresholds (USP <2021>/<2022>):** TAMC $\le 10^4$ CFU/g, TYMC $\le 10^3$ CFU/g, *E. coli* & *Salmonella* absent.
+     * **Physical/Chemical Assays:** Loss on Drying $\le 5.00\%$ (USP <731>), Residual Solvents (USP <467>).
+     * **Shelf-Life Governor:** Verifies Expiry Date $\ge \text{Current Date} + \text{Minimum Required Shelf Life}$ (e.g., 24 months).
+
+### 2.4 Decision Engine & ERP State Machine
+* **Branch A: All Parameters Pass (Approved)**
+  1. `QMSInspectionOrder`: Populated in Acumatica with all measured values, test methods, and individual `Pass` ratings.
+  2. `INLotSerialStatus`: Lot status automatically flipped from `QC Hold` $\longrightarrow$ **`Released`**.
+  3. Manufacturing Unblocked: Inventory is instantly available for BOM allocation and production batching.
+  4. Physical Move: Warehouse crew replaces yellow hold tag with green `RELEASED` tag and moves pallets to active racking.
+  5. Audit Storage: Ingested PDF and normalized JSON validation payload are attached to `POReceipt` and lot master via `/files` API.
+* **Branch B: Out-of-Specification / Contaminant Failure (Rejected / NCR)**
+  1. `INLotSerialStatus`: Lot status remains or updates to **`Quarantine`** / **`Rejected`**; inventory hard-lock maintained.
+  2. `QMSNonConformance` (NCR): Automatic NCR record generated with breach details, severity (`Critical`), and measured vs. threshold values.
+  3. QA Escalation: Instant high-priority alert dispatched to Quality Assurance Manager.
+  4. Physical Quarantine: Pallet tagged with red `REJECTED` placard and moved to locked quarantine cage pending Return to Vendor (RTV) or vendor dispute.
+* **Branch C: Indeterminate / Low Extraction Confidence**
+  1. Routed to QA review inbox with side-by-side document provenance viewer for 1-click human verification.
+
+### 2.5 Operational Comparison: Manual Baseline vs. Automated Pipeline
+
+| Metric | Manual Inspection (Status Quo) | Automated AI Ingestion Pipeline |
+| :--- | :--- | :--- |
+| **Inspection Time per CoA** | 25 – 45 minutes manual re-keying | < 10 seconds end-to-end |
+| **Dock-to-Stock Latency** | 24 – 48 hours quarantine hold | Instantaneous release upon arrival |
+| **Transcription Risk** | High (decimal shifts, unit confusion) | 0% transcription error |
+| **Audit Readiness** | Fragmented paper binders / email attachments | 1-click PDF bounding-box provenance in ERP |
 
 ---
 

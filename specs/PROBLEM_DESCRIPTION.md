@@ -123,34 +123,66 @@ The solution connects seamlessly to **Acumatica Cloud ERP (xRP Platform)** using
 4. **Document Management & File Repository (`UploadFile`):**
    * Attaches the original supplier PDF, parsed JSON data, and validation audit report directly to the Acumatica `POReceipt` and `INLotSerialStatus` records.
 
-### 4.2 End-to-End CoA Automated Workflow
+### 4.2 End-to-End Dock-to-Stock CoA Receiving & Inspection Workflow
 
 ```
-1. RECEIPT CREATED
-   Warehouse creates PO Receipt in Acumatica -> Lot is placed in "QC Hold" -> CoA PDF captured.
-
-2. AI EXTRACTION & RECOGNITION
-   Multimodal AI extracts header data (Vendor, Item, Lot #, Expiry) and the full analytical test matrix 
-   (Parameter, Test Method, Spec Min/Max, Measured Result, Unit).
-
-3. NORMALIZATION & UNIT CONVERSION
-   Standardizes variable analyte names (e.g., "Lead", "Pb", "Heavy Metals - Pb") 
-   and normalizes units (e.g., ppm -> mg/kg, CFU/g, % w/w).
-
-4. SPECIFICATION & TOLERANCE MATCHING
-   Engine compares actual test results against Acumatica Quality Specs / Health Canada limits.
-
-5. DECISION ENGINE & ERP SYNC
-   ├─► ALL VALUES IN SPEC:
-   │   • Updates Acumatica Inspection Order with actual test values.
-   │   • Changes Lot Status from "QC Hold" to "Released".
-   │   • Attaches verified PDF to Lot & Purchase Receipt.
-   │
-   └─► OUT-OF-SPEC / CONTAMINATION DETECTED:
-       • Flags lot status as "Quarantine".
-       • Automatically creates Acumatica Non-Conformance Report (NCR).
-       • Sends immediate high-priority alert to Quality Manager with highlighted out-of-spec test.
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                      CoA INSPECTION & RECEIVING WORKFLOW                    │
+└─────────────────────────────────────────────────────────────────────────────┘
+                                      │
+ 1. PHYSICAL DOCK ARRIVAL             ▼
+ ┌───────────────────────────────────────────────────────────────────────────┐
+ │ • Inbound truck docks; clerk inspects container seals, temps & lot tags.  │
+ │ • Clerk creates `POReceipt` in Acumatica; lot assigned (e.g. LOT-EC2602). │
+ │ • Acumatica locks lot in "QC Hold" (Quarantine) under Health Canada GMP.  │
+ │ • Pallets staged in receiving bay with physical yellow QC Hold placards.  │
+ └───────────────────────────────────────────────────────────────────────────┘
+                                      │
+ 2. INBOUND CoA CAPTURE               ▼
+ ┌───────────────────────────────────────────────────────────────────────────┐
+ │ • Supplier CoA PDF captured via dock scan, email webhook, or vendor portal│
+ │ • Pipeline associates PDF with Vendor ID, PO Receipt line, and Lot Number.│
+ └───────────────────────────────────────────────────────────────────────────┘
+                                      │
+ 3. MULTIMODAL AI PARSING & NORMALIZATION ▼
+ ┌───────────────────────────────────────────────────────────────────────────┐
+ │ • Vision/Layout parser extracts test matrix (Assays, Heavy Metals, CFUs). │
+ │ • Bilingual terms & synonyms normalized (e.g., Plomb/Pb -> heavy_metal_pb)│
+ │ • Units normalized (ppm <-> mg/kg, CFU/g, % w/w); bounding boxes recorded.│
+ └───────────────────────────────────────────────────────────────────────────┘
+                                      │
+ 4. SPECIFICATION & TOLERANCE MATCHING ▼
+ ┌───────────────────────────────────────────────────────────────────────────┐
+ │ • Engine queries Acumatica `QMSInspectionPlan` for item tolerances.       │
+ │ • Evaluates potency, heavy metals, microbial CFUs, and LOD against limits.│
+ │ • Verifies remaining shelf-life against Expiration Date.                 │
+ └───────────────────────────────────────────────────────────────────────────┘
+                                      │
+ 5. AUTOMATED ERP DECISION & LOT GOVERNOR ▼
+          ├───────────────────────────────────────────┐
+          │ ALL IN-SPEC                               │ OUT-OF-SPEC / FAILED
+          ▼                                           ▼
+ ┌──────────────────────────────────┐        ┌──────────────────────────────────┐
+ │ • `QMSInspectionOrder` completed │        │ • Lot flagged as "Quarantine"    │
+ │ • Lot status flipped: "Released" │        │ • Acumatica NCR ticket generated │
+ │ • Unblocked for production work  │        │ • QA Manager alerted immediately │
+ │ • PDF attached to ERP Lot record │        │ • Pallet moved to locked storage │
+ └──────────────────────────────────┘        └──────────────────────────────────┘
 ```
+
+#### Detailed Lifecycle Phases:
+1. **Dock Arrival & Regulatory Hold:**
+   * Truck arrives; physical integrity of packaging/seals is verified.
+   * `POReceipt` and `POReceiptLineSplit` are registered in Acumatica.
+   * Acumatica automatically assigns `QC Hold` status (`INLotSerialStatus`), enforcing a hard stop preventing raw material allocation to manufacturing work orders until QC release.
+2. **Document Ingestion & AI Inspection:**
+   * Supplier CoA PDF is captured (scanner, email, portal) and matched to the PO receipt line.
+   * Multimodal vision model extracts metadata and analytical test rows with visual bounding-box provenance.
+   * Analyte synonyms and measurement units are normalized to standard SI units.
+   * Engine evaluates values against Acumatica's `QMSInspectionPlan` and Health Canada NHP limits.
+3. **Automated ERP Governance & Material Release:**
+   * **Passing Lots:** Inspection order values populated in Acumatica, lot status flipped from `QC Hold` to `Released`, PDF/JSON records archived on the lot, and material unblocked for blending.
+   * **Failing / Out-of-Spec Lots:** Lot status set to `Quarantine`, Non-Conformance Report (NCR) generated automatically in Acumatica QMS, instant alert sent to QA leadership, and physical material moved to locked storage pending return-to-vendor (RTV).
 
 ---
 
