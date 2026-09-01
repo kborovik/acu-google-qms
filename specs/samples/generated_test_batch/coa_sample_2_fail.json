@@ -1,7 +1,7 @@
 {
   "document_metadata": {
     "document_type": "Certificate of Analysis (CoA)",
-    "document_id": "COA-2026-HC-84363",
+    "document_id": "COA-2026-HC-55044",
     "issued_date": "2026-09-01",
     "standards_compliance": [
       "Health Canada Good Manufacturing Practices (GUI-0001)",
@@ -10,78 +10,142 @@
       "ISO/IEC 17025:2017 Accredited Laboratory"
     ],
     "acumatica_erp_mapping": {
-      "acumatica_po_number": "PO-060726",
-      "acumatica_receipt_number": "PR-094767",
-      "inventory_item_id": "RAW-ECH-EXT4",
-      "lot_serial_number": "LOT-CA2673-809-Q",
-      "vendor_id": "VEND-NORTH-BIO"
+      "acumatica_po_number": "PO-067724",
+      "acumatica_receipt_number": "PR-048345",
+      "inventory_item_id": "RAW-CURC-95",
+      "lot_serial_number": "LOT-EC2676-151-C",
+      "vendor_id": "VEND-PACIFIC-ORG"
     }
   },
   "issuer_information": {
-    "laboratory_name": "St. Lawrence Metallurgical & Chemical Testing Corp.",
-    "accreditation_number": "CALA-ISO17025-5556",
-    "address": "770 King St W, Winnipeg, MB R3C 1A5, Canada",
-    "contact": "qa@st.lawrencem.ca"
+    "laboratory_name": "Great Lakes Bio-Analytical Services Inc.",
+    "accreditation_number": "CALA-ISO17025-7772",
+    "address": "160 Meadowpine Blvd, Vancouver, BC V6B 1A1, Canada",
+    "contact": "qa@greatlakesbi.ca"
   },
   "product_information": {
-    "product_name": "Organic Botanical Raw Extract 4% Standardized",
-    "lot_number": "LOT-CA2673-809-Q",
-    "batch_size_kg": 2366.5,
-    "manufacturing_date": "2026-08-16",
-    "expiry_date": "2029-08-15",
-    "country_of_origin": "Canada"
+    "product_name": "Turmeric Curcuminoid Extract 95%",
+    "botanical_source": "Curcuma longa L. (Rhizome)",
+    "lot_number": "LOT-EC2676-151-C",
+    "batch_size_kg": 1654.1,
+    "manufacturing_date": "2026-07-31",
+    "expiry_date": "2029-07-30",
+    "country_of_origin": "Canada",
+    "health_canada_npn": "NPN-80053912"
   },
   "test_results": [
     {
-      "parameter": "Active Potency Assay",
-      "test_method": "HPLC-DAD (USP Monograph)",
-      "specification_min": 4.0,
+      "test_category": "Physical & Chemical Assay",
+      "parameter": "Total Curcuminoids Purity",
+      "test_method": "HPLC-DAD (USP <2021>)",
+      "specification_min": 95.0,
       "specification_max": null,
       "unit": "% (w/w)",
-      "actual_result": 4.63,
+      "actual_result": 95.8,
       "status": "PASS"
     },
     {
+      "test_category": "Physical & Chemical Assay",
       "parameter": "Loss on Drying (Moisture)",
-      "test_method": "USP <731>",
+      "test_method": "USP <731> (105\u00b0C, 3h)",
       "specification_min": null,
       "specification_max": 5.0,
       "unit": "%",
-      "actual_result": 3.73,
+      "actual_result": 3.97,
       "status": "PASS"
     },
     {
+      "test_category": "Physical & Chemical Assay",
       "parameter": "Heavy Metals - Lead (Pb)",
       "test_method": "ICP-MS (USP <2232>)",
       "specification_min": null,
       "specification_max": 0.5,
       "unit": "ppm (mg/kg)",
-      "actual_result": 0.789,
+      "actual_result": 0.921,
       "status": "FAIL"
     },
     {
+      "test_category": "Physical & Chemical Assay",
       "parameter": "Heavy Metals - Arsenic (As)",
       "test_method": "ICP-MS (USP <2232>)",
       "specification_min": null,
       "specification_max": 1.0,
       "unit": "ppm (mg/kg)",
-      "actual_result": 0.135,
+      "actual_result": 0.207,
       "status": "PASS"
     },
     {
+      "test_category": "Physical & Chemical Assay",
+      "parameter": "Heavy Metals - Cadmium (Cd)",
+      "test_method": "ICP-MS (USP <2232>)",
+      "specification_min": null,
+      "specification_max": 0.3,
+      "unit": "ppm (mg/kg)",
+      "actual_result": 0.024,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Physical & Chemical Assay",
+      "parameter": "Heavy Metals - Mercury (Hg)",
+      "test_method": "ICP-MS (USP <2232>)",
+      "specification_min": null,
+      "specification_max": 0.1,
+      "unit": "ppm (mg/kg)",
+      "actual_result": 0.013,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Microbiological Assay",
       "parameter": "Total Aerobic Microbial Count (TAMC)",
       "test_method": "USP <2021>",
       "specification_min": null,
       "specification_max": 10000,
       "unit": "CFU/g",
-      "actual_result": 497,
+      "actual_result": 127,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Microbiological Assay",
+      "parameter": "Total Combined Yeast & Mold (TYMC)",
+      "test_method": "USP <2021>",
+      "specification_min": null,
+      "specification_max": 1000,
+      "unit": "CFU/g",
+      "actual_result": 70,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Microbiological Assay",
+      "parameter": "Escherichia coli",
+      "test_method": "USP <2022>",
+      "specification_min": null,
+      "specification_max": null,
+      "unit": "in 10g",
+      "actual_result": "Absent",
+      "status": "PASS"
+    },
+    {
+      "test_category": "Microbiological Assay",
+      "parameter": "Salmonella spp.",
+      "test_method": "USP <2022>",
+      "specification_min": null,
+      "specification_max": null,
+      "unit": "in 25g",
+      "actual_result": "Absent",
       "status": "PASS"
     }
   ],
   "authorization": {
-    "signatory_name": "Dr. Jean-Marc Boucher, Ph.D.",
-    "title": "Director of Quality Control & Analytical Validation",
-    "approval_date": "2026-09-01T11:23:18.404185"
+    "signatory_name": "Dr. \u00c9lodie Tremblay, Ph.D., C.Chem.",
+    "title": "Director of Quality Assurance & Analytical Validation",
+    "approval_date": "2026-09-01T12:20:09.688780"
+  },
+  "evaluation_summary": {
+    "overall_status": "REJECTED",
+    "discrepancy_count": 1,
+    "reasons": [
+      "Heavy Metal Lead (Pb) measured 0.921 ppm exceeds limit 0.50 ppm."
+    ]
   },
   "acumatica_action_directive": {
     "auto_approve_lot": false,

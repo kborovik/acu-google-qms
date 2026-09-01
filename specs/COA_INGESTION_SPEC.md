@@ -243,12 +243,3 @@ Every ingested document is normalized into the following canonical JSON schema:
 | `Salmonella`, `Salmonella spp.` | `pathogen_salmonella` | `text` | Absent in 25g (USP <2022>) |
 | `Loss on Drying`, `Moisture`, `LOD`, `Humidité` | `loss_on_drying` | `%` | $\le 5.0$ % (USP <731>) |
 | `Total Cannabinoids`, `THC`, `Total CBD` | `active_potency` | `% (w/w)` | Label Claim $\pm 10\%$ (SOR/2018-144) |
-
----
-
-## 6. Shared Extensibility for MTRs, CoCs, and SDSs
-
-The pipeline is intentionally modular. To process **Material Test Reports (MTRs)** for metals and fabrication:
-- The tabular extraction routes to the **Metals Metallurgy Ontology** (e.g., mapping `Yield Strength` $\to$ `yield_strength_mpa`, ladle chemistry `C, Mn, P, S` $\to$ weight %).
-- The tolerance engine compares values against **CSA G40.21** or **ASTM A572** limits rather than Health Canada NHP limits.
-- The Acumatica connector maps to discrete manufacturing lot attributes and Acumatica Quality inspection orders.

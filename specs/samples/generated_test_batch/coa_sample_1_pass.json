@@ -1,7 +1,7 @@
 {
   "document_metadata": {
     "document_type": "Certificate of Analysis (CoA)",
-    "document_id": "COA-2026-HC-61351",
+    "document_id": "COA-2026-HC-19644",
     "issued_date": "2026-09-01",
     "standards_compliance": [
       "Health Canada Good Manufacturing Practices (GUI-0001)",
@@ -10,78 +10,140 @@
       "ISO/IEC 17025:2017 Accredited Laboratory"
     ],
     "acumatica_erp_mapping": {
-      "acumatica_po_number": "PO-010716",
-      "acumatica_receipt_number": "PR-099569",
-      "inventory_item_id": "RAW-ECH-EXT4",
-      "lot_serial_number": "LOT-CA2670-637-A",
-      "vendor_id": "VEND-NORTH-BIO"
+      "acumatica_po_number": "PO-014297",
+      "acumatica_receipt_number": "PR-025412",
+      "inventory_item_id": "RAW-ASH-EXT5",
+      "lot_serial_number": "LOT-EC2645-762-V",
+      "vendor_id": "VEND-ALPINE-EXT"
     }
   },
   "issuer_information": {
-    "laboratory_name": "Pacific Rim Material Sciences Labs Inc.",
-    "accreditation_number": "CALA-ISO17025-2805",
-    "address": "361 King St W, Winnipeg, MB R3C 1A5, Canada",
-    "contact": "qa@pacificrimma.ca"
+    "laboratory_name": "Pacific Rim BioNutra Labs Inc.",
+    "accreditation_number": "CALA-ISO17025-5613",
+    "address": "355 Meadowpine Blvd, Saint-Laurent, QC H4S 2A1, Canada",
+    "contact": "qa@pacificrimbi.ca"
   },
   "product_information": {
-    "product_name": "Organic Botanical Raw Extract 4% Standardized",
-    "lot_number": "LOT-CA2670-637-A",
-    "batch_size_kg": 826.3,
-    "manufacturing_date": "2026-07-05",
-    "expiry_date": "2029-07-04",
-    "country_of_origin": "Canada"
+    "product_name": "Organic Ashwagandha Root Extract 5% Withanolides",
+    "botanical_source": "Withania somnifera (L.) Dunal (Root)",
+    "lot_number": "LOT-EC2645-762-V",
+    "batch_size_kg": 550.3,
+    "manufacturing_date": "2026-07-27",
+    "expiry_date": "2029-07-26",
+    "country_of_origin": "Canada",
+    "health_canada_npn": "NPN-80041289"
   },
   "test_results": [
     {
-      "parameter": "Active Potency Assay",
-      "test_method": "HPLC-DAD (USP Monograph)",
-      "specification_min": 4.0,
+      "test_category": "Physical & Chemical Assay",
+      "parameter": "Total Withanolides Assay",
+      "test_method": "HPLC-UV (USP Monograph)",
+      "specification_min": 5.0,
       "specification_max": null,
       "unit": "% (w/w)",
-      "actual_result": 4.19,
+      "actual_result": 5.53,
       "status": "PASS"
     },
     {
+      "test_category": "Physical & Chemical Assay",
       "parameter": "Loss on Drying (Moisture)",
-      "test_method": "USP <731>",
+      "test_method": "USP <731> (105\u00b0C, 3h)",
       "specification_min": null,
       "specification_max": 5.0,
       "unit": "%",
-      "actual_result": 2.87,
+      "actual_result": 2.51,
       "status": "PASS"
     },
     {
+      "test_category": "Physical & Chemical Assay",
       "parameter": "Heavy Metals - Lead (Pb)",
       "test_method": "ICP-MS (USP <2232>)",
       "specification_min": null,
       "specification_max": 0.5,
       "unit": "ppm (mg/kg)",
-      "actual_result": 0.124,
+      "actual_result": 0.089,
       "status": "PASS"
     },
     {
+      "test_category": "Physical & Chemical Assay",
       "parameter": "Heavy Metals - Arsenic (As)",
       "test_method": "ICP-MS (USP <2232>)",
       "specification_min": null,
       "specification_max": 1.0,
       "unit": "ppm (mg/kg)",
-      "actual_result": 0.124,
+      "actual_result": 0.062,
       "status": "PASS"
     },
     {
+      "test_category": "Physical & Chemical Assay",
+      "parameter": "Heavy Metals - Cadmium (Cd)",
+      "test_method": "ICP-MS (USP <2232>)",
+      "specification_min": null,
+      "specification_max": 0.3,
+      "unit": "ppm (mg/kg)",
+      "actual_result": 0.05,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Physical & Chemical Assay",
+      "parameter": "Heavy Metals - Mercury (Hg)",
+      "test_method": "ICP-MS (USP <2232>)",
+      "specification_min": null,
+      "specification_max": 0.1,
+      "unit": "ppm (mg/kg)",
+      "actual_result": 0.01,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Microbiological Assay",
       "parameter": "Total Aerobic Microbial Count (TAMC)",
       "test_method": "USP <2021>",
       "specification_min": null,
       "specification_max": 10000,
       "unit": "CFU/g",
-      "actual_result": 485,
+      "actual_result": 686,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Microbiological Assay",
+      "parameter": "Total Combined Yeast & Mold (TYMC)",
+      "test_method": "USP <2021>",
+      "specification_min": null,
+      "specification_max": 1000,
+      "unit": "CFU/g",
+      "actual_result": 49,
+      "status": "PASS"
+    },
+    {
+      "test_category": "Microbiological Assay",
+      "parameter": "Escherichia coli",
+      "test_method": "USP <2022>",
+      "specification_min": null,
+      "specification_max": null,
+      "unit": "in 10g",
+      "actual_result": "Absent",
+      "status": "PASS"
+    },
+    {
+      "test_category": "Microbiological Assay",
+      "parameter": "Salmonella spp.",
+      "test_method": "USP <2022>",
+      "specification_min": null,
+      "specification_max": null,
+      "unit": "in 25g",
+      "actual_result": "Absent",
       "status": "PASS"
     }
   ],
   "authorization": {
-    "signatory_name": "Dr. Jean-Marc Boucher, Ph.D.",
-    "title": "Director of Quality Control & Analytical Validation",
-    "approval_date": "2026-09-01T11:23:18.403705"
+    "signatory_name": "Dr. \u00c9lodie Tremblay, Ph.D., C.Chem.",
+    "title": "Director of Quality Assurance & Analytical Validation",
+    "approval_date": "2026-09-01T12:20:09.688478"
+  },
+  "evaluation_summary": {
+    "overall_status": "APPROVED",
+    "discrepancy_count": 0,
+    "reasons": []
   },
   "acumatica_action_directive": {
     "auto_approve_lot": true,
