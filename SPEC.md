@@ -1,7 +1,7 @@
 # GCP Agent Platform
 
 ## §G GOAL
-Terraform sole-provisions 1 Gemini Enterprise Agent Platform agent + Memory Bank store; Python ADK agent source in-repo (uv, ruff, basedpyright strict, Python 3.14).
+Implement LLM application per `specs/` (CoA ingestion → Acumatica QMS lot-release).
 
 ## §C CONSTRAINTS
 - Python 3.14
