@@ -1,0 +1,154 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "2026.1",
+  "testing_laboratories": [
+    {
+      "lab_id": "LAB-GL-ANALYTICAL",
+      "acumatica_vendor_id": "VEND-LAB-GREATLAKES",
+      "legal_name": "Great Lakes Bio-Analytical Services Inc.",
+      "short_name": "Great Lakes Analytical",
+      "status": "Active",
+      "facility_address": {
+        "address_line1": "6850 Meadowvale Town Centre Circle, Suite 400",
+        "city": "Mississauga",
+        "state_province": "ON",
+        "postal_code": "L5N 2W7",
+        "country": "CA"
+      },
+      "accreditations": [
+        {
+          "body": "CALA (Canadian Association for Laboratory Accreditation)",
+          "standard": "ISO/IEC 17025:2017",
+          "scope_number": "CALA-9481",
+          "expiry_date": "2028-06-30"
+        },
+        {
+          "body": "Health Canada HPFBI",
+          "standard": "Drug Establishment Licence (DEL) / NHP Testing",
+          "licence_number": "DEL-104928",
+          "expiry_date": "2027-12-31"
+        },
+        {
+          "body": "FDA North America",
+          "standard": "cGMP CFR Title 21 Part 111/211",
+          "registration_number": "FEI-3019284910",
+          "expiry_date": "2027-09-30"
+        }
+      ],
+      "primary_specializations": [
+        "Potency & Active Chemical Marker Assays",
+        "Heavy Metals & Elemental Impurities (USP <2232>)",
+        "Physical-Chemical Characterization (USP <731>, USP <786>)",
+        "Titrimetric & Spectrophotometric Assays"
+      ],
+      "core_instrumentation": [
+        {
+          "category": "Chromatography",
+          "equipment": "Agilent 1290 Infinity II UPLC with DAD & FLD Detectors"
+        },
+        {
+          "category": "Mass Spectrometry",
+          "equipment": "PerkinElmer NexION 2000 ICP-MS (Elemental Analysis)"
+        },
+        {
+          "category": "Mass Spectrometry",
+          "equipment": "Sciex Triple Quad 6500+ LC-MS/MS System"
+        },
+        {
+          "category": "Physical Testing",
+          "equipment": "Mettler Toledo Halogen Moisture Analyzer & Anton Paar Density Meter"
+        }
+      ],
+      "turnaround_slas": {
+        "standard_turnaround_days": 5,
+        "rush_turnaround_days": 2,
+        "emergency_turnaround_hours": 24
+      },
+      "contacts": {
+        "lab_director": "Dr. Ronald Henderson, Ph.D., C.Chem.",
+        "qa_manager": "Claire Beaulieu, M.Sc.",
+        "email_coa_submission": "coa-inbound@greatlakes-analytical.ca",
+        "phone": "+1-905-555-8820"
+      },
+      "acumatica_edi_integration": {
+        "supported_format": "JSON_REST_WEBHOOK",
+        "endpoint": "https://api.greatlakes-analytical.ca/v1/coa/results",
+        "auto_mapping_confidence_threshold": 0.95
+      }
+    },
+    {
+      "lab_id": "LAB-PACIFIC-TEST",
+      "acumatica_vendor_id": "VEND-LAB-PACRIM",
+      "legal_name": "Pacific Rim BioNutra Testing Laboratories Ltd.",
+      "short_name": "Pacific Rim Labs",
+      "status": "Active",
+      "facility_address": {
+        "address_line1": "4180 Lougheed Highway, Suite 250",
+        "city": "Burnaby",
+        "state_province": "BC",
+        "postal_code": "V5C 6A7",
+        "country": "CA"
+      },
+      "accreditations": [
+        {
+          "body": "Standards Council of Canada (SCC)",
+          "standard": "ISO/IEC 17025:2017",
+          "scope_number": "SCC-8172",
+          "expiry_date": "2028-03-31"
+        },
+        {
+          "body": "Health Canada HPFBI",
+          "standard": "Drug Establishment Licence (DEL) / Microbiology & Chemistry",
+          "licence_number": "DEL-203819",
+          "expiry_date": "2027-10-31"
+        },
+        {
+          "body": "AOAC International",
+          "standard": "RI Performance Tested Methods (PTM)",
+          "certificate_id": "AOAC-PTM-092101",
+          "expiry_date": "2027-05-31"
+        }
+      ],
+      "primary_specializations": [
+        "Microbiological Enumeration (TAMC, TYMC, USP <2021>)",
+        "Pathogen Rapid Screening (PCR & AOAC BAM)",
+        "Residual Solvents & VOCs (USP <467> Headspace GC-MS)",
+        "Pesticide Multi-Residue Screening (GC-MS/MS & LC-MS/MS 400+ Analytes)"
+      ],
+      "core_instrumentation": [
+        {
+          "category": "Microbiology Automation",
+          "equipment": "bioMérieux TEMPO Automated QC Enumerator & GENE-UP PCR System"
+        },
+        {
+          "category": "Gas Chromatography",
+          "equipment": "Agilent 7890B GC with 7697A Headspace Sampler & 5977B MSD"
+        },
+        {
+          "category": "Pesticide Residue MS",
+          "equipment": "Thermo Scientific TSQ 9000 Triple Quadrupole GC-MS/MS"
+        },
+        {
+          "category": "Incubation & Environmental",
+          "equipment": "Thermo Scientific Heratherm Certified Stability & Microbial Incubators"
+        }
+      ],
+      "turnaround_slas": {
+        "standard_turnaround_days": 5,
+        "rush_turnaround_days": 3,
+        "emergency_turnaround_hours": 36
+      },
+      "contacts": {
+        "lab_director": "Dr. Fiona MacIntyre, Ph.D., RMCCM",
+        "qa_manager": "David Suzuki, B.Sc., CQA",
+        "email_coa_submission": "intake@pacificrimlabs.ca",
+        "phone": "+1-604-555-4491"
+      },
+      "acumatica_edi_integration": {
+        "supported_format": "JSON_REST_WEBHOOK",
+        "endpoint": "https://api.pacificrimlabs.ca/qms/v2/certificates",
+        "auto_mapping_confidence_threshold": 0.95
+      }
+    }
+  ]
+}

@@ -1,0 +1,226 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "2026.1",
+  "generated_at": "2026-03-01T00:00:00Z",
+  "vendors": [
+    {
+      "vendor_id": "VEND-NORTH-BIO",
+      "vendor_name": "Northern BioNutra Imports Corp.",
+      "legal_name": "Northern BioNutra Imports Corporation",
+      "vendor_class": "RAW_BOTANICAL",
+      "currency": "CAD",
+      "terms": "NET30",
+      "status": "Active",
+      "address": {
+        "address_line1": "1450 Meadowpine Blvd, Suite 300",
+        "city": "Mississauga",
+        "state_province": "ON",
+        "postal_code": "L5N 6S2",
+        "country": "CA"
+      },
+      "compliance": {
+        "health_canada_foreign_site_annex": "FSA-CA-ON-449102",
+        "health_canada_site_licence": "302194",
+        "fda_registration_number": "18492049102",
+        "gmp_certification_body": "NSF International (ANSI 455-2)",
+        "gmp_certificate_expiry": "2027-08-31",
+        "organic_certifier": "Pro-Cert Organic Systems (COR / NOP)"
+      },
+      "quality_rating": {
+        "tier": "Tier-1 Preferred",
+        "historical_pass_rate_pct": 99.4,
+        "audited_on": "2025-11-14",
+        "lead_time_days": 5
+      },
+      "contacts": {
+        "qa_contact_name": "Jean-Pierre Tremblay",
+        "qa_email": "qa@northernbionutra.ca",
+        "sales_contact": "orders@northernbionutra.ca",
+        "phone": "+1-905-555-0192"
+      },
+      "products_supplied": [
+        "RAW-ECH-EXT4",
+        "RAW-ELD-EXT10"
+      ],
+      "preferred_test_labs": [
+        "LAB-GL-ANALYTICAL",
+        "LAB-PACIFIC-TEST"
+      ]
+    },
+    {
+      "vendor_id": "VEND-ALPINE-EXT",
+      "vendor_name": "Alpine Botanical Extracts GmbH",
+      "legal_name": "Alpine Botanical Extracts GmbH & Co. KG",
+      "vendor_class": "RAW_BOTANICAL_IMPORT",
+      "currency": "EUR",
+      "terms": "NET60",
+      "status": "Active",
+      "address": {
+        "address_line1": "Industriestrasse 42",
+        "city": "Holzminden",
+        "state_province": "Lower Saxony",
+        "postal_code": "37603",
+        "country": "DE"
+      },
+      "compliance": {
+        "health_canada_foreign_site_annex": "FSA-EU-DE-910482",
+        "eu_gmp_cert_number": "DE_NI_01_GMP_2025_0044",
+        "gmp_certification_body": "TÜV SÜD Food Safety & Ph. Eur. GMP",
+        "gmp_certificate_expiry": "2027-04-30",
+        "organic_certifier": "Kiwa BCS Öko-Garantie GmbH (EU / COR)"
+      },
+      "quality_rating": {
+        "tier": "Tier-1 Preferred",
+        "historical_pass_rate_pct": 98.9,
+        "audited_on": "2025-09-20",
+        "lead_time_days": 18
+      },
+      "contacts": {
+        "qa_contact_name": "Dr. Klaus Richter",
+        "qa_email": "quality@alpine-extracts.de",
+        "sales_contact": "export@alpine-extracts.de",
+        "phone": "+49-5531-99201"
+      },
+      "products_supplied": [
+        "RAW-ASH-EXT5",
+        "RAW-RHOD-EXT3"
+      ],
+      "preferred_test_labs": [
+        "LAB-GL-ANALYTICAL",
+        "LAB-PACIFIC-TEST"
+      ]
+    },
+    {
+      "vendor_id": "VEND-PACIFIC-ORG",
+      "vendor_name": "Pacific Organic Ingredients Ltd.",
+      "legal_name": "Pacific Organic Ingredients Limited",
+      "vendor_class": "RAW_NUTRACEUTICAL",
+      "currency": "USD",
+      "terms": "NET30",
+      "status": "Active",
+      "address": {
+        "address_line1": "7800 Riverfront Way, Suite 100",
+        "city": "Burnaby",
+        "state_province": "BC",
+        "postal_code": "V5J 5L3",
+        "country": "CA"
+      },
+      "compliance": {
+        "health_canada_foreign_site_annex": "FSA-CA-BC-119284",
+        "health_canada_site_licence": "304882",
+        "fda_registration_number": "19482910394",
+        "gmp_certification_body": "SGS North America (21 CFR Part 111)",
+        "gmp_certificate_expiry": "2026-12-15",
+        "organic_certifier": "Quality Assurance International (QAI - COR/NOP)"
+      },
+      "quality_rating": {
+        "tier": "Tier-1 Preferred",
+        "historical_pass_rate_pct": 99.1,
+        "audited_on": "2025-10-05",
+        "lead_time_days": 7
+      },
+      "contacts": {
+        "qa_contact_name": "Sarah Chen, M.Sc.",
+        "qa_email": "qc@pacificorganic.ca",
+        "sales_contact": "sales@pacificorganic.ca",
+        "phone": "+1-604-555-0831"
+      },
+      "products_supplied": [
+        "RAW-CURC-95",
+        "RAW-GUT-PRB100"
+      ],
+      "preferred_test_labs": [
+        "LAB-GL-ANALYTICAL",
+        "LAB-PACIFIC-TEST"
+      ]
+    },
+    {
+      "vendor_id": "VEND-NIPPON-PHARMA",
+      "vendor_name": "Nippon Pure Bioactives Inc.",
+      "legal_name": "Nippon Pure Bioactives Corporation",
+      "vendor_class": "RAW_API_FERMENTATION",
+      "currency": "USD",
+      "terms": "NET45",
+      "status": "Active",
+      "address": {
+        "address_line1": "2-8-1 Nihonbashi Honcho, Chuo-ku",
+        "city": "Tokyo",
+        "state_province": "Tokyo",
+        "postal_code": "103-0023",
+        "country": "JP"
+      },
+      "compliance": {
+        "health_canada_foreign_site_annex": "FSA-JP-TK-883921",
+        "pmda_japan_gmp": "JP-GMP-2024-819",
+        "fda_dmf_number": "DMF-029481",
+        "gmp_certification_body": "Japan PMDA / ISO 9001:2015",
+        "gmp_certificate_expiry": "2027-11-30",
+        "organic_certifier": "N/A (Pharmaceutical Fermentation Grade)"
+      },
+      "quality_rating": {
+        "tier": "Tier-1 Preferred",
+        "historical_pass_rate_pct": 99.8,
+        "audited_on": "2025-08-12",
+        "lead_time_days": 21
+      },
+      "contacts": {
+        "qa_contact_name": "Kenji Takahashi, Ph.D.",
+        "qa_email": "k-takahashi@nippon-purebio.co.jp",
+        "sales_contact": "intl-sales@nippon-purebio.co.jp",
+        "phone": "+81-3-5555-4819"
+      },
+      "products_supplied": [
+        "RAW-COQ10-99",
+        "RAW-THEA-98"
+      ],
+      "preferred_test_labs": [
+        "LAB-GL-ANALYTICAL",
+        "LAB-PACIFIC-TEST"
+      ]
+    },
+    {
+      "vendor_id": "VEND-NORDIC-MAR",
+      "vendor_name": "Nordic Marine Extracts AS",
+      "legal_name": "Nordic Marine Extracts Aktieselskap",
+      "vendor_class": "RAW_MARINE_LIPID",
+      "currency": "USD",
+      "terms": "NET30",
+      "status": "Active",
+      "address": {
+        "address_line1": "Havnegata 18",
+        "city": "Ålesund",
+        "state_province": "Møre og Romsdal",
+        "postal_code": "6003",
+        "country": "NO"
+      },
+      "compliance": {
+        "health_canada_foreign_site_annex": "FSA-NO-MR-672910",
+        "mattilsynet_norway_licence": "NO-HACCP-9481",
+        "goed_standard_compliance": "GOED Voluntary Monograph Compliant",
+        "gmp_certification_body": "DNV GL Food & Pharma GMP",
+        "gmp_certificate_expiry": "2027-06-30",
+        "msc_certification": "MSC-C-54819 (Marine Stewardship Council)"
+      },
+      "quality_rating": {
+        "tier": "Tier-1 Preferred",
+        "historical_pass_rate_pct": 99.3,
+        "audited_on": "2025-10-28",
+        "lead_time_days": 15
+      },
+      "contacts": {
+        "qa_contact_name": "Astrid Lindholm, M.Sc.",
+        "qa_email": "astrid.lindholm@nordicmarine.no",
+        "sales_contact": "supply@nordicmarine.no",
+        "phone": "+47-70-192800"
+      },
+      "products_supplied": [
+        "RAW-OMEGA3-70",
+        "RAW-ASTA-10"
+      ],
+      "preferred_test_labs": [
+        "LAB-GL-ANALYTICAL",
+        "LAB-PACIFIC-TEST"
+      ]
+    }
+  ]
+}

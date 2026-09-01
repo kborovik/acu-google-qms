@@ -1,0 +1,692 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "version": "2026.2",
+  "qms_inspection_plans": [
+    {
+      "plan_id": "QPLAN-BOT-ECH4",
+      "description": "Quality Inspection Plan for Organic Echinacea 4% Extract",
+      "inventory_id": "RAW-ECH-EXT4",
+      "sampling_plan": "ISO 2859-1 Level II Normal Single Sampling",
+      "test_criteria": [
+        {
+          "step_nbr": 10,
+          "test_id": "ASSAY_POLYPHENOLS",
+          "description": "Total Active Polyphenols (as Cichoric/Caftaric Acids)",
+          "method": "HPLC-DAD (USP Monograph)",
+          "target_value": 4.0,
+          "min_value": 4.00,
+          "max_value": null,
+          "uom": "% (w/w)",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 20,
+          "test_id": "PHYS_LOD",
+          "description": "Loss on Drying (Moisture Content)",
+          "method": "USP <731> (105°C for 2h)",
+          "target_value": 4.0,
+          "min_value": null,
+          "max_value": 5.00,
+          "uom": "% (w/w)",
+          "criticality": "Major"
+        },
+        {
+          "step_nbr": 30,
+          "test_id": "HM_LEAD",
+          "description": "Elemental Impurities: Lead (Pb)",
+          "method": "ICP-MS (USP <2232> / AOAC 2013.06)",
+          "target_value": 0.1,
+          "min_value": null,
+          "max_value": 0.50,
+          "uom": "ppm",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 40,
+          "test_id": "HM_ARSENIC",
+          "description": "Elemental Impurities: Arsenic (As)",
+          "method": "ICP-MS (USP <2232> / AOAC 2013.06)",
+          "target_value": 0.2,
+          "min_value": null,
+          "max_value": 1.00,
+          "uom": "ppm",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 50,
+          "test_id": "HM_CADMIUM",
+          "description": "Elemental Impurities: Cadmium (Cd)",
+          "method": "ICP-MS (USP <2232> / AOAC 2013.06)",
+          "target_value": 0.05,
+          "min_value": null,
+          "max_value": 0.30,
+          "uom": "ppm",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 60,
+          "test_id": "HM_MERCURY",
+          "description": "Elemental Impurities: Mercury (Hg)",
+          "method": "ICP-MS (USP <2232> / AOAC 2013.06)",
+          "target_value": 0.01,
+          "min_value": null,
+          "max_value": 0.10,
+          "uom": "ppm",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 70,
+          "test_id": "MICRO_TAMC",
+          "description": "Total Aerobic Microbial Count (TAMC)",
+          "method": "USP <2021> (Membrane Filtration)",
+          "target_value": 500,
+          "min_value": null,
+          "max_value": 10000.0,
+          "uom": "CFU/g",
+          "criticality": "Major"
+        },
+        {
+          "step_nbr": 80,
+          "test_id": "MICRO_TYMC",
+          "description": "Total Combined Yeast & Mold (TYMC)",
+          "method": "USP <2021> (Spread Plate)",
+          "target_value": 50,
+          "min_value": null,
+          "max_value": 1000.0,
+          "uom": "CFU/g",
+          "criticality": "Major"
+        },
+        {
+          "step_nbr": 90,
+          "test_id": "PATH_ECOLI",
+          "description": "Escherichia coli",
+          "method": "USP <2022> (Enrichment / Selective Media)",
+          "target_value": "Absent in 10g",
+          "expected_text": "Absent",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 100,
+          "test_id": "PATH_SALMONELLA",
+          "description": "Salmonella species",
+          "method": "USP <2022> (AOAC Rapid PCR / Culture)",
+          "target_value": "Absent in 25g",
+          "expected_text": "Absent",
+          "criticality": "Critical"
+        }
+      ]
+    },
+    {
+      "plan_id": "QPLAN-BOT-ELD10",
+      "description": "Quality Inspection Plan for European Elderberry 10% Anthocyanins",
+      "inventory_id": "RAW-ELD-EXT10",
+      "sampling_plan": "ISO 2859-1 Level II Normal Single Sampling",
+      "test_criteria": [
+        {
+          "step_nbr": 10,
+          "test_id": "ASSAY_ANTHOCYANINS",
+          "description": "Total Anthocyanins (as Cyanidin-3-glucoside)",
+          "method": "HPLC-UV (Ph. Eur. / USP)",
+          "target_value": 10.0,
+          "min_value": 10.00,
+          "max_value": null,
+          "uom": "% (w/w)",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 20,
+          "test_id": "PHYS_LOD",
+          "description": "Loss on Drying",
+          "method": "USP <731>",
+          "target_value": 3.5,
+          "min_value": null,
+          "max_value": 5.00,
+          "uom": "% (w/w)",
+          "criticality": "Major"
+        },
+        {
+          "step_nbr": 30,
+          "test_id": "HM_LEAD",
+          "description": "Lead (Pb)",
+          "method": "ICP-MS (USP <2232>)",
+          "target_value": 0.15,
+          "min_value": null,
+          "max_value": 0.50,
+          "uom": "ppm",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 40,
+          "test_id": "MICRO_TAMC",
+          "description": "Total Aerobic Microbial Count",
+          "method": "USP <2021>",
+          "target_value": 300,
+          "min_value": null,
+          "max_value": 10000.0,
+          "uom": "CFU/g",
+          "criticality": "Major"
+        }
+      ]
+    },
+    {
+      "plan_id": "QPLAN-BOT-ASH5",
+      "description": "Quality Inspection Plan for Organic Ashwagandha 5% Withanolides",
+      "inventory_id": "RAW-ASH-EXT5",
+      "sampling_plan": "ISO 2859-1 Level II Normal Single Sampling",
+      "test_criteria": [
+        {
+          "step_nbr": 10,
+          "test_id": "ASSAY_WITHANOLIDES",
+          "description": "Total Withanolides Assay",
+          "method": "HPLC-UV (USP Monograph)",
+          "target_value": 5.0,
+          "min_value": 5.00,
+          "max_value": null,
+          "uom": "% (w/w)",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 20,
+          "test_id": "PHYS_LOD",
+          "description": "Loss on Drying",
+          "method": "USP <731>",
+          "target_value": 4.0,
+          "min_value": null,
+          "max_value": 5.00,
+          "uom": "% (w/w)",
+          "criticality": "Major"
+        },
+        {
+          "step_nbr": 30,
+          "test_id": "HM_LEAD",
+          "description": "Lead (Pb)",
+          "method": "ICP-MS (USP <2232>)",
+          "target_value": 0.1,
+          "min_value": null,
+          "max_value": 0.50,
+          "uom": "ppm",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 40,
+          "test_id": "MICRO_TAMC",
+          "description": "Total Aerobic Count",
+          "method": "USP <2021>",
+          "target_value": 400,
+          "min_value": null,
+          "max_value": 10000.0,
+          "uom": "CFU/g",
+          "criticality": "Major"
+        }
+      ]
+    },
+    {
+      "plan_id": "QPLAN-BOT-RHOD3",
+      "description": "Quality Inspection Plan for Rhodiola Rosea 3% Rosavins / 1% Salidroside",
+      "inventory_id": "RAW-RHOD-EXT3",
+      "sampling_plan": "ISO 2859-1 Level II Normal Single Sampling",
+      "test_criteria": [
+        {
+          "step_nbr": 10,
+          "test_id": "ASSAY_ROSAVINS",
+          "description": "Total Rosavins (Rosavin, Rosin, Rosarin)",
+          "method": "HPLC-DAD (USP Monograph)",
+          "target_value": 3.0,
+          "min_value": 3.00,
+          "max_value": null,
+          "uom": "% (w/w)",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 20,
+          "test_id": "ASSAY_SALIDROSIDE",
+          "description": "Salidroside Purity",
+          "method": "HPLC-DAD (USP Monograph)",
+          "target_value": 1.0,
+          "min_value": 1.00,
+          "max_value": null,
+          "uom": "% (w/w)",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 30,
+          "test_id": "PHYS_LOD",
+          "description": "Loss on Drying",
+          "method": "USP <731>",
+          "target_value": 3.5,
+          "min_value": null,
+          "max_value": 5.00,
+          "uom": "% (w/w)",
+          "criticality": "Major"
+        }
+      ]
+    },
+    {
+      "plan_id": "QPLAN-BOT-CURC95",
+      "description": "Quality Inspection Plan for Turmeric Curcuminoids 95%",
+      "inventory_id": "RAW-CURC-95",
+      "sampling_plan": "ISO 2859-1 Level II Normal Single Sampling",
+      "test_criteria": [
+        {
+          "step_nbr": 10,
+          "test_id": "ASSAY_CURCUMINOIDS",
+          "description": "Total Curcuminoids Assay",
+          "method": "HPLC-DAD (USP <2021> / ASTA 18.0)",
+          "target_value": 95.0,
+          "min_value": 95.00,
+          "max_value": 102.00,
+          "uom": "% (w/w)",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 20,
+          "test_id": "SOLV_ETHANOL",
+          "description": "Residual Solvent: Ethanol",
+          "method": "Headspace GC-FID (USP <467> Option 1)",
+          "target_value": 500.0,
+          "min_value": null,
+          "max_value": 5000.0,
+          "uom": "ppm",
+          "criticality": "Major"
+        },
+        {
+          "step_nbr": 30,
+          "test_id": "HM_LEAD",
+          "description": "Lead (Pb)",
+          "method": "ICP-MS (USP <2232>)",
+          "target_value": 0.08,
+          "min_value": null,
+          "max_value": 0.50,
+          "uom": "ppm",
+          "criticality": "Critical"
+        }
+      ]
+    },
+    {
+      "plan_id": "QPLAN-BIO-PRB100",
+      "description": "Quality Inspection Plan for Multi-Strain Probiotic Blend 100B CFU/g",
+      "inventory_id": "RAW-GUT-PRB100",
+      "sampling_plan": "Aseptic Composite Core Sampling",
+      "test_criteria": [
+        {
+          "step_nbr": 10,
+          "test_id": "VIABLE_CELL_COUNT",
+          "description": "Total Viable Probiotic Cell Count",
+          "method": "ISO 7889 / ISO 20128 (MRS/TOS-MUP Agar)",
+          "target_value": 100.0,
+          "min_value": 100.0,
+          "max_value": null,
+          "uom": "Billion CFU/g",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 20,
+          "test_id": "PHYS_WATER_ACT",
+          "description": "Water Activity (Aw)",
+          "method": "USP <922> (Chilled Mirror Dewpoint @ 25°C)",
+          "target_value": 0.12,
+          "min_value": null,
+          "max_value": 0.20,
+          "uom": "Aw",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 30,
+          "test_id": "MICRO_NON_LACTIC",
+          "description": "Non-Lactic Contaminant Count (Enterobacteria)",
+          "method": "ISO 21528-2 (VRBG Agar)",
+          "target_value": 0,
+          "min_value": null,
+          "max_value": 10.0,
+          "uom": "CFU/g",
+          "criticality": "Critical"
+        }
+      ]
+    },
+    {
+      "plan_id": "QPLAN-API-COQ10",
+      "description": "Quality Inspection Plan for Pure Coenzyme Q10 99% USP",
+      "inventory_id": "RAW-COQ10-99",
+      "sampling_plan": "ISO 2859-1 Level II Normal Single Sampling",
+      "test_criteria": [
+        {
+          "step_nbr": 10,
+          "test_id": "ASSAY_COQ10",
+          "description": "Ubidecarenone (CoQ10) Assay",
+          "method": "HPLC-UV (USP Ubidecarenone Monograph)",
+          "target_value": 99.5,
+          "min_value": 99.00,
+          "max_value": 101.00,
+          "uom": "% (w/w)",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 20,
+          "test_id": "PHYS_MELTING_POINT",
+          "description": "Melting Range",
+          "method": "USP <741> Class 1a",
+          "target_value": 49.5,
+          "min_value": 48.0,
+          "max_value": 52.0,
+          "uom": "°C",
+          "criticality": "Major"
+        },
+        {
+          "step_nbr": 30,
+          "test_id": "PHYS_RESIDUE_IGNITION",
+          "description": "Residue on Ignition (Sulfated Ash)",
+          "method": "USP <281>",
+          "target_value": 0.04,
+          "min_value": null,
+          "max_value": 0.10,
+          "uom": "% (w/w)",
+          "criticality": "Major"
+        }
+      ]
+    },
+    {
+      "plan_id": "QPLAN-API-THEA98",
+      "description": "Quality Inspection Plan for Pure L-Theanine 98.5%",
+      "inventory_id": "RAW-THEA-98",
+      "sampling_plan": "ISO 2859-1 Level II Normal Single Sampling",
+      "test_criteria": [
+        {
+          "step_nbr": 10,
+          "test_id": "ASSAY_L_THEANINE",
+          "description": "L-Theanine Content (Anhydrous)",
+          "method": "HPLC-UV / Optical Rotation",
+          "target_value": 99.0,
+          "min_value": 98.50,
+          "max_value": 101.50,
+          "uom": "% (w/w)",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 20,
+          "test_id": "SPECIFIC_ROTATION",
+          "description": "Specific Optical Rotation [α]D20",
+          "method": "USP <781S> (c=5, H2O)",
+          "target_value": 8.0,
+          "min_value": 7.7,
+          "max_value": 8.5,
+          "uom": "degrees",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 30,
+          "test_id": "PHYS_LOD",
+          "description": "Loss on Drying",
+          "method": "USP <731> (105°C for 3h)",
+          "target_value": 0.3,
+          "min_value": null,
+          "max_value": 1.00,
+          "uom": "% (w/w)",
+          "criticality": "Major"
+        }
+      ]
+    },
+    {
+      "plan_id": "QPLAN-LIP-OM370",
+      "description": "Quality Inspection Plan for Marine Omega-3 TG Oil 70% EPA/DHA",
+      "inventory_id": "RAW-OMEGA3-70",
+      "sampling_plan": "Closed Nitrogen-Purged Syringe Sampling",
+      "test_criteria": [
+        {
+          "step_nbr": 10,
+          "test_id": "ASSAY_EPA_DHA",
+          "description": "Total EPA (40%) + DHA (30%) Sum Assay",
+          "method": "GC-FID (Ph. Eur. 2.4.29 / GOED Monograph)",
+          "target_value": 72.0,
+          "min_value": 70.00,
+          "max_value": null,
+          "uom": "% (w/w)",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 20,
+          "test_id": "OXID_PEROXIDE",
+          "description": "Peroxide Value (PV)",
+          "method": "AOCS Cd 8b-90 (Potentiometric Titration)",
+          "target_value": 2.0,
+          "min_value": null,
+          "max_value": 5.0,
+          "uom": "meq O2/kg",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 30,
+          "test_id": "OXID_ANISIDINE",
+          "description": "p-Anisidine Value (p-AV)",
+          "method": "AOCS Cd 18-90 (Spectrophotometric)",
+          "target_value": 8.0,
+          "min_value": null,
+          "max_value": 20.0,
+          "uom": "AnV unit",
+          "criticality": "Major"
+        },
+        {
+          "step_nbr": 40,
+          "test_id": "OXID_TOTOX",
+          "description": "Total Oxidation Value (TOTOX = 2*PV + p-AV)",
+          "method": "Calculated (GOED Monograph)",
+          "target_value": 12.0,
+          "min_value": null,
+          "max_value": 26.0,
+          "uom": "index",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 50,
+          "test_id": "CONTAM_DIOXINS",
+          "description": "Dioxins and Dioxin-like PCBs (WHO-PCDD/F-TEQ)",
+          "method": "HRGC-HRMS (EPA 1613B)",
+          "target_value": 0.5,
+          "min_value": null,
+          "max_value": 1.75,
+          "uom": "pg/g",
+          "criticality": "Critical"
+        }
+      ]
+    },
+    {
+      "plan_id": "QPLAN-LIP-ASTA10",
+      "description": "Quality Inspection Plan for Natural Astaxanthin Oleoresin 10%",
+      "inventory_id": "RAW-ASTA-10",
+      "sampling_plan": "Homogenized Drum Core Sample",
+      "test_criteria": [
+        {
+          "step_nbr": 10,
+          "test_id": "ASSAY_ASTAXANTHIN",
+          "description": "Total Natural Astaxanthin Complex (Free + Esters)",
+          "method": "HPLC-UV (USP Astaxanthin Ester Monograph)",
+          "target_value": 10.2,
+          "min_value": 10.00,
+          "max_value": null,
+          "uom": "% (w/w)",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 20,
+          "test_id": "OXID_PEROXIDE",
+          "description": "Peroxide Value",
+          "method": "AOCS Cd 8b-90",
+          "target_value": 3.0,
+          "min_value": null,
+          "max_value": 10.0,
+          "uom": "meq O2/kg",
+          "criticality": "Major"
+        },
+        {
+          "step_nbr": 30,
+          "test_id": "HM_LEAD",
+          "description": "Lead (Pb)",
+          "method": "ICP-MS (USP <2232>)",
+          "target_value": 0.1,
+          "min_value": null,
+          "max_value": 0.50,
+          "uom": "ppm",
+          "criticality": "Critical"
+        }
+      ]
+    },
+    {
+      "plan_id": "QPLAN-FG-IMMUNE60",
+      "description": "Finished Product Quality Inspection Plan for ImmunoShield Botanical Active Plus 60 Veg Capsules",
+      "inventory_id": "FG-IMMUNE-DEFENSE-60C",
+      "sampling_plan": "ISO 2859-1 Level II Normal Single Sampling (Finished Dose)",
+      "test_criteria": [
+        {
+          "step_nbr": 10,
+          "test_id": "FG_WEIGHT_VARIATION",
+          "description": "Capsule Fill Weight Uniformity",
+          "method": "USP <2091> (20 Capsules)",
+          "target_value": 540.0,
+          "min_value": 513.0,
+          "max_value": 567.0,
+          "uom": "mg / cap",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 20,
+          "test_id": "FG_DISINTEGRATION",
+          "description": "Disintegration Time in Simulated Gastric Fluid",
+          "method": "USP <2040>",
+          "target_value": 12.0,
+          "min_value": null,
+          "max_value": 20.0,
+          "uom": "minutes",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 30,
+          "test_id": "FG_ASSAY_POLYPHENOLS",
+          "description": "Finished Dose Polyphenols Assay",
+          "method": "HPLC-DAD",
+          "target_value": 8.0,
+          "min_value": 7.20,
+          "max_value": 9.60,
+          "uom": "mg / cap",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 40,
+          "test_id": "FG_ASSAY_ANTHOCYANINS",
+          "description": "Finished Dose Anthocyanins Assay",
+          "method": "HPLC-UV",
+          "target_value": 15.0,
+          "min_value": 13.50,
+          "max_value": 18.00,
+          "uom": "mg / cap",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 50,
+          "test_id": "FG_ASSAY_WITHANOLIDES",
+          "description": "Finished Dose Withanolides Assay",
+          "method": "HPLC-UV",
+          "target_value": 5.0,
+          "min_value": 4.50,
+          "max_value": 6.00,
+          "uom": "mg / cap",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 60,
+          "test_id": "FG_MICRO_TAMC",
+          "description": "Finished Dose TAMC",
+          "method": "USP <2021>",
+          "target_value": 100,
+          "min_value": null,
+          "max_value": 1000.0,
+          "uom": "CFU/g",
+          "criticality": "Major"
+        }
+      ]
+    },
+    {
+      "plan_id": "QPLAN-FG-CARDIO60",
+      "description": "Finished Product Quality Inspection Plan for CardioPure Ultra Omega-3 + CoQ10 & Astaxanthin 60 Softgels",
+      "inventory_id": "FG-CARDIO-OMEGA-COQ10-60SG",
+      "sampling_plan": "ISO 2859-1 Level II Normal Single Sampling (Finished Dose)",
+      "test_criteria": [
+        {
+          "step_nbr": 10,
+          "test_id": "FG_WEIGHT_VARIATION",
+          "description": "Softgel Fill Weight Uniformity",
+          "method": "USP <2091> (20 Softgels)",
+          "target_value": 1150.0,
+          "min_value": 1115.5,
+          "max_value": 1184.5,
+          "uom": "mg / softgel",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 20,
+          "test_id": "FG_RUPTURE_TIME",
+          "description": "Softgel Rupture / Disintegration Time",
+          "method": "USP <2040>",
+          "target_value": 8.0,
+          "min_value": null,
+          "max_value": 15.0,
+          "uom": "minutes",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 30,
+          "test_id": "FG_ASSAY_EPA",
+          "description": "Finished Dose EPA Content",
+          "method": "GC-FID",
+          "target_value": 400.0,
+          "min_value": 360.0,
+          "max_value": 480.0,
+          "uom": "mg / softgel",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 40,
+          "test_id": "FG_ASSAY_DHA",
+          "description": "Finished Dose DHA Content",
+          "method": "GC-FID",
+          "target_value": 300.0,
+          "min_value": 270.0,
+          "max_value": 360.0,
+          "uom": "mg / softgel",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 50,
+          "test_id": "FG_ASSAY_COQ10",
+          "description": "Finished Dose Coenzyme Q10 Content",
+          "method": "HPLC-UV",
+          "target_value": 100.0,
+          "min_value": 90.0,
+          "max_value": 120.0,
+          "uom": "mg / softgel",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 60,
+          "test_id": "FG_ASSAY_ASTAXANTHIN",
+          "description": "Finished Dose Astaxanthin Content",
+          "method": "HPLC-UV",
+          "target_value": 2.0,
+          "min_value": 1.80,
+          "max_value": 2.40,
+          "uom": "mg / softgel",
+          "criticality": "Critical"
+        },
+        {
+          "step_nbr": 70,
+          "test_id": "FG_OXID_PEROXIDE",
+          "description": "Finished Softgel Peroxide Value",
+          "method": "AOCS Cd 8b-90",
+          "target_value": 2.5,
+          "min_value": null,
+          "max_value": 5.0,
+          "uom": "meq O2/kg",
+          "criticality": "Critical"
+        }
+      ]
+    }
+  ]
+}
