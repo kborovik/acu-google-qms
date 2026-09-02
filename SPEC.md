@@ -51,7 +51,7 @@ T3|.|add dedicated engine SA + `roles/aiplatform.user` + `roles/storage.objectVi
 T4|.|add GCS artifact bucket for later package_spec|V7,I.gcs
 T5|.|add `google_vertex_ai_reasoning_engine` w/ Memory Bank `context_spec`; no `package_spec`|V1,V3,V7,I.resource
 T6|.|emit outputs `reasoning_engine_name` `service_account_email` `artifact_bucket` `gemini_api_key_secret_id`|V8,I.out
-T7|.|extend `.gitignore` for `.terraform/` `*.tfstate` `*.tfstate.backup`|V9
+T7|x|extend `.gitignore` for `.terraform/` `*.tfstate` `*.tfstate.backup`|V9
 T8|.|`terraform fmt` + `terraform validate` pass|T1,T2,T3,T4,T5,T6,T13
 T9|.|init uv project Python 3.14 `pyproject.toml` + `.python-version`; no `requirements.txt`|V2,I.pkg
 T10|.|set ruff + basedpyright strict in `pyproject.toml`|V2,I.pkg
