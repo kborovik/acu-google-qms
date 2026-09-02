@@ -4,7 +4,7 @@ An automated quality compliance and material ingestion platform that extracts, v
 
 ## Core Objectives
 
-1. **Unstructured CoA Ingestion & Extraction**
+1. **Unstructured Certificate of Analysis Ingestion & Extraction**
    - Automatically ingest and parse unstructured supplier Certificate of Analysis (CoA) documents across formats (PDFs, scans, emails).
    - Extract analytical test results, chemical assays, heavy metals, microbial panels, and expiration metadata.
 
