@@ -53,17 +53,18 @@ T2|x|enable `aiplatform.googleapis.com`, `apikeys.googleapis.com`, `secretmanage
 T3|x|add dedicated engine SA + `roles/aiplatform.user` + `roles/storage.objectViewer` + `roles/secretmanager.secretAccessor`|V4,I.sa
 T4|x|add GCS artifact bucket for later package_spec|V7,I.gcs
 T5|x|add `google_vertex_ai_reasoning_engine` (google-beta) w/ Memory Bank `context_spec`; no `package_spec`|V1,V3,V7,I.resource,B1
-T6|.|emit outputs `reasoning_engine_name` `service_account_email` `artifact_bucket` `gemini_api_key_secret_id`|V8,I.out
+T6|.|emit outputs `reasoning_engine_name` `service_account_email` `artifact_bucket`|V8,I.out,B2
 T7|x|extend `.gitignore` for `.terraform/` `*.tfstate` `*.tfstate.backup`|V9
 T8|.|`terraform fmt` + `terraform validate` pass|T1,T2,T3,T4,T5,T6,T13,T14
 T9|.|init uv project Python 3.14 `pyproject.toml` + `.python-version`; no `requirements.txt`|V2,I.pkg
 T10|.|set ruff + basedpyright strict in `pyproject.toml`|V2,I.pkg
 T11|.|add Google ADK dep + minimal agent module in `agent/`|V2,I.adk,I.py
 T12|.|`uv run ruff check` + `uv run ruff format --check` + `uv run basedpyright` pass|V2,I.lint
-T13|.|add `google_apikeys_key` + `google_secret_manager_secret` for Gemini API key|V4,V5,I.key,I.secret
+T13|.|add `google_apikeys_key` + `google_secret_manager_secret` for Gemini API key + output `gemini_api_key_secret_id`|V4,V5,V8,I.key,I.secret,I.out,B2
 T14|x|add `terraform/lab5-acucoa-dev1.tfvars` + `terraform/lab5-acucoa-prd1.tfvars` w/ `project` + `region`|V10,I.tf
 T15|x|set Makefile `TF_ENV` default `lab5-acucoa-dev1`; `-var-file` named after GCP project|V10,I.tf,I.cmd
 
 ## §B BUGS
 id|date|cause|fix
 B1|2026-09-02|GA hashicorp/google 8.1 `google_vertex_ai_reasoning_engine` no `context_spec`; Memory Bank is google-beta, resource-root not `spec.context_spec`|V3
+B2|2026-09-02|T6 output `gemini_api_key_secret_id` refs `google_secret_manager_secret` T13 not declared|-
