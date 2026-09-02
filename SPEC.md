@@ -59,7 +59,7 @@ T8|x|`terraform fmt` + `terraform validate` pass|T1,T2,T3,T4,T5,T6,T13,T14
 T9|x|init uv project Python 3.14 `pyproject.toml` + `.python-version`; no `requirements.txt`|V2,I.pkg
 T10|x|set ruff + basedpyright strict in `pyproject.toml`|V2,I.pkg
 T11|x|add Google ADK dep + minimal agent module in `agent/`|V2,I.adk,I.py
-T12|.|`uv run ruff check` + `uv run ruff format --check` + `uv run basedpyright` pass|V2,I.lint
+T12|x|`uv run ruff check` + `uv run ruff format --check` + `uv run basedpyright` pass|V2,I.lint
 T13|.|add `google_apikeys_key` + `google_secret_manager_secret` for Gemini API key + output `gemini_api_key_secret_id`|V4,V5,V8,I.key,I.secret,I.out,B2
 T14|x|add `terraform/lab5-acucoa-dev1.tfvars` + `terraform/lab5-acucoa-prd1.tfvars` w/ `project` + `region`|V10,I.tf
 T15|x|set Makefile `TF_ENV` default `lab5-acucoa-dev1`; `-var-file` named after GCP project|V10,I.tf,I.cmd
