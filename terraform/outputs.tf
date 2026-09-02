@@ -12,3 +12,8 @@ output "artifact_bucket" {
   description = "GCS artifact bucket name"
   value       = google_storage_bucket.artifacts.name
 }
+
+output "gemini_api_key_secret_id" {
+  description = "Secret Manager secret ID for the Gemini API key"
+  value       = google_secret_manager_secret.gemini_api_key.secret_id
+}
