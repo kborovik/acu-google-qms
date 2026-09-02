@@ -52,7 +52,7 @@ T1|x|init `terraform/` root: versions, google provider pin, vars `project` `regi
 T2|x|enable `aiplatform.googleapis.com`, `apikeys.googleapis.com`, `secretmanager.googleapis.com` via `google_project_service`|V5,I.api
 T3|x|add dedicated engine SA + `roles/aiplatform.user` + `roles/storage.objectViewer` + `roles/secretmanager.secretAccessor`|V4,I.sa
 T4|x|add GCS artifact bucket for later package_spec|V7,I.gcs
-T5|.|add `google_vertex_ai_reasoning_engine` (google-beta) w/ Memory Bank `context_spec`; no `package_spec`|V1,V3,V7,I.resource,B1
+T5|x|add `google_vertex_ai_reasoning_engine` (google-beta) w/ Memory Bank `context_spec`; no `package_spec`|V1,V3,V7,I.resource,B1
 T6|.|emit outputs `reasoning_engine_name` `service_account_email` `artifact_bucket` `gemini_api_key_secret_id`|V8,I.out
 T7|x|extend `.gitignore` for `.terraform/` `*.tfstate` `*.tfstate.backup`|V9
 T8|.|`terraform fmt` + `terraform validate` pass|T1,T2,T3,T4,T5,T6,T13,T14
