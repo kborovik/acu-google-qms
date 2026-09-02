@@ -62,7 +62,7 @@ T11|.|add Google ADK dep + minimal agent module in `agent/`|V2,I.adk,I.py
 T12|.|`uv run ruff check` + `uv run ruff format --check` + `uv run basedpyright` pass|V2,I.lint
 T13|.|add `google_apikeys_key` + `google_secret_manager_secret` for Gemini API key|V4,V5,I.key,I.secret
 T14|x|add `terraform/lab5-acucoa-dev1.tfvars` + `terraform/lab5-acucoa-prd1.tfvars` w/ `project` + `region`|V10,I.tf
-T15|.|set Makefile `TF_ENV` default `lab5-acucoa-dev1`; `-var-file` named after GCP project|V10,I.tf,I.cmd
+T15|x|set Makefile `TF_ENV` default `lab5-acucoa-dev1`; `-var-file` named after GCP project|V10,I.tf,I.cmd
 
 ## §B BUGS
 id|date|cause|fix

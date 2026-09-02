@@ -4,7 +4,7 @@
 
 UV ?= uv
 TF_DIR ?= terraform
-TF_ENV ?= dev
+TF_ENV ?= lab5-acucoa-dev1
 
 part := $(word 1,$(filter major minor patch,$(MAKECMDGOALS)))
 
@@ -49,16 +49,16 @@ tf-init: ## Initialize Terraform
 tf-validate: ## Validate Terraform configs
 	terraform -chdir=$(TF_DIR) validate
 
-# -var-file is relative to -chdir; omit it until terraform/$(TF_ENV).tfvars exists.
-TF_VAR_FILE_FLAG := $(if $(wildcard $(TF_DIR)/$(TF_ENV).tfvars),-var-file=$(TF_ENV).tfvars)
+# -var-file is relative to -chdir; TF_ENV is the GCP project id.
+TF_VAR_FILE_FLAG := -var-file=$(TF_ENV).tfvars
 
-tf-plan: ## Generate Terraform plan (TF_ENV=dev|prd)
+tf-plan: ## Generate Terraform plan (TF_ENV=<gcp-project>)
 	terraform -chdir=$(TF_DIR) plan $(TF_VAR_FILE_FLAG) -out=$(TF_ENV).tfplan
 
-tf-apply: ## Apply Terraform changes (TF_ENV=dev|prd)
+tf-apply: ## Apply Terraform changes (TF_ENV=<gcp-project>)
 	terraform -chdir=$(TF_DIR) apply $(if $(wildcard $(TF_DIR)/$(TF_ENV).tfplan),$(TF_ENV).tfplan,$(TF_VAR_FILE_FLAG))
 
-tf-destroy: ## Destroy Terraform resources (TF_ENV=dev|prd)
+tf-destroy: ## Destroy Terraform resources (TF_ENV=<gcp-project>)
 	terraform -chdir=$(TF_DIR) destroy $(TF_VAR_FILE_FLAG)
 
 terraform: tf-init tf-fmt tf-validate tf-plan ## Format, validate, plan; prompt to apply
