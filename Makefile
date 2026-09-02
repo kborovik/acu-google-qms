@@ -6,8 +6,6 @@ UV ?= uv
 TF_DIR ?= terraform
 TF_ENV ?= dev
 
-# `make release <part>` passes the part as an extra goal; pick it out and
-# give the part words no-op recipes so make does not try to build them.
 part := $(word 1,$(filter major minor patch,$(MAKECMDGOALS)))
 
 help:
@@ -70,6 +68,25 @@ terraform: tf-init tf-fmt tf-validate tf-plan ## Format, validate, plan; prompt 
 	  [yY]|[yY][eE][sS]) terraform -chdir=$(TF_DIR) apply $(TF_ENV).tfplan ;; \
 	  *) echo 'Skipped apply.' ;; \
 	esac
+
+###############################################################################
+# Google Cloud
+###############################################################################
+
+google_project ?= lab5-acucoa-dev1
+google_region ?= us-east1
+google_zone ?= $(google_region)-b
+
+google-auth:
+	gcloud auth login --update-adc --no-launch-browser
+
+google-config:
+	set -e
+	gcloud auth application-default set-quota-project $(google_project)
+	gcloud config set core/project $(google_project)
+	gcloud config set compute/region $(google_region)
+	gcloud config set compute/zone $(google_zone)
+	gcloud config list
 
 ###############################################################################
 # Release
