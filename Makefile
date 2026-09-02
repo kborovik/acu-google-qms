@@ -73,8 +73,8 @@ terraform: tf-init tf-fmt tf-validate tf-plan ## Format, validate, plan; prompt 
 # Google Cloud
 ###############################################################################
 
-google_project ?= lab5-acucoa-dev1
-google_region ?= us-east1
+google_project ?= $(TF_ENV)
+google_region ?= $(shell sed -n 's/^region[[:space:]]*=[[:space:]]*"\(.*\)"/\1/p' $(TF_DIR)/$(TF_ENV).tfvars)
 google_zone ?= $(google_region)-b
 
 google-auth:
