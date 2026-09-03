@@ -10,6 +10,7 @@ LLM agents: invoke bare ``docgen`` / ``python -m docgen`` (no subcommand) or
 from __future__ import annotations
 
 import json
+from datetime import date, datetime
 from pathlib import Path
 
 import click
@@ -159,6 +160,40 @@ RELATED SPECS (read before changing behavior)
   domain/COA_INGESTION_SPEC.md
   AGENTS.md §3.1
 """
+
+
+class ISODateParamType(click.ParamType[date, object]):
+    """Parses ``--as-of`` values as ISO ``YYYY-MM-DD`` dates (V10)."""
+
+    name = "YYYY-MM-DD"
+
+    def convert(
+        self, value: object, param: click.Parameter | None, ctx: click.Context | None
+    ) -> date:
+        """Parses YYYY-MM-DD strings; rejects anything else (non-zero exit)."""
+        if isinstance(value, datetime):
+            return value.date()
+        if isinstance(value, date):
+            return value
+        try:
+            return datetime.strptime(str(value), "%Y-%m-%d").date()
+        except ValueError:
+            self.fail(f"{value!r} is not a valid date in YYYY-MM-DD format", param, ctx)
+
+
+ISO_DATE = ISODateParamType()
+
+as_of_option = click.option(
+    "--as-of",
+    "as_of",
+    type=ISO_DATE,
+    default=None,
+    help=(
+        "Anchor date for document stamps: manufacture/ship date and CoA/BOL "
+        "issue dates render as-of; expiry = as-of + product shelf-life. "
+        "Defaults to today (local)."
+    ),
+)
 
 
 class AgentHelpGroup(click.Group):
@@ -329,6 +364,7 @@ def cli(ctx: click.Context) -> None:
 
 
 @cli.command("generate-suite")
+@as_of_option
 @click.option(
     "--po-json",
     type=click.Path(exists=True, dir_okay=False, path_type=Path),
@@ -387,6 +423,7 @@ def cli(ctx: click.Context) -> None:
     help="Also emit structured manifest JSON alongside PDFs.",
 )
 def generate_suite_cmd(
+    as_of: date | None,
     po_json: Path | None,
     inventory_id: str | None,
     vendor_id: str | None,
@@ -415,6 +452,7 @@ def generate_suite_cmd(
             po_data=po_data,
             force_status=status.upper(),
             lot_nbr=lot_nbr,
+            as_of=as_of,
         )
     else:
         suite = build_synthetic_shipment_suite(
@@ -425,6 +463,7 @@ def generate_suite_cmd(
             lot_nbr=lot_nbr,
             po_nbr=po_nbr,
             receipt_nbr=receipt_nbr,
+            as_of=as_of,
         )
 
     prefix = f"{suite.product.inventory_id}_{suite.lot_serial_number}"
@@ -458,6 +497,7 @@ def generate_suite_cmd(
 
 
 @cli.command("from-po")
+@as_of_option
 @click.option(
     "--po-json",
     "-p",
@@ -494,6 +534,7 @@ def generate_suite_cmd(
     help="Also emit structured manifest JSON alongside PDFs.",
 )
 def from_po_cmd(
+    as_of: date | None,
     po_json: Path,
     lot_nbr: str | None,
     status: str,
@@ -515,6 +556,7 @@ def from_po_cmd(
         po_data=po_data,
         force_status=status.upper(),
         lot_nbr=lot_nbr,
+        as_of=as_of,
     )
 
     prefix = f"{suite.product.inventory_id}_{suite.lot_serial_number}"
@@ -548,6 +590,7 @@ def from_po_cmd(
 
 
 @cli.command("generate-coa")
+@as_of_option
 @click.option("--inventory-id", "-i", type=str, help="Inventory Item ID.")
 @click.option("--vendor-id", "-v", type=str, help="Vendor ID.")
 @click.option("--lot-nbr", "-l", type=str, help="Lot number.")
@@ -566,6 +609,7 @@ def from_po_cmd(
     show_default=True,
 )
 def generate_coa_cmd(
+    as_of: date | None,
     inventory_id: str | None,
     vendor_id: str | None,
     lot_nbr: str | None,
@@ -585,6 +629,7 @@ def generate_coa_cmd(
         vendor_id=vendor_id,
         force_status=status.upper(),
         lot_nbr=lot_nbr,
+        as_of=as_of,
     )
     coa_path = (
         outdir / f"COA_{suite.product.inventory_id}_{suite.lot_serial_number}.pdf"
@@ -594,6 +639,7 @@ def generate_coa_cmd(
 
 
 @cli.command("generate-packing-slip")
+@as_of_option
 @click.option("--inventory-id", "-i", type=str, help="Inventory Item ID.")
 @click.option("--vendor-id", "-v", type=str, help="Vendor ID.")
 @click.option("--lot-nbr", "-l", type=str, help="Lot number.")
@@ -605,6 +651,7 @@ def generate_coa_cmd(
     show_default=True,
 )
 def generate_packing_slip_cmd(
+    as_of: date | None,
     inventory_id: str | None,
     vendor_id: str | None,
     lot_nbr: str | None,
@@ -621,6 +668,7 @@ def generate_packing_slip_cmd(
         inventory_id=inventory_id,
         vendor_id=vendor_id,
         lot_nbr=lot_nbr,
+        as_of=as_of,
     )
     pack_path = (
         outdir
@@ -631,6 +679,7 @@ def generate_packing_slip_cmd(
 
 
 @cli.command("generate-bol")
+@as_of_option
 @click.option("--inventory-id", "-i", type=str, help="Inventory Item ID.")
 @click.option("--vendor-id", "-v", type=str, help="Vendor ID.")
 @click.option("--lot-nbr", "-l", type=str, help="Lot number.")
@@ -642,6 +691,7 @@ def generate_packing_slip_cmd(
     show_default=True,
 )
 def generate_bol_cmd(
+    as_of: date | None,
     inventory_id: str | None,
     vendor_id: str | None,
     lot_nbr: str | None,
@@ -659,6 +709,7 @@ def generate_bol_cmd(
         inventory_id=inventory_id,
         vendor_id=vendor_id,
         lot_nbr=lot_nbr,
+        as_of=as_of,
     )
     bol_path = (
         outdir / f"BOL_{suite.product.inventory_id}_{suite.lot_serial_number}.pdf"
@@ -668,6 +719,7 @@ def generate_bol_cmd(
 
 
 @cli.command("batch")
+@as_of_option
 @click.option(
     "--count",
     "-c",
@@ -697,7 +749,11 @@ def generate_bol_cmd(
     help="Also emit structured manifest JSON alongside PDFs.",
 )
 def batch_cmd(
-    count: int, outdir: Path, include_failures: bool, emit_json: bool
+    as_of: date | None,
+    count: int,
+    outdir: Path,
+    include_failures: bool,
+    emit_json: bool,
 ) -> None:
     """Generate a batch of 3-document suites covering multiple vendors & labs.
 
@@ -723,6 +779,7 @@ def batch_cmd(
             registry=registry,
             inventory_id=prod.inventory_id,
             force_status=force_status,
+            as_of=as_of,
         )
 
         p_id = suite.product.inventory_id

@@ -53,7 +53,7 @@ T10|x|sanitize `docgen/coa_builder.py` removing Acumatica InventoryID, PO refere
 T11|x|sanitize `docgen/bol_builder.py` removing Acumatica PO and POReceipt references|V6,V8,I.doc-bol
 T12|x|extend `docgen/models.py` and `docgen/cli.py` to accept `--po-json` input and build shipment suites from PO JSON|V3,V8,V9,I.cli,I.flags
 T13|x|update manifest schema to distinguish external document fields from ground-truth ERP linking metadata|V3,V8,I.cli
-T14|.|derive suite dates from as-of (default today); wire `--as-of` on generate-suite, from-po, generate-coa, generate-packing-slip, generate-bol, batch|V10,I.flags
+T14|x|derive suite dates from as-of (default today); wire `--as-of` on generate-suite, from-po, generate-coa, generate-packing-slip, generate-bol, batch|V10,I.flags
 T15|.|sync AGENT_HELP_EPILOG + AGENTS.md recipes for default-today / `--as-of`|V10,V2b,I.agent-help
 
 ## §B BUGS

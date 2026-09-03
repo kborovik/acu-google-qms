@@ -3,6 +3,7 @@
 import json
 import random
 from dataclasses import dataclass, field
+from datetime import date, timedelta
 from pathlib import Path
 from typing import Any, cast
 
@@ -401,6 +402,14 @@ class MasterDataRegistry:
                 self.inspection_plans[plan.plan_id] = plan
 
 
+def plus_years(anchor: date, years: int) -> date:
+    """Shifts anchor by whole calendar years; Feb 29 collapses to Feb 28."""
+    try:
+        return anchor.replace(year=anchor.year + years)
+    except ValueError:  # leap-day anchor into a non-leap target year
+        return anchor.replace(year=anchor.year + years, month=2, day=28)
+
+
 def build_synthetic_shipment_suite(
     registry: MasterDataRegistry,
     inventory_id: str | None = None,
@@ -410,6 +419,7 @@ def build_synthetic_shipment_suite(
     po_nbr: str | None = None,
     receipt_nbr: str | None = None,
     quantity_kg: float | None = None,
+    as_of: date | None = None,
 ) -> InboundShipmentSuite:
     """Builds a complete, consistent InboundShipmentSuite for all 3 documents."""
     # Resolve product
@@ -466,9 +476,17 @@ def build_synthetic_shipment_suite(
     else:
         overall_status = "FAIL" if random.random() < 0.20 else "PASS"
 
-    # Dates
-    mfg_date = "2026-02-15"
-    expiry_date = "2029-02-14"
+    # Dates (V10): as-of anchor defaults to the run date (local). Manufacture,
+    # ship, and CoA/BOL stamps all render the anchor; expiry = as-of + product
+    # shelf-life (3-year fallback when absent).
+    anchor_date = as_of if as_of is not None else date.today()
+    mfg_date = anchor_date.isoformat()
+    if product.shelf_life_days > 0:
+        expiry_date = (
+            anchor_date + timedelta(days=product.shelf_life_days)
+        ).isoformat()
+    else:
+        expiry_date = plus_years(anchor_date, 3).isoformat()
 
     # Quantities & Containers
     if quantity_kg is not None and quantity_kg > 0:
@@ -659,6 +677,7 @@ def build_shipment_suite_from_po_data(
     po_data: dict[str, Any],
     force_status: str | None = None,
     lot_nbr: str | None = None,
+    as_of: date | None = None,
 ) -> InboundShipmentSuite:
     """Builds an InboundShipmentSuite from an Acumatica Purchase Order JSON payload."""
     raw_po = cast(
@@ -731,4 +750,5 @@ def build_shipment_suite_from_po_data(
         lot_nbr=lot_nbr,
         po_nbr=po_nbr,
         quantity_kg=order_qty,
+        as_of=as_of,
     )
