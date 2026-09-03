@@ -46,14 +46,26 @@ clean: docgen-clean ## Clean caches, build artifacts, and output documents
 ###############################################################################
 
 DOCS_OUTDIR ?= output/shipping_docs
-DOCS_ITEM ?= RAW-ECH-EXT4
 DOCS_STATUS ?= pass
+PRODUCTS_JSON ?= acumatica/master_data/products.json
 
-docgen: .venv ## Generate full shipping document suite for review
-	$(UV) run docgen generate-suite \
-		--inventory-id $(DOCS_ITEM) \
-		--status $(DOCS_STATUS) \
-		--outdir $(DOCS_OUTDIR)
+# First inventory_id per vendor_id from products.json (master-data order).
+DOCS_VENDOR_ITEMS = $(shell $(UV) run python -c "import json; from pathlib import Path; \
+data=json.loads(Path('$(PRODUCTS_JSON)').read_text()); seen=set(); \
+print(' '.join(p['inventory_id'] for p in data['raw_materials'] \
+if p['vendor_id'] not in seen and not seen.add(p['vendor_id'])))")
+
+docgen: .venv ## Generate full shipping document package for all vendors
+	@set -euo pipefail; \
+	echo "Generating suites for all vendors -> $(DOCS_OUTDIR) [$(DOCS_STATUS)]"; \
+	for inv in $(DOCS_VENDOR_ITEMS); do \
+		echo "==> $$inv"; \
+		$(UV) run docgen generate-suite \
+			--inventory-id $$inv \
+			--status $(DOCS_STATUS) \
+			--outdir $(DOCS_OUTDIR); \
+	done; \
+	echo "Done: $$(echo $(DOCS_VENDOR_ITEMS) | wc -w | tr -d ' ') vendor suites in $(DOCS_OUTDIR)"
 
 docgen-clean: ## Remove generated document output folder
 	rm -rf output
