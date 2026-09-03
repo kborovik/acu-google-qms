@@ -4,7 +4,7 @@ import json
 import random
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 MASTER_DATA_DIR = Path(__file__).resolve().parent.parent / "acumatica" / "master_data"
 
@@ -409,6 +409,7 @@ def build_synthetic_shipment_suite(
     lot_nbr: str | None = None,
     po_nbr: str | None = None,
     receipt_nbr: str | None = None,
+    quantity_kg: float | None = None,
 ) -> InboundShipmentSuite:
     """Builds a complete, consistent InboundShipmentSuite for all 3 documents."""
     # Resolve product
@@ -470,8 +471,11 @@ def build_synthetic_shipment_suite(
     expiry_date = "2029-02-14"
 
     # Quantities & Containers
-    qty_kg = random.choice([250.0, 500.0, 750.0, 1000.0])
-    drum_count = int(qty_kg / 25.0)
+    if quantity_kg is not None and quantity_kg > 0:
+        qty_kg = float(quantity_kg)
+    else:
+        qty_kg = random.choice([250.0, 500.0, 750.0, 1000.0])
+    drum_count = max(1, int(qty_kg / 25.0))
     pallet_count = max(1, int(drum_count / 16))
 
     # Carrier details
@@ -637,4 +641,94 @@ def build_synthetic_shipment_suite(
         overall_status=overall_status,
         test_results=test_results,
         failure_reasons=failure_reasons,
+    )
+
+
+def extract_field_value(val: object) -> object:
+    """Helper to unpack {'value': ...} Acumatica REST payload or plain value."""
+    if isinstance(val, dict):
+        d_val = cast(dict[str, object], val)
+        if "value" in d_val:
+            return d_val["value"]
+        return d_val
+    return val
+
+
+def build_shipment_suite_from_po_data(
+    registry: MasterDataRegistry,
+    po_data: dict[str, Any],
+    force_status: str | None = None,
+    lot_nbr: str | None = None,
+) -> InboundShipmentSuite:
+    """Builds an InboundShipmentSuite from an Acumatica Purchase Order JSON payload."""
+    raw_po = cast(
+        object,
+        po_data.get("po_number")
+        or po_data.get("purchase_order_number")
+        or po_data.get("OrderNbr")
+        or po_data.get("OrderNo")
+        or "PO-049000",
+    )
+    po_nbr = str(extract_field_value(raw_po))
+
+    raw_vendor = cast(
+        object,
+        po_data.get("vendor_id") or po_data.get("VendorID") or po_data.get("Vendor"),
+    )
+    vendor_id = str(extract_field_value(raw_vendor)) if raw_vendor is not None else None
+
+    inventory_id: str | None = None
+    order_qty: float | None = None
+
+    lines_val = cast(
+        object,
+        po_data.get("lines") or po_data.get("Details") or po_data.get("line_items"),
+    )
+    if isinstance(lines_val, list):
+        typed_lines = cast(list[object], lines_val)
+        if len(typed_lines) > 0:
+            first_line = typed_lines[0]
+            if isinstance(first_line, dict):
+                fl_dict = cast(dict[str, object], first_line)
+                line_inv = (
+                    fl_dict.get("inventory_id")
+                    or fl_dict.get("InventoryID")
+                    or fl_dict.get("item_id")
+                )
+                if line_inv is not None:
+                    inventory_id = str(extract_field_value(line_inv))
+
+                line_qty = extract_field_value(
+                    fl_dict.get("order_qty")
+                    or fl_dict.get("OrderQty")
+                    or fl_dict.get("quantity")
+                    or fl_dict.get("quantity_kg")
+                )
+                order_qty = safe_float(line_qty)
+
+    if not inventory_id:
+        top_inv = cast(
+            object,
+            po_data.get("inventory_id") or po_data.get("InventoryID"),
+        )
+        if top_inv is not None:
+            inventory_id = str(extract_field_value(top_inv))
+
+    if order_qty is None:
+        top_qty = cast(
+            object,
+            po_data.get("order_qty")
+            or po_data.get("quantity_kg")
+            or po_data.get("OrderQty"),
+        )
+        order_qty = safe_float(extract_field_value(top_qty))
+
+    return build_synthetic_shipment_suite(
+        registry=registry,
+        inventory_id=inventory_id,
+        vendor_id=vendor_id,
+        force_status=force_status,
+        lot_nbr=lot_nbr,
+        po_nbr=po_nbr,
+        quantity_kg=order_qty,
     )
