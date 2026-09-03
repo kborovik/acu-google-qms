@@ -103,15 +103,11 @@ def generate_coa_pdf(suite: InboundShipmentSuite, output_path: str | Path) -> Pa
             styles["MetaValue"],
         ),
         Paragraph(
-            f"<b>Product Name:</b> {suite.product.description}",
+            f"<b>Product Description:</b> {suite.product.description}",
             styles["MetaValue"],
         ),
         Paragraph(
-            f"<b>Inventory ID:</b> {suite.product.inventory_id}",
-            styles["MetaValue"],
-        ),
-        Paragraph(
-            f"<b>Manufacturer:</b> {suite.vendor.legal_name}",
+            f"<b>Manufacturer / Supplier:</b> {suite.vendor.legal_name}",
             styles["MetaValue"],
         ),
     ]
@@ -123,6 +119,7 @@ def generate_coa_pdf(suite: InboundShipmentSuite, output_path: str | Path) -> Pa
             )
         )
 
+    sample_id = f"SMP-{suite.manifest_id[4:]}"
     meta_col2 = [
         Paragraph(
             f"<b>Lot / Batch Nbr:</b> {suite.lot_serial_number}",
@@ -142,7 +139,7 @@ def generate_coa_pdf(suite: InboundShipmentSuite, output_path: str | Path) -> Pa
             styles["MetaValue"],
         ),
         Paragraph(
-            f"<b>PO Reference:</b> {suite.purchase_order_number}",
+            f"<b>Laboratory Sample ID:</b> {sample_id}",
             styles["MetaValue"],
         ),
     ]
@@ -263,14 +260,11 @@ def generate_coa_pdf(suite: InboundShipmentSuite, output_path: str | Path) -> Pa
         leading=11,
     )
 
-    npn_ref = suite.product.health_canada_npn_reference or "N/A"
-    qa_disp = "Approved for Release" if disp_pass else "HOLD / Segregated Quarantine"
-
     sign_data = [
         [
             Paragraph(f"<b>{disp_title}</b>", disp_style),
             Paragraph(
-                f"<b>Health Canada NPN:</b> {npn_ref}",
+                f"<b>Laboratory Standard:</b> {lab.document_standard}",
                 styles["MetaValue"],
             ),
         ],
@@ -282,9 +276,10 @@ def generate_coa_pdf(suite: InboundShipmentSuite, output_path: str | Path) -> Pa
                 styles["CalloutText"],
             ),
             Paragraph(
-                f"<b>CanNordic QA Review:</b> Dr. Élodie Tremblay, Ph.D., C.Chem.<br/>"
-                f"<b>QAP Disposition:</b> {qa_disp}<br/>"
-                f"<b>Acumatica Plan ID:</b> {suite.inspection_plan.plan_id}",
+                f"<b>Accreditation Body:</b> {lab.accreditation_body}<br/>"
+                f"<b>Accreditation Number:</b> {lab.accreditation_number}<br/>"
+                "<b>Attestation:</b> Testing conducted per ISO/IEC 17025 standard. "
+                "Results apply solely to the submitted lot batch sample.",
                 styles["CalloutText"],
             ),
         ],
