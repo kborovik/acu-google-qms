@@ -1,5 +1,5 @@
 .PHONY: sync format lint typecheck test check build clean \
-	docgen docgen-suite docgen-clean \
+	docgen docgen-clean \
 	tf-init tf-fmt tf-validate tf-plan tf-apply tf-destroy terraform \
 	google-auth google-config \
 	release major minor patch help
@@ -48,18 +48,12 @@ clean: docgen-clean ## Clean caches, build artifacts, and output documents
 DOCS_OUTDIR ?= output/shipping_docs
 DOCS_ITEM ?= RAW-ECH-EXT4
 DOCS_STATUS ?= pass
-PO_JSON ?=
-COUNT ?= 10
 
-docgen: .venv ## Generate full batch of shipping document suites (COUNT=10)
-	$(UV) run python -m docgen batch --count $(COUNT) --outdir $(DOCS_OUTDIR)
-
-docgen-suite: .venv ## Generate single shipping document suite (DOCS_ITEM or PO_JSON)
-	@if [ -n "$(PO_JSON)" ]; then \
-		$(UV) run python -m docgen from-po --po-json "$(PO_JSON)" --status $(DOCS_STATUS) --outdir $(DOCS_OUTDIR); \
-	else \
-		$(UV) run python -m docgen generate-suite --inventory-id $(DOCS_ITEM) --status $(DOCS_STATUS) --outdir $(DOCS_OUTDIR); \
-	fi
+docgen: .venv ## Generate full shipping document suite for review
+	$(UV) run docgen generate-suite \
+		--inventory-id $(DOCS_ITEM) \
+		--status $(DOCS_STATUS) \
+		--outdir $(DOCS_OUTDIR)
 
 docgen-clean: ## Remove generated document output folder
 	rm -rf output

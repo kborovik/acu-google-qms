@@ -2,7 +2,12 @@
 
 Uses Click to provide subcommands for generating individual or complete
 3-document suites (CoA, Packing Slip, BOL).
+
+LLM agents: invoke bare ``docgen`` / ``python -m docgen`` (no subcommand) or
+``docgen --help`` to print the full multi-command agent help in one shot.
 """
+
+from __future__ import annotations
 
 import json
 from pathlib import Path
@@ -18,6 +23,186 @@ from docgen.models import (
     build_synthetic_shipment_suite,
 )
 from docgen.packing_slip_builder import generate_packing_slip_pdf
+
+# ---------------------------------------------------------------------------
+# Agent-oriented help surfaces (shown on bare `docgen` and `docgen --help`)
+# ---------------------------------------------------------------------------
+
+AGENT_HELP_EPILOG = """
+========================================================================
+LLM AGENT OPERATING MANUAL
+========================================================================
+
+AUDIENCE
+  This CLI is the synthetic inbound shipping-document factory for the
+  GCP Acumatica CoA ingestion platform. Agents use it to produce the
+  three mandatory dock-receiving PDFs plus a machine-readable manifest.
+
+INVOCATION (prefer uv)
+  uv run python -m docgen              # full agent help (this text)
+  uv run python -m docgen --help       # identical full agent help
+  uv run docgen <COMMAND> [OPTIONS]    # console-script entry point
+  uv run python -m docgen <COMMAND> ...
+
+COMMAND SELECTION (decision tree)
+  1. Need valid IDs?              -> list-master-data
+  2. Have Acumatica PO JSON?      -> from-po  (or generate-suite --po-json)
+  3. Need full 3-doc suite?       -> generate-suite
+  4. Need only CoA / pack / BOL?  -> generate-coa | generate-packing-slip | generate-bol
+  5. Need multi-vendor corpus?    -> batch
+
+MASTER DATA (resolve IDs here; never invent)
+  Source dir: acumatica/master_data/
+    vendors.json | products.json | test_labs.json | qms_inspection_plans.json
+
+  Vendors (vendor_id -> preferred lab):
+    VEND-NORTH-BIO     -> LAB-GL-ANALYTICAL      (CA)
+    VEND-ALPINE-EXT    -> LAB-EURO-PHYTO         (DE)
+    VEND-PACIFIC-ORG   -> LAB-PACIFIC-TEST       (CA)
+    VEND-NIPPON-PHARMA -> LAB-TOKYO-BIO          (JP)
+    VEND-NORDIC-MAR    -> LAB-FJORD-ANALYTICAL   (NO)
+
+  Products (inventory_id -> default vendor):
+    RAW-ECH-EXT4   VEND-NORTH-BIO      Echinacea 4% polyphenols
+    RAW-ELD-EXT10  VEND-NORTH-BIO      Elderberry 10% anthocyanins
+    RAW-ASH-EXT5   VEND-ALPINE-EXT     Ashwagandha 5% withanolides
+    RAW-RHOD-EXT3  VEND-ALPINE-EXT     Rhodiola 3% rosavins
+    RAW-CURC-95    VEND-PACIFIC-ORG    Curcuminoids 95%
+    RAW-GUT-PRB100 VEND-PACIFIC-ORG    Probiotic 100B CFU
+    RAW-COQ10-99   VEND-NIPPON-PHARMA  CoQ10 USP 99%
+    RAW-THEA-98    VEND-NIPPON-PHARMA  L-Theanine 98.5%
+    RAW-OMEGA3-70  VEND-NORDIC-MAR     Omega-3 TG 70% EPA+DHA
+    RAW-ASTA-10    VEND-NORDIC-MAR     Astaxanthin oleoresin 10%
+
+RESOLUTION RULES
+  --inventory-id omitted  -> random product from master data
+  --vendor-id omitted     -> product.vendor_id (then random vendor)
+  Lab                     -> product.assigned_primary_lab
+  QMS plan                -> product.qms_inspection_plan_id
+  --lot-nbr omitted       -> LOT-<CODE>2603-<NNN>A  (CODE from product map)
+  --po-nbr / --receipt-nbr omitted -> synthetic PO-04#### / PR-2026-00####
+  --status pass|fail      -> forces CoA overall evaluation (default: pass)
+  Unknown inventory/vendor IDs fall back to random master-data picks (no hard fail).
+
+OUTPUT ARTIFACTS
+  generate-suite / from-po (default outdir=output/shipping_docs):
+    COA_<inventory_id>_<lot>.pdf
+    PACKING_SLIP_<inventory_id>_<lot>.pdf
+    BOL_<inventory_id>_<lot>.pdf
+    MANIFEST_<inventory_id>_<lot>.json   (--emit-json, default ON)
+
+  batch (default outdir=output/batch_shipping_docs):
+    COA_suite_<n>_<vendor_id>_<inventory_id>_<lot>.pdf
+    PACKING_SLIP_suite_<n>_...pdf
+    BOL_suite_<n>_...pdf
+    MANIFEST_suite_<n>_...json
+
+  Standalone defaults:
+    generate-coa           -> output/coa/
+    generate-packing-slip  -> output/packing_slips/
+    generate-bol           -> output/bol/
+
+MANIFEST JSON (ground truth for agents; NOT printed on PDFs)
+  Top-level keys:
+    manifest_id, overall_status ("PASS"|"FAIL"),
+    erp_association_metadata  -> PO#, receipt#, vendor_id, inventory_id,
+                                 warehouse, quarantine bin, inspection_plan_id
+    external_document_metadata -> delivery note / CoA / BOL external fields
+    line_items, analytical_results, failure_reasons
+
+ZERO ERP LEAKAGE (invariant)
+  PDFs must NEVER contain internal Acumatica identifiers:
+    no internal PO#, VendorID, InventoryID, POReceipt#, QMS plan ID, warehouse bins.
+  ERP identifiers live ONLY in MANIFEST_*.json under erp_association_metadata.
+  External PDFs show commercial names, lot numbers, delivery-note / CoA / BOL numbers.
+
+PO JSON INPUT (--po-json / from-po)
+  Accepts Acumatica REST-shaped or flat JSON. Field aliases supported:
+    PO number:  po_number | purchase_order_number | OrderNbr | OrderNo
+                (also {"value": "..."} wrappers)
+    Vendor:     vendor_id | VendorID | Vendor
+    Lines:      lines | Details | line_items
+      line inventory: inventory_id | InventoryID | item_id
+      line qty:       order_qty | OrderQty | quantity | quantity_kg
+    Top-level inventory_id / OrderQty also accepted when lines absent.
+  Uses FIRST line only. Qty drives received_quantity_kg + container/pallet math.
+
+STATUS / FAIL SIMULATION
+  --status pass  -> all QMS plan analytes in-spec (PASS)
+  --status fail  -> first plan criterion forced out-of-spec; failure_reasons populated
+  batch --include-failures (default): odd suites FAIL, even PASS
+  batch --all-pass: every suite PASS
+
+CANONICAL AGENT RECIPES
+  # Discover IDs
+  uv run python -m docgen list-master-data
+
+  # In-spec receiving suite for a known SKU
+  uv run python -m docgen generate-suite \\
+    --inventory-id RAW-ECH-EXT4 --status pass --outdir ./output/shipping_docs
+
+  # Out-of-spec suite for quarantine / NCR testing
+  uv run python -m docgen generate-suite \\
+    --inventory-id RAW-ASH-EXT5 --status fail --outdir ./output/shipping_docs_failed
+
+  # From Acumatica PO payload
+  uv run python -m docgen from-po \\
+    --po-json ./path/to/po_order.json --status pass --outdir ./output/po_shipping_docs
+
+  # Multi-vendor corpus (5 suites, alternating pass/fail)
+  uv run python -m docgen batch --count 5 --include-failures \\
+    --outdir ./output/batch_shipping_docs
+
+RELATED SPECS (read before changing behavior)
+  docgen/SPEC.md
+  domain/MANDATORY_SHIPPING_DOCUMENTS_SPEC.md
+  domain/COA_INGESTION_SPEC.md
+  AGENTS.md §3.1
+"""
+
+
+class AgentHelpGroup(click.Group):
+    """Click group that expands ``--help`` to the full multi-command agent view.
+
+    Bare invocation (no subcommand) and ``--help`` both render:
+    group usage + options + every subcommand's full help + agent epilog.
+    """
+
+    def format_commands(
+        self, ctx: click.Context, formatter: click.HelpFormatter
+    ) -> None:
+        """Render each subcommand's full Click help instead of a one-line list."""
+        commands: list[tuple[str, click.Command]] = []
+        for name in self.list_commands(ctx):
+            cmd = self.get_command(ctx, name)
+            if cmd is None or cmd.hidden:
+                continue
+            commands.append((name, cmd))
+
+        if not commands:
+            return
+
+        formatter.write_paragraph()
+        formatter.write("Commands (full help for each subcommand):\n")
+        for name, cmd in commands:
+            # Child context so Click formats Usage: with the subcommand name.
+            sub_ctx = click.Context(cmd, info_name=name, parent=ctx)
+            formatter.write("\n")
+            formatter.write("-" * 72)
+            formatter.write(f"\nCommand: {name}\n")
+            formatter.write("-" * 72)
+            formatter.write("\n")
+            formatter.write(cmd.get_help(sub_ctx))
+            formatter.write("\n")
+
+    def format_epilog(self, ctx: click.Context, formatter: click.HelpFormatter) -> None:
+        """Write the agent operating manual without Click text-reflow wrapping."""
+        if not self.epilog:
+            return
+        formatter.write_paragraph()
+        # write() preserves monospace layout; write_text() would collapse it.
+        formatter.write(self.epilog.rstrip("\n"))
+        formatter.write("\n")
 
 
 def emit_manifest_json(suite: InboundShipmentSuite, out_path: Path) -> Path:
@@ -111,15 +296,36 @@ def emit_manifest_json(suite: InboundShipmentSuite, out_path: Path) -> Path:
     return out_path
 
 
-@click.group()
+@click.group(
+    cls=AgentHelpGroup,
+    invoke_without_command=True,
+    context_settings={
+        "help_option_names": ["-h", "--help"],
+        "max_content_width": 100,
+    },
+    epilog=AGENT_HELP_EPILOG,
+)
 @click.version_option(version="0.1.0", prog_name="docgen")
-def cli() -> None:
-    """Inbound Shipping Document PDF Generator CLI.
+@click.pass_context
+def cli(ctx: click.Context) -> None:
+    """Inbound Shipping Document PDF Generator CLI (LLM-agent help entrypoint).
 
     Generates Certificate of Analysis (CoA), Supplier Packing Slip, and
-    Bill of Lading (BOL) documents for dock-to-stock ERP compliance testing.
+    Bill of Lading (BOL) documents for dock-to-stock ERP compliance testing
+    (Health Canada GMP GUI-0001/0158, CFIA SFCR, USP / Ph. Eur. lab variants).
+
+    \b
+    AGENT CONTRACT
+      • Bare `docgen` (no subcommand) prints this FULL help and exits 0.
+      • `docgen --help` / `-h` prints the same FULL help (all subcommands expanded).
+      • Prefer `uv run docgen ...` or `uv run python -m docgen ...` (after `uv sync`).
+      • Never hardcode vendor/product IDs — resolve via list-master-data or
+        acumatica/master_data/*.json.
+      • PDFs are external-facing (zero ERP leakage). Use MANIFEST_*.json for
+        ground-truth ERP association keys.
     """
-    pass
+    if ctx.invoked_subcommand is None:
+        click.echo(ctx.get_help(), color=ctx.color)
 
 
 @cli.command("generate-suite")
@@ -191,7 +397,14 @@ def generate_suite_cmd(
     outdir: Path,
     emit_json: bool,
 ) -> None:
-    """Generate all 3 mandatory dock receiving PDFs (CoA, Packing Slip, BOL)."""
+    """Generate all 3 mandatory dock receiving PDFs (CoA, Packing Slip, BOL).
+
+    Primary agent entrypoint for a single inbound shipment suite. Writes CoA,
+    Packing Slip, BOL, and (by default) MANIFEST JSON under --outdir.
+
+    Provide either --po-json OR --inventory-id (and optional --vendor-id).
+    Omitting both picks a random product from master data.
+    """
     registry = MasterDataRegistry()
 
     if po_json is not None:
@@ -287,7 +500,12 @@ def from_po_cmd(
     outdir: Path,
     emit_json: bool,
 ) -> None:
-    """Generate 3-document suite from an Acumatica Purchase Order JSON file."""
+    """Generate 3-document suite from an Acumatica Purchase Order JSON file.
+
+    Dedicated PO path (equivalent to generate-suite --po-json). Reads the first
+    PO line for inventory_id + qty; maps vendor_id; synthesizes external docs
+    that match the open PO without leaking ERP IDs onto the PDFs.
+    """
     with po_json.open("r", encoding="utf-8") as f:
         po_data = json.load(f)
 
@@ -354,7 +572,12 @@ def generate_coa_cmd(
     status: str,
     outdir: Path,
 ) -> None:
-    """Generate standalone Certificate of Analysis (CoA) PDF."""
+    """Generate standalone Certificate of Analysis (CoA) PDF.
+
+    Lab header, units, and bilingual analyte terms adapt to the product's
+    assigned primary lab. Use --status fail to force an out-of-spec CoA.
+    Does not emit Packing Slip, BOL, or MANIFEST JSON.
+    """
     registry = MasterDataRegistry()
     suite = build_synthetic_shipment_suite(
         registry=registry,
@@ -387,7 +610,11 @@ def generate_packing_slip_cmd(
     lot_nbr: str | None,
     outdir: Path,
 ) -> None:
-    """Generate standalone Supplier Packing Slip PDF."""
+    """Generate standalone Supplier Packing Slip PDF.
+
+    External delivery note with commercial product name, lot, containers,
+    net weight, and storage notes. No CoA / BOL / MANIFEST JSON.
+    """
     registry = MasterDataRegistry()
     suite = build_synthetic_shipment_suite(
         registry=registry,
@@ -420,7 +647,12 @@ def generate_bol_cmd(
     lot_nbr: str | None,
     outdir: Path,
 ) -> None:
-    """Generate standalone Carrier Bill of Lading (BOL) PDF."""
+    """Generate standalone Carrier Bill of Lading (BOL) PDF.
+
+    Carrier PRO#, trailer/seal, pallet/container counts, and freight gross
+    weight. Carrier is resolved from the vendor's preferred carrier map.
+    No CoA / Packing Slip / MANIFEST JSON.
+    """
     registry = MasterDataRegistry()
     suite = build_synthetic_shipment_suite(
         registry=registry,
@@ -467,7 +699,12 @@ def generate_bol_cmd(
 def batch_cmd(
     count: int, outdir: Path, include_failures: bool, emit_json: bool
 ) -> None:
-    """Generate a batch of 3-document suites covering multiple vendors & labs."""
+    """Generate a batch of 3-document suites covering multiple vendors & labs.
+
+    Cycles products in master-data order. With --include-failures (default),
+    odd suites are FAIL and even suites are PASS. Filenames are prefixed
+    suite_<n>_<vendor_id>_<inventory_id>_<lot>.
+    """
     registry = MasterDataRegistry()
     products_list = list(registry.products.values())
 
@@ -521,7 +758,11 @@ def batch_cmd(
 
 @cli.command("list-master-data")
 def list_master_data_cmd() -> None:
-    """List available vendors, testing labs, and products."""
+    """List available vendors, testing labs, and products.
+
+    Agent discovery command. Print vendor_id, lab_id, and inventory_id values
+    that are safe to pass to generate-* / batch / from-po. Do not invent IDs.
+    """
     registry = MasterDataRegistry()
     click.secho("=== REGISTERED QUALIFIED VENDORS ===", bold=True, fg="blue")
     for v in registry.vendors.values():

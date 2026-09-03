@@ -17,7 +17,8 @@ CLI generating pixel-perfect PDF shipping document suites (CoA, Packing Slip, BO
 - PO JSON input: docgen accepts Acumatica PO JSON to synthesize matching external shipment documents via master data
 
 ## §I INTERFACES
-- cli: `uv run python -m docgen.cli` or subcommands `generate-suite`, `generate-coa`, `generate-packing-slip`, `generate-bol`, `batch`, `from-po`
+- cli: `uv run python -m docgen` / `uv run docgen`; subcommands `generate-suite`, `generate-coa`, `generate-packing-slip`, `generate-bol`, `batch`, `from-po`, `list-master-data`
+- agent-help: bare `docgen` (no subcommand) and `docgen --help`/`-h` emit identical full multi-command Click help + LLM agent operating manual (master data IDs, resolution rules, output artifacts, zero-ERP-leakage, PO JSON aliases, recipes)
 - flags: `--po-json`, `--vendor-id`, `--inventory-id`, `--lot-nbr`, `--status [pass|fail]`, `--outdir`, `--emit-json`, `--count`
 - doc-coa: Certificate of Analysis PDF (`COA_<vendor>_<lot>.pdf`) with lab accreditation header, lot meta, test matrix table, pass/fail evaluation, QA signature
 - doc-pack: Supplier Packing Slip PDF (`PACKING_SLIP_<vendor>_<lot>.pdf`) with supplier delivery note #, CanNordic dest, commercial product name, container count, gross/net kg, storage notes
@@ -26,7 +27,8 @@ CLI generating pixel-perfect PDF shipping document suites (CoA, Packing Slip, BO
 
 ## §V INVARIANTS
 V1: three-document-suite — tool generates all 3 mandatory dock receiving documents: CoA, Packing Slip, BOL
-V2: click-cli-architecture — CLI implemented via Click framework with modular subcommands and help documentation
+V2: click-cli-architecture — CLI implemented via Click framework with modular subcommands; bare invocation and `--help` expand full per-subcommand help plus LLM agent operating manual (`AgentHelpGroup`)
+V2b: agent-help-entrypoint — `uv run python -m docgen` with no subcommand prints the full agent help document and exits 0 (same text as `--help`)
 V3: master-data-fidelity — lots, items, test criteria, and vendor/lab metadata resolve against `acumatica/master_data/`
 V4: multi-lab-standards — CoA rendering adapts headers, regional units, and language terms to each of the 5 labs
 V5: pass-fail-simulation — supports in-spec (pass) and out-of-spec (fail) simulation for QA quarantine/NCR testing

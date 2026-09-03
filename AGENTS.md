@@ -22,12 +22,16 @@ The repository is structured into five distinct operational domains:
 
 * **Language Runtime:** Python `>=3.14`
 * **Package Manager:** `uv` (`pyproject.toml` and `uv.lock` are source of truth; do **not** generate `requirements.txt`).
+* **Project install:** `[build-system]` + `[project.scripts]` make this repo an installable package. Run `uv sync` so the `docgen` console script is wired into `.venv` (required for `uv run docgen`).
 * **Linting & Formatting:** `ruff`
 * **Static Type Checking:** `basedpyright` in strict mode (`typeCheckingMode = "strict"`).
 * **Infrastructure:** `terraform` (Google & Google-Beta providers).
 
 ### Core Verification Commands
 ```bash
+# Install project + deps (wires console scripts such as docgen)
+uv sync
+
 # Run code linting and formatting checks
 uv run ruff check
 uv run ruff format --check
@@ -51,40 +55,38 @@ The `docgen` CLI generates pixel-perfect PDF shipping suites matching Health Can
 #### Command Reference & Syntax
 
 ```bash
-# Display help and available subcommands
-uv run python -m docgen --help
-# Or using the console script entry point:
-uv run docgen --help
+# Full LLM-agent help (all subcommands expanded + operating manual). Requires `uv sync`.
+uv run docgen
 ```
 
 #### 1. Inspect Master Data
 View registered qualified vendors, accredited testing laboratories, and raw material catalog items:
 ```bash
-uv run python -m docgen list-master-data
+uv run docgen list-master-data
 ```
 
 #### 2. Generate Complete 3-Document Receiving Suite
 Generates a synchronized **Certificate of Analysis (CoA)**, **Supplier Packing Slip**, **Bill of Lading (BOL)**, and **Manifest JSON** for a given inventory item:
 ```bash
 # Generate in-spec (PASS) receiving suite
-uv run python -m docgen generate-suite \
+uv run docgen generate-suite \
   --inventory-id RAW-ECH-EXT4 \
   --outdir ./output/shipping_docs
 
 # Generate out-of-spec (FAIL) receiving suite for quarantine & NCR testing
-uv run python -m docgen generate-suite \
+uv run docgen generate-suite \
   --inventory-id RAW-ASH-EXT5 \
   --status fail \
   --outdir ./output/shipping_docs_failed
 
 # Generate suite directly from an Acumatica Purchase Order JSON payload
-uv run python -m docgen from-po \
+uv run docgen from-po \
   --po-json ./path/to/po_order.json \
   --status pass \
   --outdir ./output/po_shipping_docs
 
 # Or via generate-suite with optional --po-json:
-uv run python -m docgen generate-suite \
+uv run docgen generate-suite \
   --po-json ./path/to/po_order.json \
   --status pass \
   --outdir ./output/po_shipping_docs
@@ -94,18 +96,18 @@ uv run python -m docgen generate-suite \
 Generate individual PDF documents for targeted testing:
 ```bash
 # Generate standalone Certificate of Analysis (CoA)
-uv run python -m docgen generate-coa \
+uv run docgen generate-coa \
   --inventory-id RAW-CURC-95 \
   --status pass \
   --outdir ./output/coa
 
 # Generate standalone Supplier Packing Slip
-uv run python -m docgen generate-packing-slip \
+uv run docgen generate-packing-slip \
   --inventory-id RAW-OMEGA3-70 \
   --outdir ./output/packing_slips
 
 # Generate standalone Carrier Bill of Lading (BOL)
-uv run python -m docgen generate-bol \
+uv run docgen generate-bol \
   --inventory-id RAW-THEA-98 \
   --outdir ./output/bol
 ```
@@ -114,13 +116,13 @@ uv run python -m docgen generate-bol \
 Synthesize a batch of document suites spanning the 5 vendor and laboratory standards:
 ```bash
 # Generate 5 suites with alternating pass/fail outcomes
-uv run python -m docgen batch \
+uv run docgen batch \
   --count 5 \
   --include-failures \
   --outdir ./output/batch_shipping_docs
 
 # Generate 10 all-passing suites
-uv run python -m docgen batch \
+uv run docgen batch \
   --count 10 \
   --all-pass \
   --outdir ./output/batch_all_pass
