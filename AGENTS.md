@@ -50,7 +50,7 @@ terraform -chdir=terraform validate
 
 ### 3.1 Inbound Shipping Document PDF Generator (`docgen`)
 
-The `docgen` CLI generates pixel-perfect PDF shipping suites matching Health Canada GMP, CFIA, and Acumatica ERP dock receiving requirements.
+The `docgen` CLI generates pixel-perfect PDF shipping suites matching Health Canada GMP, CFIA, and Acumatica ERP dock receiving requirements. All document stamps default to the run date (local); pass `--as-of YYYY-MM-DD` on any generator command to anchor a historical or future receiving run (see item 5).
 
 #### Command Reference & Syntax
 
@@ -127,6 +127,17 @@ uv run docgen batch \
   --all-pass \
   --outdir ./output/batch_all_pass
 ```
+
+#### 5. Anchor Document Dates (default: today)
+All generated document stamps (manufacture, ship, CoA issue, BOL) default to the run date (local); expiration derives from the product shelf-life (3-year fallback). Pass `--as-of YYYY-MM-DD` on any generator command (`generate-suite`, `from-po`, `generate-coa`, `generate-packing-slip`, `generate-bol`, `batch`) to anchor a historical or future receiving run:
+```bash
+# Backdated receiving suite anchored to a fixed date
+uv run docgen generate-suite \
+  --inventory-id RAW-CURC-95 \
+  --as-of 2026-06-30 \
+  --outdir ./output/backdated_docs
+```
+Invalid `--as-of` values (non-`YYYY-MM-DD`) are rejected with a non-zero exit.
 
 ---
 

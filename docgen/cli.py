@@ -82,8 +82,21 @@ RESOLUTION RULES
   QMS plan                -> product.qms_inspection_plan_id
   --lot-nbr omitted       -> LOT-<CODE>2603-<NNN>A  (CODE from product map)
   --po-nbr / --receipt-nbr omitted -> synthetic PO-04#### / PR-2026-00####
+  Document dates           -> anchored to today (local) by default;
+                              --as-of YYYY-MM-DD overrides (see DOCUMENT DATING)
   --status pass|fail      -> forces CoA overall evaluation (default: pass)
   Unknown inventory/vendor IDs fall back to random master-data picks (no hard fail).
+
+DOCUMENT DATING (default = today; --as-of overrides)
+  Every generator command (generate-suite, from-po, generate-coa,
+  generate-packing-slip, generate-bol, batch) derives its document stamps
+  from a single anchor date:
+    manufacture date / ship date  = as-of
+    CoA issue date / BOL date     = as-of
+    expiration date              = as-of + product shelf-life (3-year fallback)
+  Default anchor = run date (local YYYY-MM-DD). Pass --as-of YYYY-MM-DD to
+  anchor a historical or future receiving run. Invalid as-of values are
+  rejected with a non-zero exit (Click usage error).
 
 OUTPUT ARTIFACTS
   generate-suite / from-po (default outdir=output/shipping_docs):
@@ -153,6 +166,10 @@ CANONICAL AGENT RECIPES
   # Multi-vendor corpus (5 suites, alternating pass/fail)
   uv run python -m docgen batch --count 5 --include-failures \\
     --outdir ./output/batch_shipping_docs
+
+  # Backdated receiving suite (anchor every document stamp to a fixed date)
+  uv run python -m docgen generate-suite \\
+    --inventory-id RAW-CURC-95 --as-of 2026-06-30 --outdir ./output/backdated_docs
 
 RELATED SPECS (read before changing behavior)
   docgen/SPEC.md
