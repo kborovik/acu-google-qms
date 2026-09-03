@@ -18,8 +18,8 @@ CLI generating pixel-perfect PDF shipping document suites (CoA, Packing Slip, BO
 
 ## §I INTERFACES
 - cli: `uv run python -m docgen` / `uv run docgen`; subcommands `generate-suite`, `generate-coa`, `generate-packing-slip`, `generate-bol`, `batch`, `from-po`, `list-master-data`
-- agent-help: bare `docgen` (no subcommand) and `docgen --help`/`-h` emit identical full multi-command Click help + LLM agent operating manual (master data IDs, resolution rules, output artifacts, zero-ERP-leakage, PO JSON aliases, recipes)
-- flags: `--po-json`, `--vendor-id`, `--inventory-id`, `--lot-nbr`, `--status [pass|fail]`, `--outdir`, `--emit-json`, `--count`
+- agent-help: bare `docgen` (no subcommand) and `docgen --help`/`-h` emit identical full multi-command Click help + LLM agent operating manual (master data IDs, resolution rules, document-dating default-today + `--as-of`, output artifacts, zero-ERP-leakage, PO JSON aliases, recipes)
+- flags: `--po-json`, `--vendor-id`, `--inventory-id`, `--lot-nbr`, `--status [pass|fail]`, `--as-of YYYY-MM-DD`, `--outdir`, `--emit-json`, `--count`
 - doc-coa: Certificate of Analysis PDF (`COA_<vendor>_<lot>.pdf`) with lab accreditation header, lot meta, test matrix table, pass/fail evaluation, QA signature
 - doc-pack: Supplier Packing Slip PDF (`PACKING_SLIP_<vendor>_<lot>.pdf`) with supplier delivery note #, CanNordic dest, commercial product name, container count, gross/net kg, storage notes
 - doc-bol: Bill of Lading PDF (`BOL_<carrier>_<lot>.pdf`) with carrier details, PRO#, trailer/seal#, pallet count, freight gross weight, chain-of-custody sign-offs
@@ -36,6 +36,7 @@ V6: reportlab-styling — vector-grade ReportLab templates with professional typ
 V7: typing-and-lint-clean — passes `uv run ruff check`, `uv run ruff format --check`, and `uv run basedpyright` with 0 warnings/errors
 V8: zero-erp-leakage — external documents (CoA, Packing Slip, BOL) contain zero internal Acumatica identifiers (no internal PO#, Acumatica VendorID, InventoryID, POReceipt#, QMS plan ID, or ERP warehouse bin codes)
 V9: po-json-input — docgen accepts Acumatica PO JSON input to generate realistic external shipment documents matching open PO lines via master data
+V10: document-as-of — default as-of = run date (local YYYY-MM-DD); mfg + ship + CoA/BOL stamps = as-of; expiry = as-of + 3y (or product shelf-life when present); `--as-of YYYY-MM-DD` overrides anchor; invalid as-of → non-zero exit
 
 ## §T TASKS
 id|status|task|cites
@@ -52,6 +53,9 @@ T10|x|sanitize `docgen/coa_builder.py` removing Acumatica InventoryID, PO refere
 T11|x|sanitize `docgen/bol_builder.py` removing Acumatica PO and POReceipt references|V6,V8,I.doc-bol
 T12|x|extend `docgen/models.py` and `docgen/cli.py` to accept `--po-json` input and build shipment suites from PO JSON|V3,V8,V9,I.cli,I.flags
 T13|x|update manifest schema to distinguish external document fields from ground-truth ERP linking metadata|V3,V8,I.cli
+T14|.|derive suite dates from as-of (default today); wire `--as-of` on generate-suite, from-po, generate-coa, generate-packing-slip, generate-bol, batch|V10,I.flags
+T15|.|sync AGENT_HELP_EPILOG + AGENTS.md recipes for default-today / `--as-of`|V10,V2b,I.agent-help
 
 ## §B BUGS
 id|date|cause|fix
+B1|2026-09-03|hardcoded mfg/expiry strings → PDF dates stuck in past vs run day|V10
