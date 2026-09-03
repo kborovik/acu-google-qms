@@ -24,8 +24,8 @@ Raw materials **cannot be moved into production racking or released into blendin
  2. 3-WAY DOCUMENT RECONCILIATION                   ▼
  ┌──────────────────────────────────────────────────────────────────────────────────────────────────────┐
  │  [BILL OF LADING (BOL)]       [SUPPLIER PACKING SLIP]         [CERTIFICATE OF ANALYSIS (CoA)]        │
- │  • Carrier & Trailer ID       • Acumatica PO Number (`PO-*`)  • Testing Laboratory & Accreditation   │
- │  • Tamper Seal Numbers        • Vendor Item & Inventory ID    • Lot/Batch Number (`LotSerialNbr`)    │
+ │  • Carrier & Trailer ID       • Supplier Delivery Note #      • Testing Laboratory & Accreditation   │
+ │  • Tamper Seal Numbers        • Product / Commercial Name     • Lot/Batch Number (`LotSerialNbr`)    │
  │  • Gross Weight & Pallets     • Lot Number & Container Count  • Chemical Assays, Metals, Bioburden   │
  └──────────────────────────────────────────────────┬───────────────────────────────────────────────────┘
                                                     │
@@ -97,18 +97,17 @@ The Certificate of Analysis is the foundational regulatory artifact required und
 ---
 
 ### 3.2 Document 2: Supplier Packing Slip / Delivery Note
-The Packing Slip accompanies the physical freight and serves as the bridge between the vendor's fulfillment order and CanNordic's purchase order in Acumatica ERP.
+The Packing Slip accompanies the physical freight and serves as the supplier's fulfillment record. The AI Ingestion Engine matches this external document to open purchase orders in Acumatica ERP.
 
 * **Mandatory Data Elements:**
   1. **Commercial Header:**
-     * Supplier Legal Name and Acumatica Vendor ID (`VendorID`, e.g., `VEND-NORTH-BIO`).
-     * CanNordic Purchase Order Reference (`POOrderNbr`, e.g., `PO-049182`).
-     * Vendor Sales Order / Delivery Note Number.
-     * Shipping Date and Destination Warehouse ID (`WH-MISS-01`, `WH-MISS-COLD-01`).
+     * Supplier Legal Name and Dispatch Facility Address.
+     * Supplier Sales Order / Delivery Note Number (`DeliveryNoteNbr`, e.g., `DN-2026-9481`).
+     * Consignee Destination Address (CanNordic BioNutra Inc., Mississauga, ON).
+     * Shipping / Dispatch Date.
   2. **Line-Item Lot Detail Table:**
-     * CanNordic Inventory Item ID (`InventoryID`, e.g., `RAW-ECH-EXT4`).
-     * Complete Product Description.
-     * Supplier Lot / Serial Number (`LotSerialNbr`).
+     * Product Commercial Name / Botanical Scientific Description.
+     * Supplier Lot / Batch Number (`LotSerialNbr`).
      * Number of Packages / Containers (e.g., `20 Fiber Drums @ 25.0 kg net`).
      * Net Weight and Gross Weight in KG.
      * Container Serial Numbers or Tamper-Evident Security Seal Identifiers.
@@ -185,12 +184,12 @@ Receiving dock clerks must execute the standard 5-step receiving protocol before
   • Extract BOL, Packing Slip, CoA, TempTale logger, and Organic certs.
                  │
                  ▼
-[Step 3: 3-Way Cross-Reconciliation Check]
-  ┌──────────────────────────────────────────────────────────────────┐
-  │ Match 1: Packing Slip PO# == Open Acumatica Purchase Order       │
-  │ Match 2: Physical Drum Lot Tags == Packing Slip Lot# == CoA Lot# │
-  │ Match 3: Physical Drum Count == Packing Slip Qty == BOL Pieces   │
-  └──────────────────────────────────────────────────────────────────┘
+[Step 3: 3-Way Cross-Reconciliation & PO Matching Check]
+  ┌──────────────────────────────────────────────────────────────────────┐
+  │ Match 1: Vendor & Item Description == Open Acumatica Purchase Order  │
+  │ Match 2: Physical Drum Lot Tags == Packing Slip Lot# == CoA Lot#     │
+  │ Match 3: Physical Drum Count == Packing Slip Qty == BOL Pieces       │
+  └──────────────────────────────────────────────────────────────────────┘
                  │
           ┌──────┴────────────────────────┐
           │ ALL MATCH                     │ DISCREPANCY / MISSING DOC

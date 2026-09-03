@@ -77,15 +77,17 @@ uv run python -m docgen generate-suite \
   --status fail \
   --outdir ./output/shipping_docs_failed
 
-# Generate suite with explicit custom lot, PO, and receipt numbers
-uv run python -m docgen generate-suite \
-  --inventory-id RAW-COQ10-99 \
-  --vendor-id VEND-NIPPON-PHARMA \
-  --lot-nbr LOT-CQ2603-901A \
-  --po-nbr PO-048192 \
-  --receipt-nbr PR-2026-004819 \
+# Generate suite directly from an Acumatica Purchase Order JSON payload
+uv run python -m docgen from-po \
+  --po-json ./path/to/po_order.json \
   --status pass \
-  --outdir ./output/custom_suite
+  --outdir ./output/po_shipping_docs
+
+# Or via generate-suite with optional --po-json:
+uv run python -m docgen generate-suite \
+  --po-json ./path/to/po_order.json \
+  --status pass \
+  --outdir ./output/po_shipping_docs
 ```
 
 #### 3. Generate Standalone Documents
