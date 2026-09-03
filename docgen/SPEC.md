@@ -47,7 +47,7 @@ T7|x|implement Click CLI entry points, subcommands, and batch generator in `docg
 T8|x|configure `pyproject.toml` tool sections and verify `ruff` + `basedpyright` passes|V7,I.cli
 T9|x|sanitize `docgen/packing_slip_builder.py` removing all Acumatica internal references (PO#, VendorID, InventoryID, POReceipt#, quarantine bin)|V6,V8,I.doc-pack
 T10|x|sanitize `docgen/coa_builder.py` removing Acumatica InventoryID, PO reference, internal plan ID, and internal QA disposition block|V4,V6,V8,I.doc-coa
-T11|.|sanitize `docgen/bol_builder.py` removing Acumatica PO and POReceipt references|V6,V8,I.doc-bol
+T11|x|sanitize `docgen/bol_builder.py` removing Acumatica PO and POReceipt references|V6,V8,I.doc-bol
 T12|.|extend `docgen/models.py` and `docgen/cli.py` to accept `--po-json` input and build shipment suites from PO JSON|V3,V8,V9,I.cli,I.flags
 T13|.|update manifest schema to distinguish external document fields from ground-truth ERP linking metadata|V3,V8,I.cli
 

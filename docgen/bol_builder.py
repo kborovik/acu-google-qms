@@ -109,18 +109,15 @@ def generate_bol_pdf(suite: InboundShipmentSuite, output_path: str | Path) -> Pa
     ]
 
     freight_routing_info = [
-        Paragraph("<b>3. FREIGHT & EQUIPMENT:</b>", styles["MetaLabel"]),
+        Paragraph("<b>3. FREIGHT & ROUTING:</b>", styles["MetaLabel"]),
         Paragraph(f"<b>Carrier:</b> {suite.carrier_name}", styles["MetaValue"]),
         Paragraph(f"<b>Trailer Nbr:</b> {suite.trailer_number}", styles["MetaValue"]),
         Paragraph(
             f"<b>Seal Nbr:</b> {suite.seal_number} (High Security)",
             styles["MetaValue"],
         ),
-        Paragraph(
-            f"<b>Acumatica PO:</b> {suite.purchase_order_number}",
-            styles["MetaValue"],
-        ),
-        Paragraph("<b>Payment Terms:</b> Prepaid / 3rd Party", styles["MetaValue"]),
+        Paragraph("<b>Billing Terms:</b> 3rd Party Prepaid", styles["MetaValue"]),
+        Paragraph("<b>Service Level:</b> Standard LTL Freight", styles["MetaValue"]),
     ]
 
     routing_table_data = [
@@ -175,11 +172,10 @@ def generate_bol_pdf(suite: InboundShipmentSuite, output_path: str | Path) -> Pa
         Paragraph("Gross Weight (LBS)", styles["TableTH"]),
     ]
 
-    p_id = suite.product.inventory_id
     p_lot = suite.lot_serial_number
     item_desc = (
         f"<b>{suite.product.description}</b><br/>"
-        f"<font size=6.5 color='#333333'>Item ID: {p_id} | Lot: {p_lot}</font><br/>"
+        f"<font size=6.5 color='#333333'>Shipping Marks / Lot: {p_lot}</font><br/>"
         f"<font size=6 color='#555555'>Non-Hazardous Dietary / Food Supplement</font>"
     )
 
@@ -297,8 +293,8 @@ def generate_bol_pdf(suite: InboundShipmentSuite, output_path: str | Path) -> Pa
             ),
             Paragraph(
                 "<b>Consignee:</b> CanNordic BioNutra Inc.<br/>"
-                "<b>Receiver:</b> Devon Singh<br/>"
-                f"<b>POReceipt:</b> {suite.receipt_number}<br/>"
+                "<b>Receiver (Dock):</b> Devon Singh<br/>"
+                "<b>Arrival Condition:</b> Freight Accepted<br/>"
                 "<b>Seal Verified Intact:</b> [ √ ] Yes",
                 styles["SignatureLabel"],
             ),
