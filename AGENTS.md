@@ -173,6 +173,7 @@ terraform -chdir=terraform apply -var-file=lab5-acucoa-prd1.tfvars
 | **Shipping Documents Spec** | `domain/MANDATORY_SHIPPING_DOCUMENTS_SPEC.md` | Inbound dock compliance, 3-way reconciliation (CoA, Packing Slip, BOL). |
 | **CoA Ingestion Spec** | `domain/COA_INGESTION_SPEC.md` | Multimodal AI parsing, unit conversions, and ERP release workflows. |
 | **Acumatica Matrix** | `acumatica/acumatica_integration_matrix.md` | REST API endpoints, entity mapping, and state machine transitions. |
+| **QMS Extension Spec** | `domain/ACUMATICA_QMS_EXTENSION_SPEC.md` | Minimum technical specification for Acumatica xRP QMS extension package. |
 | **DocGen Specification** | `docgen/SPEC.md` | SDD specification for the CLI document generator. |
 
 ---
