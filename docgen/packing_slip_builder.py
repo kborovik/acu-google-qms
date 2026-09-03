@@ -48,13 +48,12 @@ def generate_packing_slip_pdf(
     vendor = suite.vendor
     vendor_title = f"{vendor.legal_name.upper()}"
     vendor_sub = (
-        f"SUPPLIER ID: {vendor.vendor_id} | "
-        f"GMP STATUS: {vendor.gmp_certification_status}"
+        f"QUALITY ASSURED FACILITY | GMP STATUS: {vendor.gmp_certification_status}"
     )
     vendor_addr = (
         f"{vendor.headquarters_address}<br/>"
         f"{vendor.city_region}, {vendor.country}<br/>"
-        f"<b>Contact:</b> {vendor.primary_contact_name} "
+        f"<b>Sales & Dispatch:</b> {vendor.primary_contact_name} "
         f"({vendor.primary_contact_email})"
     )
 
@@ -96,12 +95,12 @@ def generate_packing_slip_pdf(
     story.append(Paragraph(sub_title, styles["DocSubtitle"]))
     story.append(Spacer(1, 4))
 
-    slip_nbr = f"PACK-{suite.manifest_id[4:]}"
-    dest_wh = suite.product.default_warehouse
+    slip_nbr = f"DN-{suite.manifest_id[4:]}"
+    order_ref = f"ORD-{suite.manifest_id[4:]}"
     meta_col1 = [
-        Paragraph(f"<b>Packing Slip Nbr:</b> {slip_nbr}", styles["MetaValue"]),
+        Paragraph(f"<b>Delivery Note Nbr:</b> {slip_nbr}", styles["MetaValue"]),
         Paragraph(
-            f"<b>CanNordic PO Nbr:</b> {suite.purchase_order_number}",
+            f"<b>Supplier Order Ref:</b> {order_ref}",
             styles["MetaValue"],
         ),
         Paragraph(f"<b>Ship Date:</b> {suite.manufacturing_date}", styles["MetaValue"]),
@@ -114,7 +113,7 @@ def generate_packing_slip_pdf(
         Paragraph("<b>Ship To (Consignee):</b>", styles["MetaLabel"]),
         Paragraph("CanNordic BioNutra Inc. - Receiving Dock", styles["MetaValue"]),
         Paragraph("2450 Meadowpine Blvd, Warehouse Gate 3", styles["MetaValue"]),
-        Paragraph(f"Mississauga, ON L5N 6S2 | Dest: {dest_wh}", styles["MetaValue"]),
+        Paragraph("Mississauga, ON L5N 6S2 Canada", styles["MetaValue"]),
     ]
 
     meta_table_data = [
@@ -157,7 +156,7 @@ def generate_packing_slip_pdf(
 
     item_headers = [
         Paragraph("Line", styles["TableTH"]),
-        Paragraph("Item ID & Description", styles["TableTH"]),
+        Paragraph("Description of Goods", styles["TableTH"]),
         Paragraph("Lot / Batch Nbr", styles["TableTH"]),
         Paragraph("Expiry Date", styles["TableTH"]),
         Paragraph("Packaging / Units", styles["TableTH"]),
@@ -165,10 +164,12 @@ def generate_packing_slip_pdf(
         Paragraph("Gross Qty", styles["TableTH"]),
     ]
 
-    item_desc = (
-        f"<b>{suite.product.inventory_id}</b><br/>"
-        f"<font size=6.5 color='#333333'>{suite.product.description}</font>"
-    )
+    item_desc = f"<b>{suite.product.description}</b>"
+    if suite.product.botanical_source:
+        item_desc += (
+            f"<br/><font size=6.5 color='#333333'>"
+            f"<i>{suite.product.botanical_source}</i></font>"
+        )
     pkg_desc = (
         f"{suite.container_count} x Fiber Drums<br/>"
         f"<font size=6 color='#555555'>({suite.pallet_count} Pallets)</font>"
@@ -217,25 +218,25 @@ def generate_packing_slip_pdf(
     # 4. Storage Directives & Regulatory Compliance Card
     story.append(
         Paragraph(
-            "STORAGE DIRECTIVES & REGULATORY COMPLIANCE",
+            "STORAGE DIRECTIVES & HANDLING INSTRUCTIONS",
             styles["SectionHeader"],
         )
     )
     story.append(Spacer(1, 3))
 
-    fsa_ref = vendor.foreign_site_annex_ref or "Domestic Canadian Site"
-    fsa_info = f"<b>Health Canada Foreign Site Annex:</b> {fsa_ref}"
+    fsa_ref = vendor.foreign_site_annex_ref or "Canadian Qualified Site"
+    fsa_info = f"<b>Regulatory Export / Annex Compliance:</b> {fsa_ref}"
     storage_info = f"<b>Prescribed Storage:</b> {suite.storage_conditions}"
-    quarantine_info = (
-        f"<b>Default Quarantine Location:</b> "
-        f"{suite.product.default_quarantine_location} | "
-        f"<b>Valuation:</b> {suite.product.valuation_method}"
+    handling_info = (
+        "<b>Handling Directives:</b> Store in original sealed containers in a cool, "
+        "dry warehouse. Protect from light, moisture, and extreme temperature. "
+        "Food grade / dietary supplement raw material."
     )
 
     compliance_data = [
         [
             Paragraph(
-                f"{storage_info}<br/>{quarantine_info}<br/>{fsa_info}",
+                f"{storage_info}<br/>{handling_info}<br/>{fsa_info}",
                 styles["CalloutText"],
             ),
         ]
@@ -256,31 +257,31 @@ def generate_packing_slip_pdf(
     story.append(comp_table)
     story.append(Spacer(1, 10))
 
-    # 5. Receiving Dock Checklist & Acumatica Hand-off
+    # 5. Receiving Dock Checklist (Consignee Dock Verification)
     c_count = suite.container_count
     lot_sn = suite.lot_serial_number
     checklist_p1 = (
-        "[ &nbsp; ] Physical Drum Seal Integrity Checked<br/>"
-        f"[ &nbsp; ] Drum Count Matches Packing Slip (<b>{c_count} Drums</b>)<br/>"
-        f"[ &nbsp; ] Physical Lot Tag Matches (<b>{lot_sn}</b>)<br/>"
-        "[ &nbsp; ] Attached CoA Verified in Document Pouch"
+        "[ &nbsp; ] Physical Drum / Container Seal Integrity Verified<br/>"
+        f"[ &nbsp; ] Container Count Matches Packing Slip (<b>{c_count} Drums</b>)<br/>"
+        f"[ &nbsp; ] Physical Lot Tag Label Matches (<b>{lot_sn}</b>)<br/>"
+        "[ &nbsp; ] Attached Certificate of Analysis (CoA) Present in Pouch"
     )
     checklist_p2 = (
-        "<b>Receiving Clerk:</b> Devon Singh<br/>"
-        "<b>Status Assigned:</b> <font color='#D97706'>"
-        "<b>QC HOLD (QUARANTINE)</b></font><br/>"
-        "<b>Dock Placard:</b> Yellow QC Tag Affixed<br/>"
-        "<b>Sign / Date:</b> ___________________________"
+        "<b>Received By (Dock Clerk):</b> ___________________________<br/>"
+        "<b>Date Received:</b> ___________________________<br/>"
+        "<b>Dock Triage:</b> [ &nbsp; ] Staged for Inspection &nbsp; "
+        "[ &nbsp; ] Hold / Discrepancy<br/>"
+        "<b>Physical Placard:</b> Inbound Quarantine Placard Affixed"
     )
 
     checklist_data = [
         [
             Paragraph(
-                "<b>RECEIVING DOCK VERIFICATION & CLERK AUDIT</b>",
+                "<b>CONSIGNEE RECEIVING VERIFICATION (DOCK USE ONLY)</b>",
                 styles["DocSubtitle"],
             ),
             Paragraph(
-                f"<b>Acumatica POReceipt:</b> {suite.receipt_number}",
+                "<b>Status:</b> INBOUND DOCK RECEIPT",
                 styles["MetaValue"],
             ),
         ],
