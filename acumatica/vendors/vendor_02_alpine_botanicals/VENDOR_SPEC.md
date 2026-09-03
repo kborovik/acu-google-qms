@@ -17,6 +17,7 @@
 │ Health Canada Foreign Lic│ Foreign Site Annex FSA-EU-DE-910482              │
 │ Quality Rating Tier:     │ Tier-1 Preferred (98.9% Historical Pass Rate)    │
 │ Average Lead Time:       │ 18 Business Days (Air/Ocean Freight)             │
+│ Designated Testing Lab:  │ Euro-Phyto Analytics GmbH (LAB-EURO-PHYTO)       │
 └──────────────────────────┴──────────────────────────────────────────────────┘
 ```
 
@@ -50,9 +51,13 @@ Alpine Botanical Extracts GmbH supplies premium standardized root and adaptogeni
 ## 4. Inbound Quality Governance & Testing Routing
 
 1. **Analytical Testing Routing:**
-   * Primary Laboratory: **Great Lakes Bio-Analytical Services Inc.** (`LAB-GL-ANALYTICAL`) for Withanolide and Rosavin HPLC-UV/DAD assays.
-   * Secondary Laboratory: **Pacific Rim BioNutra Testing Laboratories Ltd.** (`LAB-PACIFIC-TEST`) for USP <467> residual ethanol solvent testing and microbiological bioburden.
-2. **Receiving Tolerance & Rejection Criteria:**
+   * Primary Laboratory: **Euro-Phyto Analytics GmbH** (`LAB-EURO-PHYTO` / DAkkS #D-PL-14192-01) for Withanolide and Rosavin HPLC-UV/DAD assays, Ph. Eur. 2.2.32 *Trocknungsverlust*, and DIN EN 15763 heavy metals in $\text{mg/kg}$.
+   * Secondary Laboratory: **Great Lakes Bio-Analytical Services Inc.** (`LAB-GL-ANALYTICAL`) for confirmatory North American testing.
+2. **Document Standard & Normalization:**
+   * Inbound Document: German / European Pharmacopoeia *Prüfbericht / Prüfzertifikat* (DIN EN ISO/IEC 17025).
+   * Unit Normalization: $\% \text{ (m/m)} \rightarrow \% \text{ (w/w)}$, $\text{mg/kg} \rightarrow \text{ppm}$, $\text{KbE/g} \rightarrow \text{CFU/g}$.
+   * Synonym Normalization: *Withanolid-Gesamtgehalt*, *Rosavine gesamt*, *Trocknungsverlust*, *Blei*, *Arsen*, *Gesamtkeimzahl*.
+3. **Receiving Tolerance & Rejection Criteria:**
    * Ashwagandha withanolides must meet $\ge 5.00\%$ (w/w).
    * Rhodiola must meet dual chemical markers: Total Rosavins $\ge 3.00\%$ and Salidroside $\ge 1.00\%$.
-   * Lead (Pb) $\le 0.50$ ppm, Arsenic (As) $\le 1.00$ ppm, Cadmium (Cd) $\le 0.30$ ppm, Mercury (Hg) $\le 0.10$ ppm.
+   * Lead (Pb) $\le 0.50$ ppm (mg/kg), Arsenic (As) $\le 1.00$ ppm, Cadmium (Cd) $\le 0.30$ ppm, Mercury (Hg) $\le 0.10$ ppm.

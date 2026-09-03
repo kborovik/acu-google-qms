@@ -17,6 +17,7 @@
 │ Health Canada Foreign Lic│ Foreign Site Annex FSA-NO-MR-672910              │
 │ Quality Rating Tier:     │ Tier-1 Preferred (99.3% Historical Pass Rate)    │
 │ Average Lead Time:       │ 15 Business Days (Temperature-Controlled Ocean)  │
+│ Designated Testing Lab:  │ Fjord Marine Bio-Testing Labs (LAB-FJORD-ANALYT) │
 └──────────────────────────┴──────────────────────────────────────────────────┘
 ```
 
@@ -50,9 +51,13 @@ Nordic Marine Extracts AS supplies purified marine omega-3 oils and algal astaxa
 ## 4. Inbound Quality Governance & Testing Routing
 
 1. **Analytical Testing Routing:**
-   * Primary Laboratory: **Great Lakes Bio-Analytical Services Inc.** (`LAB-GL-ANALYTICAL`) for Fatty Acid GC-FID profile (EPA/DHA), Peroxide Value, p-Anisidine Value, and Heavy Metals (Pb, As, Cd, Hg, Total/Inorganic Arsenic).
-   * Secondary Laboratory: **Pacific Rim BioNutra Testing Laboratories Ltd.** (`LAB-PACIFIC-TEST`) for HRGC-HRMS Dioxins / Furans / PCB testing and microbial stability.
-2. **Lipid Oxidation Critical Control Limits:**
+   * Primary Laboratory: **Fjord Marine Bio-Testing Laboratories AS** (`LAB-FJORD-ANALYTICAL` / Norsk Akkreditering TEST-092 / Mattilsynet #NO-LAB-HACCP-9481) for Fatty Acid GC-FID profile (EPA/DHA), Peroxide Value, p-Anisidine Value, Astaxanthin HPLC assay, and HRGC-HRMS Dioxin/PCB profiling.
+   * Secondary Laboratory: **Pacific Rim BioNutra Testing Laboratories Ltd.** (`LAB-PACIFIC-TEST`) for confirmatory North American testing.
+2. **Document Standard & Normalization:**
+   * Inbound Document: GOED Voluntary Monograph & Ph. Eur. Marine Lipid *Analysesertifikat* (Norwegian / English).
+   * Unit Normalization: $\text{mg/g} \rightarrow \% \text{ (w/w) (value / 10)}$, $\text{meq O}_2/\text{kg} \rightarrow \text{meq O}_2/\text{kg}$, $\text{p-AV / TOTOX index}$, $\text{pg WHO-TEQ/g} \rightarrow \text{pg TEQ/g}$.
+   * Synonym Normalization: *Peroksidverdi (PV)*, *Anisidintall (p-AV)*, *Totalt oksidasjonstall (TOTOX)*, *Fettsyreinnhold: EPA/DHA*, *Rent Astaxantin-innhold*, *Dioksiner og PCB*.
+3. **Lipid Oxidation Critical Control Limits:**
    * Peroxide Value (PV) $\le 5.0\text{ meq O}_2/\text{kg}$.
    * p-Anisidine Value (p-AV) $\le 20.0$.
    * Total Oxidation (TOTOX $= 2 \times \text{PV} + \text{p-AV}$) $\le 26.0$.

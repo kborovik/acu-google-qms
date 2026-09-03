@@ -1,0 +1,122 @@
+{
+  "document_metadata": {
+    "document_type": "Certificate of Analysis (CoA)",
+    "document_id": "COA-LAB-FJ-2026-66417",
+    "issued_date": "2026-09-02",
+    "document_standard": "GOED_PHEUR_ANALYSESERTIFIKAT",
+    "primary_language": "no-NO",
+    "secondary_language": "en-GB",
+    "acumatica_erp_mapping": {
+      "acumatica_po_number": "PO-066956",
+      "acumatica_receipt_number": "PR-077036",
+      "inventory_item_id": "RAW-OMEGA3-70",
+      "lot_serial_number": "LOT-OMEGA32620-311-X",
+      "vendor_id": "VEND-NORDIC-MAR",
+      "testing_lab_id": "LAB-FJORD-ANALYTICAL"
+    }
+  },
+  "issuer_information": {
+    "laboratory_name": "Fjord Marine Bio-Testing Laboratories AS",
+    "short_name": "Fjord Marine Labs",
+    "accreditation": "NS-EN ISO/IEC 17025:2018 (Norsk Akkreditering #TEST-092) / Mattilsynet #NO-LAB-HACCP-9481",
+    "address": "Ålesund, Møre og Romsdal 6003, NO"
+  },
+  "product_information": {
+    "product_name": "Marine Omega-3 Triglyceride Oil (70% EPA/DHA min)",
+    "botanical_source": "Engraulis ringens (Wild Pelagic Fish Oil)",
+    "lot_number": "LOT-OMEGA32620-311-X",
+    "batch_size_kg": 521.5,
+    "manufacturing_date": "2026-07-27",
+    "expiry_date": "2029-07-26",
+    "supplier_vendor_id": "VEND-NORDIC-MAR",
+    "supplier_vendor_name": "Nordic Marine Extracts AS",
+    "health_canada_npn": "NPN-80092104"
+  },
+  "test_results": [
+    {
+      "step_nbr": 10,
+      "raw_parameter_name": "Fettsyreinnhold: EPA (Eicosapentaenoic Acid)",
+      "canonical_parameter": "active_potency",
+      "test_method": "GC-FID (Ph. Eur. 2.4.29 / GOED)",
+      "specification_min": 40.0,
+      "specification_max": null,
+      "raw_measured_value": 437.78,
+      "raw_unit": "mg/g",
+      "normalized_si_value": 43.78,
+      "normalized_si_unit": "% (w/w)",
+      "conversion_applied": "mg/g -> % (w/w) (factor 0.1)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 20,
+      "raw_parameter_name": "Fettsyreinnhold: DHA (Docosahexaenoic Acid)",
+      "canonical_parameter": "active_potency",
+      "test_method": "GC-FID (Ph. Eur. 2.4.29 / GOED)",
+      "specification_min": 20.0,
+      "specification_max": null,
+      "raw_measured_value": 222.29,
+      "raw_unit": "mg/g",
+      "normalized_si_value": 22.23,
+      "normalized_si_unit": "% (w/w)",
+      "conversion_applied": "mg/g -> % (w/w) (factor 0.1)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 30,
+      "raw_parameter_name": "Peroksidverdi (Peroxide Value - PV)",
+      "canonical_parameter": "other_custom_assay",
+      "test_method": "Ph. Eur. 2.5.5 Potentiometric",
+      "specification_min": null,
+      "specification_max": 5.0,
+      "raw_measured_value": 2.31,
+      "raw_unit": "meq O2/kg",
+      "normalized_si_value": 2.31,
+      "normalized_si_unit": "meq O2/kg",
+      "conversion_applied": "meq O2/kg -> meq O2/kg (factor 1.0)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 40,
+      "raw_parameter_name": "Anisidintall (p-Anisidine Value - p-AV)",
+      "canonical_parameter": "other_custom_assay",
+      "test_method": "Ph. Eur. 2.5.36 Spectrophotometric",
+      "specification_min": null,
+      "specification_max": 20.0,
+      "raw_measured_value": 12.15,
+      "raw_unit": "index",
+      "normalized_si_value": 12.15,
+      "normalized_si_unit": "index",
+      "conversion_applied": "index -> index (factor 1.0)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 50,
+      "raw_parameter_name": "Totalt oksidasjonstall (TOTOX = 2*PV + p-AV)",
+      "canonical_parameter": "other_custom_assay",
+      "test_method": "Calculated (2*PV + p-AV)",
+      "specification_min": null,
+      "specification_max": 26.0,
+      "raw_measured_value": 16.27,
+      "raw_unit": "index",
+      "normalized_si_value": 16.27,
+      "normalized_si_unit": "index",
+      "conversion_applied": "index -> index (factor 1.0)",
+      "status": "PASS"
+    }
+  ],
+  "authorization": {
+    "signatory_name": "Dr. Solveig Haugen, Ph.D., C.Chem.",
+    "title": "Laboratorieleder & Sjefskjemiker",
+    "approval_date": "2026-09-02T20:11:17.966222"
+  },
+  "evaluation_summary": {
+    "overall_status": "APPROVED",
+    "discrepancy_count": 0,
+    "reasons": []
+  },
+  "acumatica_action_directive": {
+    "auto_approve_lot": true,
+    "lot_status": "Released",
+    "create_ncr_ticket": false
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "document_metadata": {
+    "document_type": "Certificate of Analysis (CoA)",
+    "document_id": "COA-LAB-TO-2026-83200",
+    "issued_date": "2026-09-02",
+    "document_standard": "JP18_JIS_SHIKEN_SEISEKISHO",
+    "primary_language": "ja-JP",
+    "secondary_language": "en-US",
+    "acumatica_erp_mapping": {
+      "acumatica_po_number": "PO-059852",
+      "acumatica_receipt_number": "PR-012593",
+      "inventory_item_id": "RAW-COQ10-99",
+      "lot_serial_number": "LOT-COQ102670-616-B",
+      "vendor_id": "VEND-NIPPON-PHARMA",
+      "testing_lab_id": "LAB-TOKYO-BIO"
+    }
+  },
+  "issuer_information": {
+    "laboratory_name": "Tokyo Bio-Analytical Testing Laboratories Inc.",
+    "short_name": "Tokyo Bio-Analytical Labs",
+    "accreditation": "JIS Q 17025:2018 / ISO 17025 (JNLA #JNLA-09418) / PMDA #JP-PMDA-LAB-2024-819",
+    "address": "Tokyo (Chuo-ku), Tokyo 103-0022, JP"
+  },
+  "product_information": {
+    "product_name": "Pure Coenzyme Q10 (Ubiquinone) USP Grade 99.0% - 101.0%",
+    "botanical_source": "Fermentation-Derived API",
+    "lot_number": "LOT-COQ102670-616-B",
+    "batch_size_kg": 2333.2,
+    "manufacturing_date": "2026-07-08",
+    "expiry_date": "2029-07-07",
+    "supplier_vendor_id": "VEND-NIPPON-PHARMA",
+    "supplier_vendor_name": "Nippon Pure Bioactives Inc.",
+    "health_canada_npn": "NPN-80019283"
+  },
+  "test_results": [
+    {
+      "step_nbr": 10,
+      "raw_parameter_name": "定量法: ユビデカレノン (Ubidecarenone Assay)",
+      "canonical_parameter": "active_potency",
+      "test_method": "HPLC-UV (JP 18 / USP Monograph)",
+      "specification_min": 99.0,
+      "specification_max": 101.0,
+      "raw_measured_value": 101.52,
+      "raw_unit": "mass%",
+      "normalized_si_value": 101.52,
+      "normalized_si_unit": "% (w/w)",
+      "conversion_applied": "mass% -> % (w/w) (factor 1.0)",
+      "status": "FAIL"
+    },
+    {
+      "step_nbr": 20,
+      "raw_parameter_name": "強熱残分 (Residue on Ignition JP 2.44)",
+      "canonical_parameter": "loss_on_drying",
+      "test_method": "JP 2.44 / USP <281>",
+      "specification_min": null,
+      "specification_max": 0.1,
+      "raw_measured_value": 0.035,
+      "raw_unit": "%",
+      "normalized_si_value": 0.035,
+      "normalized_si_unit": "% (w/w)",
+      "conversion_applied": "% -> % (w/w) (factor 1.0)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 30,
+      "raw_parameter_name": "純度試験: 鉛 (Lead Pb by ICP-MS)",
+      "canonical_parameter": "heavy_metal_lead",
+      "test_method": "JP 1.07 / ICP-MS",
+      "specification_min": null,
+      "specification_max": 0.2,
+      "raw_measured_value": 24.55,
+      "raw_unit": "ppb",
+      "normalized_si_value": 0.0246,
+      "normalized_si_unit": "ppm",
+      "conversion_applied": "ppb -> ppm (factor 0.001)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 40,
+      "raw_parameter_name": "生菌数試験: 一般生菌数 (TAMC)",
+      "canonical_parameter": "microbial_tamc",
+      "test_method": "JP 4.05",
+      "specification_min": null,
+      "specification_max": 1000,
+      "raw_measured_value": 1500.0,
+      "raw_unit": "個/g",
+      "normalized_si_value": 1500.0,
+      "normalized_si_unit": "CFU/g",
+      "conversion_applied": "個/g -> CFU/g (factor 1.0)",
+      "status": "FAIL"
+    }
+  ],
+  "authorization": {
+    "signatory_name": "Dr. Hiroshi Nakamura, Ph.D., P.Chem.",
+    "title": "試験責任者 (Laboratory Director & Chief Analyst)",
+    "approval_date": "2026-09-02T20:11:17.966085"
+  },
+  "evaluation_summary": {
+    "overall_status": "REJECTED",
+    "discrepancy_count": 2,
+    "reasons": [
+      "定量法: ユビデカレノン (Ubidecarenone Assay) measured 101.52 % (w/w) breached spec limits.",
+      "生菌数試験: 一般生菌数 (TAMC) measured 1500.0 CFU/g breached spec limits."
+    ]
+  },
+  "acumatica_action_directive": {
+    "auto_approve_lot": false,
+    "lot_status": "Quarantine",
+    "create_ncr_ticket": true
+  }
+}

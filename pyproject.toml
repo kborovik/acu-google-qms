@@ -3,7 +3,9 @@ name = "gcp-acu-coa"
 version = "0.1.0"
 requires-python = ">=3.14"
 dependencies = [
+    "click>=8.5.0",
     "google-adk>=2.8.0",
+    "reportlab>=5.0.1",
 ]
 
 [dependency-groups]
@@ -12,10 +14,13 @@ dev = [
     "ruff",
 ]
 
+[project.scripts]
+docgen = "docgen.cli:cli"
+
 [tool.ruff]
 target-version = "py314"
 line-length = 88
-src = ["agent"]
+src = ["agent", "docgen"]
 extend-exclude = ["domain", "acumatica"]
 
 [tool.ruff.lint]
@@ -24,5 +29,5 @@ select = ["E", "F", "I", "UP", "B"]
 [tool.basedpyright]
 typeCheckingMode = "strict"
 pythonVersion = "3.14"
-include = ["agent"]
+include = ["agent", "docgen"]
 exclude = ["domain", "acumatica", "**/.venv"]

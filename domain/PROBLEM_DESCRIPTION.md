@@ -189,13 +189,23 @@ The solution connects seamlessly to **Acumatica Cloud ERP (xRP Platform)** using
 ## 5. Technical Capabilities of the CoA Ingestion Pipeline
 
 1. **Multimodal Layout-Aware Table Parser:**
-   Handles variable multi-column tables, skewed scans, watermarks, and multi-page lab certificates without requiring rigid per-supplier templates.
-2. **Chemical & Analyte Synonym Normalizer:**
-   Recognizes that `As`, `Arsenic`, and `CAS 7440-38-2` refer to the same chemical entity; standardizes microbiological assay names (`Total Plate Count`, `TAMC`, `Aerobic Plate Count`).
-3. **Unit Conversion & Normalization:**
-   Supports bi-directional conversion between Imperial and SI Metric units, and scientific concentrations (ppm $\leftrightarrow$ mg/kg, % $\leftrightarrow$ g/100g).
-4. **Bilingual Compliance Parsing (English / French):**
-   Full support for Canadian bilingual CoAs (e.g., identifying both *Numéro de lot* and *Lot Number*, *Résultat* and *Result*, *Pertes au séchage* and *Loss on Drying*).
+   Handles variable multi-column tables, skewed scans, watermarks, and multi-page lab certificates across 5 global laboratory standards (Health Canada/CALA, SCC/AOAC, Ph. Eur./DIN Prüfbericht, JP 18/JIS 試験成績書, GOED/Ph. Eur. Analysesertifikat) without requiring rigid per-supplier templates.
+2. **Multilingual Chemical & Analyte Synonym Normalizer:**
+   Recognizes and normalizes terms across 5 languages (English, French, German, Japanese, Norwegian). For example:
+   * *Lead (Pb)*, *Plomb (Pb)*, *Blei (Pb)*, *鉛 (Pb)*, *Bly (Pb)* $\longrightarrow$ `heavy_metal_lead`
+   * *Withanolides*, *Withanolid-Gesamtgehalt* $\longrightarrow$ `active_potency`
+   * *Loss on Drying*, *Perte au séchage*, *Trocknungsverlust*, *強熱残分 / 乾燥減量*, *Tørketap* $\longrightarrow$ `loss_on_drying`
+   * *TAMC*, *DGAT*, *Gesamtkeimzahl*, *生菌数*, *Totalt kimtall* $\longrightarrow$ `microbial_tamc`
+3. **Unit Conversion & SI Normalization Engine:**
+   Converts heterogeneous regional laboratory measurement units into standard SI metric equivalents:
+   * European mass fraction `% (m/m)` & Japanese `mass%` $\longrightarrow$ `% (w/w)`
+   * European & Nordic `mg/kg`, `μg/g` $\longrightarrow$ `ppm`
+   * Japanese `ppb` ($\mu\text{g/kg}$) $\longrightarrow$ `ppm` ($\text{value} / 1000.0$)
+   * Nordic marine fatty acid & astaxanthin concentrations `mg/g` $\longrightarrow$ `% (w/w)` ($\text{value} / 10.0$)
+   * German `KbE/g` & Japanese `個/g` $\longrightarrow$ `CFU/g`
+   * Nordic `mmol O2/kg` $\longrightarrow$ `meq O2/kg` ($\text{value} \times 2.0$)
+4. **Multilingual Regulatory Compliance Parsing:**
+   Full support for Canadian bilingual CoAs (EN/FR), European German/English CoAs (DE/EN), Japanese/English API CoAs (JA/EN), and Nordic marine oil CoAs (NO/EN).
 5. **Full Auditability & Visual Provenance:**
    Every extracted data point is stored with bounding-box coordinates on the original PDF, allowing one-click visual audit verification inside the user interface.
 
@@ -216,6 +226,7 @@ To test and demonstrate the system without using proprietary client data, the pl
 
 * `domain/PROBLEM_DESCRIPTION.md`: Core problem, regulatory standards, and Acumatica ERP specification.
 * `domain/COMPANY_PROFILE.md`: Reference target enterprise profile (CanNordic BioNutra Inc.).
+* `domain/MANDATORY_SHIPPING_DOCUMENTS_SPEC.md`: Detailed specification for mandatory core shipping documents (CoA, Packing Slip, BOL, Cold-Chain Logs, Organics, Foreign Site Annexes).
 * `domain/COA_INGESTION_SPEC.md`: Detailed engineering and API specification for the Certificate of Analysis pipeline.
 * `domain/samples/`: Ready-to-use sample documents in JSON schema, formatted text/markdown, and PDF.
 * `domain/samples/generate_demo_documents.py`: Automated Python generator to produce realistic CoA test/demo documents.

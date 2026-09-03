@@ -14,23 +14,28 @@ The Acumatica Cloud ERP integration layer connects the **Certificate of Analysis
                                                     │
  1. DOCK ARRIVAL & PO RECEIPT                       ▼
  ┌──────────────────────────────────────────────────────────────────────────────────────────────────────┐
- │ • Inbound shipment arrives at warehouse dock.                                                        │
+ │ • Inbound shipment arrives at warehouse dock from one of 5 qualified suppliers.                      │
  │ • Clerk posts `POReceipt` with line splits (`POReceiptLineSplit`).                                   │
  │ • Acumatica sets `INLotSerialStatus.LotStatus = 'QC Hold'`.                                          │
  │ • Material locked: Cannot be allocated to BOMs or Work Orders.                                       │
  └──────────────────────────────────────────────────────────────────────────────────────────────────────┘
                                                     │
- 2. CoA DOCUMENT INGESTION                          ▼
+ 2. MULTI-LAB CoA DOCUMENT INGESTION                ▼
  ┌──────────────────────────────────────────────────────────────────────────────────────────────────────┐
- │ • CoA PDF captured via Dock Scanner, Webhook, or Supplier EDI portal.                                │
- │ • AI Multimodal Parser extracts Analyte Matrix, Units, Batch #, Lab Accreditation.                   │
+ │ • Ingests CoA from 5 dedicated global testing laboratories with distinct standards:                  │
+ │   - LAB-GL-ANALYTICAL: Health Canada / CALA Standard (Bilingual EN/FR)                               │
+ │   - LAB-EURO-PHYTO: Ph. Eur. / DIN Prüfbericht Standard (Bilingual DE/EN)                            │
+ │   - LAB-PACIFIC-TEST: SCC & AOAC PTM / USP Standard (Bilingual EN/FR)                                │
+ │   - LAB-TOKYO-BIO: Japanese Pharmacopoeia (JP 18) / JIS 試験成績書 Standard (Bilingual JA/EN)       │
+ │   - LAB-FJORD-ANALYTICAL: GOED Monograph & Marine Lipid Analysesertifikat (Bilingual NO/EN)          │
+ │ • Multilingual layout parser normalizes terms and converts heterogeneous UoMs into standard SI.      │
  │ • Visual bounding boxes `[x_min, y_min, x_max, y_max]` recorded for 1-click audit verification.       │
  └──────────────────────────────────────────────────────────────────────────────────────────────────────┘
                                                     │
  3. SPECIFICATION & TOLERANCE MATCHING ENGINE       ▼
  ┌──────────────────────────────────────────────────────────────────────────────────────────────────────┐
  │ • Ingestion Engine queries Acumatica `QMSInspectionPlan` via REST API.                               │
- │ • Compares measured assay, heavy metals (Pb, As, Cd, Hg), microbial CFUs against tolerances.        │
+ │ • Compares normalized assay, heavy metals (Pb, As, Cd, Hg), microbial CFUs against tolerances.       │
  │ • Validates remaining shelf life: `ExpiryDate >= ReceivingDate + MinShelfLifeDays`.                  │
  └──────────────────────────────────────────────────────────────────────────────────────────────────────┘
                                                     │
@@ -154,7 +159,7 @@ Content-Type: application/json
     },
     {
       "StepNbr": { "value": 40 },
-      "TestID": "HM_ARSENIC",
+      "TestID": { "value": "HM_ARSENIC" },
       "TestMethod": { "value": "ICP-MS (USP <2232>)" },
       "TargetSpec": { "value": "<= 1.00 ppm" },
       "ActualNumericValue": { "value": 0.120 },
@@ -273,13 +278,59 @@ Requested│          └─────┬────────────�
 
 ---
 
-## 5. Automated Multi-Lab Routing Engine
+## 5. Automated Multi-Lab Ingestion & Normalization Matrix
 
-When an inbound CoA is ingested, the engine validates the certifying laboratory's accreditation against the authorized lab directory:
+Each qualified vendor routes analytical certifications through a dedicated laboratory partner with distinct regional document standards, measurement units, and terminology:
 
-1. **Chemical & Elemental Impurity Assays (HPLC, GC-MS, ICP-MS):**
-   * Routing Priority: `LAB-GL-ANALYTICAL` (Great Lakes Bio-Analytical Services Inc., CALA #9481).
-2. **Microbiological, Pathogen & Residual Solvent Assays (USP <2021>/<2022>, USP <467>):**
-   * Routing Priority: `LAB-PACIFIC-TEST` (Pacific Rim BioNutra Testing Laboratories Ltd., SCC #8172).
-3. **Dual-Testing Protocol for High-Risk Categories:**
-   * Marine oils (`RAW-OMEGA3-70`) and probiotic actives (`RAW-GUT-PRB100`) undergo split-sample validation across both accredited laboratories prior to final ERP release.
+```
+┌───────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                               5 VENDORS <-> 5 LABORATORIES INTEGRATION TOPOLOGY                                   │
+├─────────────────────┬──────────────────────────┬─────────────────────────────┬────────────────────────────────────┤
+│ SUPPLIER VENDOR     │ TESTING LABORATORY       │ DOCUMENT STANDARD           │ NORMALIZATION PROFILE              │
+├─────────────────────┼──────────────────────────┼─────────────────────────────┼────────────────────────────────────┤
+│ VEND-NORTH-BIO      │ LAB-GL-ANALYTICAL        │ Health Canada / CALA        │ • Standard Canadian Bilingual      │
+│ (Canada - Botanical)│ (Mississauga, ON, CA)    │ ISO/IEC 17025 (CALA #9481)  │ • UoMs: % (w/w), ppm, CFU/g        │
+├─────────────────────┼──────────────────────────┼─────────────────────────────┼────────────────────────────────────┤
+│ VEND-ALPINE-EXT     │ LAB-EURO-PHYTO           │ European Pharmacopoeia      │ • German / English (Prüfbericht)   │
+│ (Germany - Root Ext)│ (München, Bavaria, DE)   │ DIN EN ISO 17025 (DAkkS)    │ • UoMs: % (m/m) -> % (w/w),        │
+│                     │                          │ Ph. Eur. 11th Edition       │   mg/kg -> ppm, KbE/g -> CFU/g     │
+├─────────────────────┼──────────────────────────┼─────────────────────────────┼────────────────────────────────────┤
+│ VEND-PACIFIC-ORG    │ LAB-PACIFIC-TEST         │ SCC & AOAC PTM / USP        │ • West Coast Probiotics / Solvents │
+│ (Canada/USA - Bio)  │ (Burnaby, BC, CA)        │ ISO/IEC 17025 (SCC #8172)   │ • UoMs: Billion CFU/g, Aw, ppm     │
+├─────────────────────┼──────────────────────────┼─────────────────────────────┼────────────────────────────────────┤
+│ VEND-NIPPON-PHARMA  │ LAB-TOKYO-BIO            │ Japanese Pharmacopoeia      │ • Japanese / English (試験成績書)  │
+│ (Japan - API Ferm)  │ (Chuo-ku, Tokyo, JP)     │ JP 18 / JIS / JNLA #09418   │ • UoMs: mass% -> % (w/w),          │
+│                     │                          │ PMDA JP-PMDA-LAB-2024-819   │   ppb -> ppm (/1000), deg [α]D20   │
+├─────────────────────┼──────────────────────────┼─────────────────────────────┼────────────────────────────────────┤
+│ VEND-NORDIC-MAR     │ LAB-FJORD-ANALYTICAL     │ GOED Voluntary Monograph    │ • Norwegian / English (Analysesert)│
+│ (Norway - Marine)   │ (Ålesund, Møre, NO)      │ NS-EN ISO 17025 (NA #92)    │ • UoMs: mg/g -> % (w/w) (/10),     │
+│                     │                          │ Mattilsynet NO-HACCP-9481   │   meq O2/kg, p-AV/TOTOX, pg TEQ/g  │
+└─────────────────────┴──────────────────────────┴─────────────────────────────┴────────────────────────────────────┘
+```
+
+### 5.1 Unit of Measure Conversion Engine (to Standard SI)
+
+```
+[Inbound Heterogeneous Lab Values]
+  ├─ mg/kg, μg/g (DE, NO, JP) ──────────▶ [1:1 Direct] ─────────▶ ppm
+  ├─ ppb / μg/kg (JP) ──────────────────▶ [/ 1000.0] ───────────▶ ppm
+  ├─ % (m/m), mass%, g/100g (DE, JP) ───▶ [1:1 Direct] ─────────▶ % (w/w)
+  ├─ mg/g fatty acids/actives (NO) ─────▶ [/ 10.0] ─────────────▶ % (w/w)
+  ├─ KbE/g (DE) / 個/g (JP) ────────────▶ [1:1 Direct] ─────────▶ CFU/g
+  ├─ mmol O2/kg (NO) ───────────────────▶ [* 2.0] ──────────────▶ meq O2/kg
+  └─ Billion CFU/g (CA/US) ─────────────▶ [* 1.0e9 / 100.0 GCFU]▶ Acumatica Probiotic Standard
+```
+
+### 5.2 Multilingual Analyte Normalization Matrix
+
+| Canonical Entity | English Synonyms | German Synonyms | Japanese Synonyms | Norwegian Synonyms | French Synonyms |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **`active_potency`** | Active Polyphenols, Anthocyanins, Withanolides, Curcuminoids, CoQ10, EPA/DHA | Withanolid-Gesamtgehalt, Rosavine gesamt, Salidrosid | 定量法 (ユビデカレノン, L-テアニン), 純度試験 | Fettsyreinnhold (EPA, DHA), Rent Astaxantin | Teneur en polyphénols, Titre actif |
+| **`loss_on_drying`** | Loss on Drying, Moisture, LOD, Residue on Ignition | Trocknungsverlust (Ph. Eur. 2.2.32), Feuchtigkeitsgehalt | 強熱残分 (JP 2.44), 乾燥減量 (JP 2.41) | Tørketap, Fuktighetsinnhold | Perte au séchage, Humidité résiduelle |
+| **`heavy_metal_lead`** | Lead, Pb, Elemental Lead | Blei (Pb), Blei-Gehalt (DIN EN 15763) | 純度試験: 鉛 (Pb), 重金属 (Pb) | Bly (Pb), Blyinnhold | Plomb (Pb), Plomb élémentaire |
+| **`heavy_metal_arsenic`** | Arsenic, As, Total Arsenic | Arsen (As), Gesamtarsen | 純度試験: ヒ素 (As), ヒ素試験法 | Arsen totalt (As), Uorganisk arsen | Arsenic (As), Arsenic total |
+| **`microbial_tamc`** | Total Aerobic Microbial Count, TAMC, Plate Count | Gesamtkeimzahl (TAMC), Aerobe mesophile Keime | 生菌数試験: 一般生菌数 (TAMC) | Totalt kimtall (TAMC), Kimtall 30°C | Dénombrement germes aérobies totaux |
+| **`microbial_tymc`** | Total Combined Yeast & Mold, TYMC | Hefen und Schimmelpilze (TYMC) | 真菌数 (カビ・酵母数 / TYMC) | Gjær og muggsopp (TYMC) | Dénombrement levures et moisissures |
+| **`pathogen_e_coli`** | Escherichia coli (Absent) | E. coli (Nicht nachweisbar) | 大腸菌 (陰性 / 不検出) | Escherichia coli (Ikke påvist) | Escherichia coli (Absence) |
+| **`pathogen_salmonella`**| Salmonella spp. (Absent) | Salmonellen (Nicht nachweisbar) | サルモネラ (陰性 / 不検出) | Salmonella spp. (Ikke påvist) | Salmonella spp. (Absence) |
+| **`residual_solvents`** | Residual Solvents (Ethanol, Dioxins/PCBs) | Restlösemittel: Ethanol (Ph. Eur. 2.4.24) | 残留溶媒: エタノール (JP 2.46) | Dioksiner og dioksinlignende PCB | Solvants résiduels (Éthanol) |

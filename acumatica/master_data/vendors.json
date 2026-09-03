@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "version": "2026.1",
+  "version": "2026.2",
   "generated_at": "2026-03-01T00:00:00Z",
   "vendors": [
     {
@@ -86,8 +86,8 @@
         "RAW-RHOD-EXT3"
       ],
       "preferred_test_labs": [
-        "LAB-GL-ANALYTICAL",
-        "LAB-PACIFIC-TEST"
+        "LAB-EURO-PHYTO",
+        "LAB-GL-ANALYTICAL"
       ]
     },
     {
@@ -130,8 +130,8 @@
         "RAW-GUT-PRB100"
       ],
       "preferred_test_labs": [
-        "LAB-GL-ANALYTICAL",
-        "LAB-PACIFIC-TEST"
+        "LAB-PACIFIC-TEST",
+        "LAB-GL-ANALYTICAL"
       ]
     },
     {
@@ -174,8 +174,8 @@
         "RAW-THEA-98"
       ],
       "preferred_test_labs": [
-        "LAB-GL-ANALYTICAL",
-        "LAB-PACIFIC-TEST"
+        "LAB-TOKYO-BIO",
+        "LAB-GL-ANALYTICAL"
       ]
     },
     {
@@ -218,7 +218,7 @@
         "RAW-ASTA-10"
       ],
       "preferred_test_labs": [
-        "LAB-GL-ANALYTICAL",
+        "LAB-FJORD-ANALYTICAL",
         "LAB-PACIFIC-TEST"
       ]
     }

@@ -1,0 +1,110 @@
+{
+  "document_metadata": {
+    "document_type": "Certificate of Analysis (CoA)",
+    "document_id": "COA-LAB-EU-2026-63412",
+    "issued_date": "2026-09-02",
+    "document_standard": "DIN_EN_ISO17025_PHEUR",
+    "primary_language": "de-DE",
+    "secondary_language": "en-GB",
+    "acumatica_erp_mapping": {
+      "acumatica_po_number": "PO-036438",
+      "acumatica_receipt_number": "PR-073927",
+      "inventory_item_id": "RAW-ASH-EXT5",
+      "lot_serial_number": "LOT-ASH2632-837-T",
+      "vendor_id": "VEND-ALPINE-EXT",
+      "testing_lab_id": "LAB-EURO-PHYTO"
+    }
+  },
+  "issuer_information": {
+    "laboratory_name": "Euro-Phyto Analytics GmbH",
+    "short_name": "Euro-Phyto Analytics",
+    "accreditation": "DIN EN ISO/IEC 17025:2018 (DAkkS #D-PL-14192-01) / EU GMP #DE_BY_01_GMP_2025_0112",
+    "address": "München, Bavaria 80807, DE"
+  },
+  "product_information": {
+    "product_name": "Organic Ashwagandha Root Extract 5% Withanolides",
+    "botanical_source": "Withania somnifera (L.) Dunal (Root)",
+    "lot_number": "LOT-ASH2632-837-T",
+    "batch_size_kg": 1470.2,
+    "manufacturing_date": "2026-07-18",
+    "expiry_date": "2029-07-17",
+    "supplier_vendor_id": "VEND-ALPINE-EXT",
+    "supplier_vendor_name": "Alpine Botanical Extracts GmbH",
+    "health_canada_npn": "NPN-80041289"
+  },
+  "test_results": [
+    {
+      "step_nbr": 10,
+      "raw_parameter_name": "Withanolid-Gesamtgehalt (Withanolides HPLC)",
+      "canonical_parameter": "active_potency",
+      "test_method": "HPLC-UV (Ph. Eur. Monograph)",
+      "specification_min": 5.0,
+      "specification_max": null,
+      "raw_measured_value": 5.37,
+      "raw_unit": "% (m/m)",
+      "normalized_si_value": 5.37,
+      "normalized_si_unit": "% (w/w)",
+      "conversion_applied": "% (m/m) -> % (w/w) (factor 1.0)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 20,
+      "raw_parameter_name": "Trocknungsverlust (Loss on Drying 105°C)",
+      "canonical_parameter": "loss_on_drying",
+      "test_method": "Ph. Eur. 2.2.32",
+      "specification_min": null,
+      "specification_max": 5.0,
+      "raw_measured_value": 3.59,
+      "raw_unit": "% (m/m)",
+      "normalized_si_value": 3.59,
+      "normalized_si_unit": "% (w/w)",
+      "conversion_applied": "% (m/m) -> % (w/w) (factor 1.0)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 30,
+      "raw_parameter_name": "Blei (Pb) / Lead ICP-MS",
+      "canonical_parameter": "heavy_metal_lead",
+      "test_method": "ICP-MS (DIN EN 15763)",
+      "specification_min": null,
+      "specification_max": 0.5,
+      "raw_measured_value": 0.075,
+      "raw_unit": "mg/kg",
+      "normalized_si_value": 0.075,
+      "normalized_si_unit": "ppm",
+      "conversion_applied": "mg/kg -> ppm (factor 1.0)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 40,
+      "raw_parameter_name": "Gesamtkeimzahl (Aerobe mesophile Keime - TAMC)",
+      "canonical_parameter": "microbial_tamc",
+      "test_method": "Ph. Eur. 2.6.12",
+      "specification_min": null,
+      "specification_max": 10000,
+      "raw_measured_value": 15000.0,
+      "raw_unit": "KbE/g",
+      "normalized_si_value": 15000.0,
+      "normalized_si_unit": "CFU/g",
+      "conversion_applied": "KbE/g -> CFU/g (factor 1.0)",
+      "status": "FAIL"
+    }
+  ],
+  "authorization": {
+    "signatory_name": "Dr. Manfred Weiss, Dr. rer. nat., Dipl.-Chem.",
+    "title": "Laborleiter & Leitender Chemiker",
+    "approval_date": "2026-09-02T20:11:17.965615"
+  },
+  "evaluation_summary": {
+    "overall_status": "REJECTED",
+    "discrepancy_count": 1,
+    "reasons": [
+      "Gesamtkeimzahl (Aerobe mesophile Keime - TAMC) measured 15000.0 CFU/g breached spec limits."
+    ]
+  },
+  "acumatica_action_directive": {
+    "auto_approve_lot": false,
+    "lot_status": "Quarantine",
+    "create_ncr_ticket": true
+  }
+}

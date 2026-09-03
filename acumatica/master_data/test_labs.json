@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
-  "version": "2026.1",
+  "version": "2026.2",
   "testing_laboratories": [
     {
       "lab_id": "LAB-GL-ANALYTICAL",
@@ -8,6 +8,8 @@
       "legal_name": "Great Lakes Bio-Analytical Services Inc.",
       "short_name": "Great Lakes Analytical",
       "status": "Active",
+      "assigned_vendor_id": "VEND-NORTH-BIO",
+      "assigned_vendor_name": "Northern BioNutra Imports Corp.",
       "facility_address": {
         "address_line1": "6850 Meadowvale Town Centre Circle, Suite 400",
         "city": "Mississauga",
@@ -33,6 +35,71 @@
           "standard": "cGMP CFR Title 21 Part 111/211",
           "registration_number": "FEI-3019284910",
           "expiry_date": "2027-09-30"
+        }
+      ],
+      "document_standard": {
+        "standard_name": "Health Canada HPFBI / CALA ISO 17025 Standard CoA",
+        "framework": "Health Canada GUI-0001 / GUI-0158 & CALA Scope #9481",
+        "layout_type": "Standard Canadian Bilingual Tabular Certificate",
+        "primary_language": "en-CA",
+        "secondary_language": "fr-CA"
+      },
+      "measurement_units_and_si_conversion": {
+        "potency_uom": "% (w/w) [Baseline SI: 1.0 %]",
+        "heavy_metals_uom": "ppm [SI conversion: 1 ppm = 1.0 mg/kg]",
+        "microbial_uom": "CFU/g [Baseline SI: 1 CFU/g]",
+        "loss_on_drying_uom": "% (w/w) [Baseline SI: 1.0 %]"
+      },
+      "bilingual_terms_and_synonyms": [
+        {
+          "canonical_parameter": "active_potency",
+          "synonyms_en": ["Active Polyphenols Content", "Anthocyanins Content", "Assay (Potency)"],
+          "synonyms_fr": ["Teneur en polyphénols totaux", "Teneur en anthocyanes", "Dosage / Titre"]
+        },
+        {
+          "canonical_parameter": "loss_on_drying",
+          "synonyms_en": ["Loss on Drying (Moisture)", "Moisture Content", "LOD"],
+          "synonyms_fr": ["Perte au séchage (Humidité)", "Teneur en eau", "Humidité résiduelle"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_lead",
+          "synonyms_en": ["Lead (Pb)", "Elemental Lead", "Heavy Metals (as Pb)"],
+          "synonyms_fr": ["Plomb (Pb)", "Plomb élémentaire", "Métaux lourds (exprimés en Pb)"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_arsenic",
+          "synonyms_en": ["Arsenic (As)", "Total Arsenic", "Inorganic Arsenic"],
+          "synonyms_fr": ["Arsenic (As)", "Arsenic total", "Arsenic inorganique"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_cadmium",
+          "synonyms_en": ["Cadmium (Cd)", "Elemental Cadmium"],
+          "synonyms_fr": ["Cadmium (Cd)", "Cadmium élémentaire"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_mercury",
+          "synonyms_en": ["Mercury (Hg)", "Elemental Mercury", "Total Mercury"],
+          "synonyms_fr": ["Mercure (Hg)", "Mercure élémentaire", "Mercure total"]
+        },
+        {
+          "canonical_parameter": "microbial_tamc",
+          "synonyms_en": ["Total Aerobic Microbial Count (TAMC)", "Total Plate Count", "Aerobic Plate Count"],
+          "synonyms_fr": ["Dénombrement des germes aérobies totaux (DGAT)", "Flore aérobie mésophile totale"]
+        },
+        {
+          "canonical_parameter": "microbial_tymc",
+          "synonyms_en": ["Total Combined Yeast & Mold (TYMC)", "Yeast and Mold Count"],
+          "synonyms_fr": ["Dénombrement des levures et moisissures totales (DLMT)", "Levures et moisissures"]
+        },
+        {
+          "canonical_parameter": "pathogen_e_coli",
+          "synonyms_en": ["Escherichia coli", "E. coli"],
+          "synonyms_fr": ["Escherichia coli (Absence dans 10g)"]
+        },
+        {
+          "canonical_parameter": "pathogen_salmonella",
+          "synonyms_en": ["Salmonella spp.", "Salmonella"],
+          "synonyms_fr": ["Salmonella spp. (Absence dans 25g)"]
         }
       ],
       "primary_specializations": [
@@ -82,6 +149,8 @@
       "legal_name": "Pacific Rim BioNutra Testing Laboratories Ltd.",
       "short_name": "Pacific Rim Labs",
       "status": "Active",
+      "assigned_vendor_id": "VEND-PACIFIC-ORG",
+      "assigned_vendor_name": "Pacific Organic Ingredients Ltd.",
       "facility_address": {
         "address_line1": "4180 Lougheed Highway, Suite 250",
         "city": "Burnaby",
@@ -107,6 +176,51 @@
           "standard": "RI Performance Tested Methods (PTM)",
           "certificate_id": "AOAC-PTM-092101",
           "expiry_date": "2027-05-31"
+        }
+      ],
+      "document_standard": {
+        "standard_name": "SCC & AOAC PTM / USP Dietary Supplement Testing Standard",
+        "framework": "Standards Council of Canada (SCC #8172) & AOAC-RI PTM #092101",
+        "layout_type": "North American Specialized Probiotic & Solvents Certificate",
+        "primary_language": "en-CA",
+        "secondary_language": "fr-CA"
+      },
+      "measurement_units_and_si_conversion": {
+        "probiotic_potency_uom": "Billion CFU/g [SI conversion: value * 1.0e9 CFU/g or 100.0 GCFU/g]",
+        "water_activity_uom": "Aw [dimensionless, 0.00 to 1.00]",
+        "residual_solvents_uom": "ppm [SI conversion: 1 ppm = 1.0 μg/g = 1.0 mg/kg]",
+        "botanical_potency_uom": "% (w/w) [Baseline SI: 1.0 %]"
+      },
+      "bilingual_terms_and_synonyms": [
+        {
+          "canonical_parameter": "active_potency",
+          "synonyms_en": ["Viable Probiotic Cell Count", "Total Curcuminoids Purity", "Curcuminoid Complex"],
+          "synonyms_fr": ["Numération des bactéries probiotiques viables", "Pureté en curcuminoïdes totaux"]
+        },
+        {
+          "canonical_parameter": "ph_value",
+          "synonyms_en": ["Water Activity (Aw)", "Water Activity", "Aw Value"],
+          "synonyms_fr": ["Activité de l'eau (Aw)", "Valeur d'activité de l'eau"]
+        },
+        {
+          "canonical_parameter": "residual_solvents",
+          "synonyms_en": ["Residual Solvents (Ethanol)", "Residual Ethanol", "Class 3 Solvents (Ethanol)"],
+          "synonyms_fr": ["Solvants résiduels (Éthanol)", "Éthanol résiduel"]
+        },
+        {
+          "canonical_parameter": "microbial_tamc",
+          "synonyms_en": ["Non-Lactic Contaminant Bioburden", "Total Aerobic Count (TAMC)"],
+          "synonyms_fr": ["Contaminants non-lactiques", "Dénombrement aérobie total"]
+        },
+        {
+          "canonical_parameter": "pathogen_e_coli",
+          "synonyms_en": ["Escherichia coli", "E. coli (Absent in 10g)"],
+          "synonyms_fr": ["Escherichia coli (Absence dans 10g)"]
+        },
+        {
+          "canonical_parameter": "pathogen_salmonella",
+          "synonyms_en": ["Salmonella spp.", "Salmonella (Absent in 25g)"],
+          "synonyms_fr": ["Salmonella spp. (Absence dans 25g)"]
         }
       ],
       "primary_specializations": [
@@ -147,6 +261,457 @@
       "acumatica_edi_integration": {
         "supported_format": "JSON_REST_WEBHOOK",
         "endpoint": "https://api.pacificrimlabs.ca/qms/v2/certificates",
+        "auto_mapping_confidence_threshold": 0.95
+      }
+    },
+    {
+      "lab_id": "LAB-EURO-PHYTO",
+      "acumatica_vendor_id": "VEND-LAB-EUROPHYTO",
+      "legal_name": "Euro-Phyto Analytics GmbH",
+      "short_name": "Euro-Phyto Analytics",
+      "status": "Active",
+      "assigned_vendor_id": "VEND-ALPINE-EXT",
+      "assigned_vendor_name": "Alpine Botanical Extracts GmbH",
+      "facility_address": {
+        "address_line1": "Am Gewerbepark 14",
+        "city": "München",
+        "state_province": "Bavaria",
+        "postal_code": "80807",
+        "country": "DE"
+      },
+      "accreditations": [
+        {
+          "body": "DAkkS (Deutsche Akkreditierungsstelle)",
+          "standard": "DIN EN ISO/IEC 17025:2018",
+          "scope_number": "D-PL-14192-01-00",
+          "expiry_date": "2028-09-30"
+        },
+        {
+          "body": "Regierung von Oberbayern / EU GMP",
+          "standard": "EU GMP Guideline Part II / Ph. Eur. Testing Laboratory",
+          "licence_number": "DE_BY_01_GMP_2025_0112",
+          "expiry_date": "2027-11-30"
+        },
+        {
+          "body": "Health Canada Foreign Annex",
+          "standard": "MRA Foreign Testing Laboratory Annex",
+          "licence_number": "FSA-EU-DE-LAB-9182",
+          "expiry_date": "2027-04-30"
+        }
+      ],
+      "document_standard": {
+        "standard_name": "European Pharmacopoeia (Ph. Eur.) & DIN EN ISO/IEC 17025 Prüfzertifikat",
+        "framework": "Ph. Eur. 11th Edition / DIN EN 15763 & DAkkS D-PL-14192-01",
+        "layout_type": "German / European DIN-Pharma Prüfbericht Standard",
+        "primary_language": "de-DE",
+        "secondary_language": "en-GB"
+      },
+      "measurement_units_and_si_conversion": {
+        "potency_uom": "% (m/m) [SI conversion: 1 % (m/m) = 1.0 % (w/w)] or g/100g [1 g/100g = 1 % (w/w)] or g/kg [value / 10 = % (w/w)]",
+        "heavy_metals_uom": "mg/kg or μg/g [SI conversion: 1 mg/kg = 1.0 ppm]",
+        "microbial_uom": "KbE/g (Koloniebildende Einheiten) [SI conversion: 1 KbE/g = 1.0 CFU/g]",
+        "loss_on_drying_uom": "% (m/m) Trocknungsverlust [SI conversion: 1 % (m/m) = 1.0 % Loss on Drying]"
+      },
+      "bilingual_terms_and_synonyms": [
+        {
+          "canonical_parameter": "active_potency",
+          "synonyms_en": ["Total Withanolides Assay", "Withanolides Content", "Total Rosavins", "Salidroside Content"],
+          "synonyms_de": ["Withanolid-Gesamtgehalt", "Withanolide (HPLC)", "Rosavine gesamt", "Salidrosid-Gehalt"]
+        },
+        {
+          "canonical_parameter": "loss_on_drying",
+          "synonyms_en": ["Loss on Drying (Ph. Eur. 2.2.32)", "Moisture Content (LOD)", "Drying Loss"],
+          "synonyms_de": ["Trocknungsverlust (Ph. Eur. 2.2.32)", "Feuchtigkeitsgehalt", "Trocknungsverlust 105°C"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_lead",
+          "synonyms_en": ["Lead (Pb)", "Elemental Lead (DIN EN 15763)"],
+          "synonyms_de": ["Blei (Pb)", "Blei-Gehalt (ICP-MS)", "Blei gemäß Ph. Eur. 2.4.27"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_arsenic",
+          "synonyms_en": ["Arsenic (As)", "Total Arsenic (DIN EN 15763)"],
+          "synonyms_de": ["Arsen (As)", "Gesamtarsen", "Arsen gemäß Ph. Eur. 2.4.27"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_cadmium",
+          "synonyms_en": ["Cadmium (Cd)", "Elemental Cadmium"],
+          "synonyms_de": ["Cadmium (Cd)", "Cadmium-Gehalt", "Cadmium gemäß Ph. Eur. 2.4.27"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_mercury",
+          "synonyms_en": ["Mercury (Hg)", "Total Mercury"],
+          "synonyms_de": ["Quecksilber (Hg)", "Quecksilber-Gehalt", "Quecksilber gemäß Ph. Eur. 2.4.27"]
+        },
+        {
+          "canonical_parameter": "microbial_tamc",
+          "synonyms_en": ["Total Aerobic Microbial Count (TAMC)", "Aerobic Plate Count (Ph. Eur. 2.6.12)"],
+          "synonyms_de": ["Gesamtkeimzahl (TAMC)", "Aerobe mesophile Keime", "Gesamtzahl aerober Mikroorganismen"]
+        },
+        {
+          "canonical_parameter": "microbial_tymc",
+          "synonyms_en": ["Total Combined Yeast & Mold (TYMC)", "Yeast and Mold (Ph. Eur. 2.6.12)"],
+          "synonyms_de": ["Hefen und Schimmelpilze (TYMC)", "Gesamtzahl Hefen und Schimmelpilze"]
+        },
+        {
+          "canonical_parameter": "pathogen_e_coli",
+          "synonyms_en": ["Escherichia coli (Absent in 10g)", "E. coli (Ph. Eur. 2.6.13)"],
+          "synonyms_de": ["Escherichia coli (Nicht nachweisbar in 10g)", "E. coli (Abwesend in 10g)"]
+        },
+        {
+          "canonical_parameter": "pathogen_salmonella",
+          "synonyms_en": ["Salmonella spp. (Absent in 25g)", "Salmonella (Ph. Eur. 2.6.13)"],
+          "synonyms_de": ["Salmonellen (Nicht nachweisbar in 25g)", "Salmonella spp. (Abwesend in 25g)"]
+        },
+        {
+          "canonical_parameter": "residual_solvents",
+          "synonyms_en": ["Residual Solvents: Ethanol (Ph. Eur. 2.4.24)", "Residual Ethanol"],
+          "synonyms_de": ["Restlösemittel: Ethanol (Ph. Eur. 2.4.24)", "Ethanol-Restgehalt"]
+        }
+      ],
+      "primary_specializations": [
+        "Standardized Botanical Marker Assays (Ph. Eur. Monographs)",
+        "Heavy Metals by ICP-MS (DIN EN 15763 / Ph. Eur. 2.4.27)",
+        "European Microbial Limits (Ph. Eur. 2.6.12 / 2.6.13 / ISO 4833)",
+        "Residual Solvents by Headspace GC-FID (Ph. Eur. 2.4.24)"
+      ],
+      "core_instrumentation": [
+        {
+          "category": "Chromatography",
+          "equipment": "Shimadzu Nexera X3 UHPLC System with Prominence Photodiode Array Detector"
+        },
+        {
+          "category": "Mass Spectrometry",
+          "equipment": "Agilent 7900 ICP-MS with Ultra High Matrix Introduction (UHMI)"
+        },
+        {
+          "category": "Gas Chromatography",
+          "equipment": "Thermo Scientific TRACE 1310 GC with TriPlus 500 Headspace Sampler"
+        },
+        {
+          "category": "Physical & Thermal",
+          "equipment": "Sartorius MA100 Infrared Moisture Analyzer & Memmert Vacuum Ovens"
+        }
+      ],
+      "turnaround_slas": {
+        "standard_turnaround_days": 6,
+        "rush_turnaround_days": 2,
+        "emergency_turnaround_hours": 24
+      },
+      "contacts": {
+        "lab_director": "Dr. Manfred Weiss, Dr. rer. nat., Dipl.-Chem.",
+        "qa_manager": "Hanna Lindner, M.Sc.",
+        "email_coa_submission": "pruefbericht@europhyto-analytics.de",
+        "phone": "+49-89-555-73910"
+      },
+      "acumatica_edi_integration": {
+        "supported_format": "JSON_REST_WEBHOOK",
+        "endpoint": "https://api.europhyto-analytics.de/qms/v1/pruefzertifikate",
+        "auto_mapping_confidence_threshold": 0.95
+      }
+    },
+    {
+      "lab_id": "LAB-TOKYO-BIO",
+      "acumatica_vendor_id": "VEND-LAB-TOKYOBIO",
+      "legal_name": "Tokyo Bio-Analytical Testing Laboratories Inc.",
+      "short_name": "Tokyo Bio-Analytical Labs",
+      "status": "Active",
+      "assigned_vendor_id": "VEND-NIPPON-PHARMA",
+      "assigned_vendor_name": "Nippon Pure Bioactives Inc.",
+      "facility_address": {
+        "address_line1": "3-14-5 Nihonbashi Muromachi, Chuo-ku",
+        "city": "Tokyo",
+        "state_province": "Tokyo",
+        "postal_code": "103-0022",
+        "country": "JP"
+      },
+      "accreditations": [
+        {
+          "body": "Japan PMDA (Pharmaceuticals and Medical Devices Agency)",
+          "standard": "GMP Ministerial Ordinance No. 179 / Testing Laboratory",
+          "scope_number": "JP-PMDA-LAB-2024-819",
+          "expiry_date": "2027-11-30"
+        },
+        {
+          "body": "JNLA (Japan National Laboratory Accreditation)",
+          "standard": "JIS Q 17025:2018 (ISO/IEC 17025:2017)",
+          "scope_number": "JNLA-09418",
+          "expiry_date": "2028-05-31"
+        },
+        {
+          "body": "US FDA Registration",
+          "standard": "21 CFR Part 211 / API Quality Testing",
+          "registration_number": "FEI-3008491028",
+          "expiry_date": "2027-08-31"
+        },
+        {
+          "body": "Health Canada Foreign Annex",
+          "standard": "MRA Foreign API Testing Facility Annex",
+          "licence_number": "FSA-JP-TK-LAB-4491",
+          "expiry_date": "2027-11-30"
+        }
+      ],
+      "document_standard": {
+        "standard_name": "Japanese Pharmacopoeia (JP XVII/XVIII) & JIS Shiken Seisekisho (試験成績書)",
+        "framework": "Japanese Pharmacopoeia (JP 18) / PMDA GMP / JIS K 0102 & JNLA-09418",
+        "layout_type": "Japanese Pharmacopoeial Dual-Language Analytical Certificate",
+        "primary_language": "ja-JP",
+        "secondary_language": "en-US"
+      },
+      "measurement_units_and_si_conversion": {
+        "potency_uom": "% (w/w) or mass% / 質量% [Baseline SI: 1.0 %]",
+        "heavy_metals_uom": "ppm or ppb (μg/kg) [SI conversion: ppb / 1000 = ppm, 1 ppm = 1.0 ppm]",
+        "optical_rotation_uom": "degrees (deg / °) [Baseline SI optical rotation: [α]D20]",
+        "residue_on_ignition_uom": "% (w/w) 強熱残分 [SI conversion: 1.0 % Residue on Ignition]",
+        "microbial_uom": "CFU/g or 個/g [SI conversion: 1 個/g = 1.0 CFU/g]"
+      },
+      "bilingual_terms_and_synonyms": [
+        {
+          "canonical_parameter": "active_potency",
+          "synonyms_en": ["Ubiquinone (CoQ10) Assay", "Coenzyme Q10 Potency", "L-Theanine Assay", "L-Theanine Content"],
+          "synonyms_ja": ["定量法: ユビデカレノン (Ubidecarenone)", "定量法: コエンザイムQ10", "定量法: L-テアニン (L-Theanine)", "含量 / 純度試験"]
+        },
+        {
+          "canonical_parameter": "loss_on_drying",
+          "synonyms_en": ["Residue on Ignition (USP <281>)", "Loss on Drying (JP 2.41)", "Ash Content"],
+          "synonyms_ja": ["強熱残分 (JP 2.44)", "乾燥減量 (JP 2.41)", "強熱灰分"]
+        },
+        {
+          "canonical_parameter": "density_specific_gravity",
+          "synonyms_en": ["Specific Optical Rotation [α]D20 (JP 2.49)", "Optical Rotation", "Specific Rotation"],
+          "synonyms_ja": ["比旋光度 [α]D20 (JP 2.49)", "旋光度試験"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_lead",
+          "synonyms_en": ["Lead (Pb)", "Heavy Metals (as Pb) JP 1.07"],
+          "synonyms_ja": ["純度試験: 鉛 (Pb)", "重金属 (Pbとして)", "鉛試験法"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_arsenic",
+          "synonyms_en": ["Arsenic (As)", "Arsenic Impurity (JP 1.11)"],
+          "synonyms_ja": ["純度試験: ヒ素 (As)", "ヒ素試験法 (JP 1.11)"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_cadmium",
+          "synonyms_en": ["Cadmium (Cd)", "Cadmium Impurity"],
+          "synonyms_ja": ["純度試験: カドミウム (Cd)"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_mercury",
+          "synonyms_en": ["Mercury (Hg)", "Mercury Impurity"],
+          "synonyms_ja": ["純度試験: 水銀 (Hg)"]
+        },
+        {
+          "canonical_parameter": "microbial_tamc",
+          "synonyms_en": ["Total Aerobic Microbial Count (TAMC)", "Microbial Limits (JP 4.05)"],
+          "synonyms_ja": ["生菌数試験: 一般生菌数 (TAMC)", "微生物限度試験: 好気性菌数"]
+        },
+        {
+          "canonical_parameter": "microbial_tymc",
+          "synonyms_en": ["Total Combined Yeast & Mold (TYMC)", "Fungi Count (JP 4.05)"],
+          "synonyms_ja": ["生菌数試験: 真菌数 (カビ・酵母数 / TYMC)"]
+        },
+        {
+          "canonical_parameter": "pathogen_e_coli",
+          "synonyms_en": ["Escherichia coli (Absent in 10g)", "E. coli (JP 4.05)"],
+          "synonyms_ja": ["大腸菌 (Escherichia coli - 陰性 / 不検出 in 10g)"]
+        },
+        {
+          "canonical_parameter": "pathogen_salmonella",
+          "synonyms_en": ["Salmonella spp. (Absent in 25g)", "Salmonella (JP 4.05)"],
+          "synonyms_ja": ["サルモネラ (Salmonella spp. - 陰性 / 不検出 in 25g)"]
+        },
+        {
+          "canonical_parameter": "residual_solvents",
+          "synonyms_en": ["Residual Solvents: Ethanol (JP 2.46)", "Residual Solvents"],
+          "synonyms_ja": ["残留溶媒: エタノール (JP 2.46)", "残留溶媒試験法"]
+        }
+      ],
+      "primary_specializations": [
+        "Active Pharmaceutical Ingredient (API) Potency & Purity (JP / USP / EP)",
+        "High-Precision Polarimetry & Specific Optical Rotation (JP 2.49 / USP <781S>)",
+        "Residue on Ignition & Heavy Metals Analysis (JP 2.44 / JP 1.07 / ICP-MS)",
+        "Related Substances & High-Purity Chromatographic Impurities (HPLC-UV/DAD)"
+      ],
+      "core_instrumentation": [
+        {
+          "category": "Chromatography",
+          "equipment": "Waters ACQUITY UPLC H-Class PLUS with PDA & QDa Mass Detector"
+        },
+        {
+          "category": "Polarimetry",
+          "equipment": "JASCO P-2000 High-Precision Digital Polarimeter (Sodium D-line 589nm)"
+        },
+        {
+          "category": "Mass Spectrometry",
+          "equipment": "Shimadzu ICPMS-2030 Inductively Coupled Plasma Mass Spectrometer"
+        },
+        {
+          "category": "Thermal & Ash",
+          "equipment": "Yamato FO-310 Muffler Furnace & Sartorius SE2 Microbalance (0.1 μg precision)"
+        }
+      ],
+      "turnaround_slas": {
+        "standard_turnaround_days": 5,
+        "rush_turnaround_days": 2,
+        "emergency_turnaround_hours": 24
+      },
+      "contacts": {
+        "lab_director": "Dr. Hiroshi Nakamura, Ph.D., P.Chem.",
+        "qa_manager": "Yuki Tanaka, B.Pharm., CQA",
+        "email_coa_submission": "coa-qa@tokyobio-labs.co.jp",
+        "phone": "+81-3-5555-8930"
+      },
+      "acumatica_edi_integration": {
+        "supported_format": "JSON_REST_WEBHOOK",
+        "endpoint": "https://api.tokyobio-labs.co.jp/edi/v2/shiken-seisekisho",
+        "auto_mapping_confidence_threshold": 0.95
+      }
+    },
+    {
+      "lab_id": "LAB-FJORD-ANALYTICAL",
+      "acumatica_vendor_id": "VEND-LAB-FJORDMAR",
+      "legal_name": "Fjord Marine Bio-Testing Laboratories AS",
+      "short_name": "Fjord Marine Labs",
+      "status": "Active",
+      "assigned_vendor_id": "VEND-NORDIC-MAR",
+      "assigned_vendor_name": "Nordic Marine Extracts AS",
+      "facility_address": {
+        "address_line1": "Havnegata 34",
+        "city": "Ålesund",
+        "state_province": "Møre og Romsdal",
+        "postal_code": "6003",
+        "country": "NO"
+      },
+      "accreditations": [
+        {
+          "body": "Norsk Akkreditering (NA)",
+          "standard": "NS-EN ISO/IEC 17025:2018",
+          "scope_number": "TEST-092",
+          "expiry_date": "2028-10-31"
+        },
+        {
+          "body": "Mattilsynet (Norwegian Food Safety Authority)",
+          "standard": "Approved Marine Lipid Testing Laboratory / HACCP",
+          "licence_number": "NO-LAB-HACCP-9481",
+          "expiry_date": "2027-12-31"
+        },
+        {
+          "body": "GOED (Global Organization for EPA and DHA Omega-3)",
+          "standard": "Voluntary Monograph Recognized Independent Lab",
+          "certificate_id": "GOED-LAB-2025-04",
+          "expiry_date": "2027-06-30"
+        },
+        {
+          "body": "Health Canada Foreign Annex",
+          "standard": "MRA Marine Lipid Testing Facility Annex",
+          "licence_number": "FSA-NO-MR-LAB-6729",
+          "expiry_date": "2027-06-30"
+        }
+      ],
+      "document_standard": {
+        "standard_name": "GOED Voluntary Monograph & Ph. Eur. Marine Lipid Analysesertifikat",
+        "framework": "GOED Monograph Version 2025 / Ph. Eur. 2.5.5, 2.5.7 & Norsk Akkreditering TEST-092",
+        "layout_type": "Nordic Marine Oil Standard Certificate of Analysis",
+        "primary_language": "no-NO",
+        "secondary_language": "en-GB"
+      },
+      "measurement_units_and_si_conversion": {
+        "peroxide_value_uom": "meq O2/kg or mmol O2/kg [SI conversion: 1 mmol O2/kg = 2.0 meq O2/kg; Baseline SI: meq O2/kg]",
+        "anisidine_value_uom": "unitless / index [SI standard p-AV dimensionless index]",
+        "totox_uom": "index [SI standard formula: 2 * PV + p-AV]",
+        "acid_value_uom": "mg KOH/g [Baseline SI: mg KOH/g]",
+        "fatty_acid_potency_uom": "mg/g or g/100g [SI conversion: mg/g / 10 = % (w/w); e.g. 400 mg/g EPA = 40.0 % (w/w), 200 mg/g DHA = 20.0 % (w/w), 700 mg/g Total EPA+DHA = 70.0 % (w/w)]",
+        "astaxanthin_potency_uom": "mg/g or g/kg [SI conversion: mg/g / 10 = % (w/w); e.g. 100 mg/g = 10.0 % (w/w)]",
+        "dioxin_pcb_uom": "pg WHO-PCDD/F-TEQ/g or ng/kg [Baseline SI: pg TEQ/g]",
+        "heavy_metals_uom": "mg/kg or ppm [SI conversion: 1 mg/kg = 1.0 ppm]",
+        "microbial_uom": "CFU/g [Baseline SI: 1 CFU/g]"
+      },
+      "bilingual_terms_and_synonyms": [
+        {
+          "canonical_parameter": "active_potency",
+          "synonyms_en": ["EPA (Eicosapentaenoic Acid)", "DHA (Docosahexaenoic Acid)", "Total EPA + DHA", "Astaxanthin Oleoresin Purity"],
+          "synonyms_no": ["Fettsyreinnhold: EPA (Eikosapentaensyre)", "Fettsyreinnhold: DHA (Dokosaheksaensyre)", "Totalt EPA + DHA innhold", "Rent Astaxantin-innhold"]
+        },
+        {
+          "canonical_parameter": "other_custom_assay",
+          "synonyms_en": ["Peroxide Value (PV)", "p-Anisidine Value (p-AV)", "Total Oxidation (TOTOX)", "Acid Value"],
+          "synonyms_no": ["Peroksidverdi (PV)", "Anisidintall (p-AV)", "Totalt oksidasjonstall (TOTOX)", "Syretall (Acid Value)"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_lead",
+          "synonyms_en": ["Lead (Pb)", "Heavy Metals (Lead)"],
+          "synonyms_no": ["Bly (Pb)", "Blyinnhold (ICP-MS)"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_arsenic",
+          "synonyms_en": ["Arsenic Total (As)", "Inorganic Arsenic (HPLC-ICP-MS)"],
+          "synonyms_no": ["Arsen totalt (As)", "Uorganisk arsen (HPLC-ICP-MS)"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_cadmium",
+          "synonyms_en": ["Cadmium (Cd)"],
+          "synonyms_no": ["Kadmium (Cd)"]
+        },
+        {
+          "canonical_parameter": "heavy_metal_mercury",
+          "synonyms_en": ["Mercury (Hg)", "Total Mercury"],
+          "synonyms_no": ["Kvikksølv (Hg)", "Totalkvikksølv"]
+        },
+        {
+          "canonical_parameter": "residual_solvents",
+          "synonyms_en": ["Dioxins, Furans & Dioxin-like PCBs (EPA 1613B)", "PCDD/F and PCB Congeners"],
+          "synonyms_no": ["Dioksiner, furaner og dioksinlignende PCB", "PCDD/PCDF og dioksinlignende PCB"]
+        },
+        {
+          "canonical_parameter": "microbial_tamc",
+          "synonyms_en": ["Total Aerobic Microbial Count (TAMC)", "Total Viable Count"],
+          "synonyms_no": ["Totalt kimtall (TAMC)", "Totalantall kim (30°C)"]
+        },
+        {
+          "canonical_parameter": "microbial_tymc",
+          "synonyms_en": ["Total Combined Yeast & Mold (TYMC)"],
+          "synonyms_no": ["Gjær og muggsopp (TYMC)"]
+        }
+      ],
+      "primary_specializations": [
+        "Marine Lipid Fatty Acid Profiling (EPA / DHA by GC-FID Ph. Eur. 2.4.29 / GOED)",
+        "Lipid Oxidation Parameters (Peroxide Value, p-Anisidine Value, TOTOX, Acid Value)",
+        "Natural Carotenoids & Astaxanthin Oleoresin HPLC Assay",
+        "Persistent Organic Pollutants (Dioxins, Furans, Dioxin-like PCBs by HRGC-HRMS EPA 1613B)"
+      ],
+      "core_instrumentation": [
+        {
+          "category": "Gas Chromatography",
+          "equipment": "Agilent 8890 GC System with Dual FID and Flame Photometric Detectors"
+        },
+        {
+          "category": "High-Res Mass Spectrometry",
+          "equipment": "Thermo Scientific DFS High Resolution Magnetic Sector GC-HRMS (Dioxin / PCB analysis)"
+        },
+        {
+          "category": "Chromatography",
+          "equipment": "Waters ACQUITY Arc HPLC with 2998 Photodiode Array (Carotenoid/Astaxanthin)"
+        },
+        {
+          "category": "Titrimetry",
+          "equipment": "Metrohm 905 Titrando Automated Potentiometric Titrator (Peroxide & Acid Value)"
+        }
+      ],
+      "turnaround_slas": {
+        "standard_turnaround_days": 5,
+        "rush_turnaround_days": 2,
+        "emergency_turnaround_hours": 36
+      },
+      "contacts": {
+        "lab_director": "Dr. Solveig Haugen, Ph.D., C.Chem.",
+        "qa_manager": "Eirik Bakke, M.Sc.",
+        "email_coa_submission": "analyser@fjordmarinelabs.no",
+        "phone": "+47-70-198420"
+      },
+      "acumatica_edi_integration": {
+        "supported_format": "JSON_REST_WEBHOOK",
+        "endpoint": "https://api.fjordmarinelabs.no/v1/analysesertifikater",
         "auto_mapping_confidence_threshold": 0.95
       }
     }

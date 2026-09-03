@@ -61,7 +61,7 @@ The primary objective is to automate the extraction of analytical test parameter
 
 ### 2.1 Receiving Dock Arrival & Physical/Digital Hand-off
 1. **Physical Unloading & Verification:**
-   * Carrier truck docks at the receiving bay. The receiving clerk inspects trailer condition, temperature compliance (for climate-controlled botanicals), container seals (e.g., tamper-evident 25 kg fiber drums), and cross-checks physical lot tags against the delivery manifest.
+   * Carrier truck docks at the receiving bay. The receiving clerk inspects trailer condition, temperature compliance (for climate-controlled botanicals), container seals (e.g., tamper-evident 25 kg fiber drums), and cross-checks physical lot tags against the delivery manifest and shipping documents packet. For the complete document requirements and 3-way matching rules, see [`domain/MANDATORY_SHIPPING_DOCUMENTS_SPEC.md`](MANDATORY_SHIPPING_DOCUMENTS_SPEC.md).
 2. **Inbound ERP Registration (`POReceipt`):**
    * The clerk opens Acumatica Cloud ERP and creates or confirms a `POReceipt` linked to the inbound Purchase Order.
    * Lot details (`LotSerialNbr`, batch quantity, container count, manufacturer expiration date) are registered via `POReceiptLineSplit`.
@@ -301,17 +301,66 @@ Every ingested document is normalized into the following canonical JSON schema:
 
 ---
 
-## 5. Parameter Normalization Dictionary (Canadian Standard)
+## 5. Multi-Laboratory Document Standards & Normalization Architecture
 
-| Raw Synonym in Document | Canonical Analyte ID | Standard Unit | Health Canada / USP Limit Reference |
-| :--- | :--- | :--- | :--- |
-| `Lead`, `Pb`, `Plomb`, `Heavy Metals (as Pb)` | `heavy_metal_lead` | `ppm` (mg/kg) | $\le 0.50$ ppm (NHP Category 1) |
-| `Arsenic`, `As`, `Arsenic total` | `heavy_metal_arsenic` | `ppm` (mg/kg) | $\le 1.00$ ppm (NHP Category 1) |
-| `Cadmium`, `Cd` | `heavy_metal_cadmium` | `ppm` (mg/kg) | $\le 0.30$ ppm (NHP Category 1) |
-| `Mercury`, `Hg`, `Mercure` | `heavy_metal_mercury` | `ppm` (mg/kg) | $\le 0.10$ ppm (NHP Category 1) |
-| `Total Aerobic Count`, `TAMC`, `TPC`, `APC` | `microbial_tamc` | `CFU/g` | $\le 10,000$ CFU/g (USP <2021>) |
-| `Yeast and Mold`, `TYMC`, `Y&M` | `microbial_tymc` | `CFU/g` | $\le 1,000$ CFU/g (USP <2021>) |
-| `E. coli`, `Escherichia coli` | `pathogen_e_coli` | `text` | Absent in 10g (USP <2022>) |
-| `Salmonella`, `Salmonella spp.` | `pathogen_salmonella` | `text` | Absent in 25g (USP <2022>) |
-| `Loss on Drying`, `Moisture`, `LOD`, `Humidité` | `loss_on_drying` | `%` | $\le 5.0$ % (USP <731>) |
-| `Total Cannabinoids`, `THC`, `Total CBD` | `active_potency` | `% (w/w)` | Label Claim $\pm 10\%$ (SOR/2018-144) |
+The ingestion pipeline handles 5 dedicated testing laboratories corresponding to the 5 qualified suppliers, each operating under distinct regional document formats, measurement units, and multilingual terms:
+
+```
+┌────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+│                                 5-LABORATORY INTEGRATION ARCHITECTURE                                  │
+├─────────────────────┬──────────────────────────┬─────────────────────────────┬─────────────────────────┤
+│ SUPPLIER VENDOR     │ TESTING LABORATORY       │ DOCUMENT STANDARD           │ INBOUND LANGUAGE / UOM  │
+├─────────────────────┼──────────────────────────┼─────────────────────────────┼─────────────────────────┤
+│ VEND-NORTH-BIO      │ LAB-GL-ANALYTICAL        │ Health Canada HPFBI / CALA  │ • English / French      │
+│ (Canada)            │ (Mississauga, ON, CA)    │ ISO/IEC 17025 (CALA #9481)  │ • % (w/w), ppm, CFU/g   │
+├─────────────────────┼──────────────────────────┼─────────────────────────────┼─────────────────────────┤
+│ VEND-ALPINE-EXT     │ LAB-EURO-PHYTO           │ European Pharmacopoeia      │ • German / English      │
+│ (Germany)           │ (München, Bavaria, DE)   │ DIN EN ISO/IEC 17025 (DAkkS)│ • % (m/m), mg/kg, KbE/g │
+├─────────────────────┼──────────────────────────┼─────────────────────────────┼─────────────────────────┤
+│ VEND-PACIFIC-ORG    │ LAB-PACIFIC-TEST         │ SCC & AOAC PTM / USP        │ • English / French      │
+│ (Canada/USA)        │ (Burnaby, BC, CA)        │ ISO/IEC 17025 (SCC #8172)   │ • Billion CFU/g, Aw, ppm│
+├─────────────────────┼──────────────────────────┼─────────────────────────────┼─────────────────────────┤
+│ VEND-NIPPON-PHARMA  │ LAB-TOKYO-BIO            │ Japanese Pharmacopoeia      │ • Japanese / English    │
+│ (Japan)             │ (Chuo-ku, Tokyo, JP)     │ JP 18 / JIS / JNLA #09418   │ • mass%, ppb, deg [α]D20│
+├─────────────────────┼──────────────────────────┼─────────────────────────────┼─────────────────────────┤
+│ VEND-NORDIC-MAR     │ LAB-FJORD-ANALYTICAL     │ GOED Voluntary Monograph    │ • Norwegian / English   │
+│ (Norway)            │ (Ålesund, Møre, NO)      │ NS-EN ISO/IEC 17025 (NA #92)│ • mg/g, meq O2/kg, p-AV │
+└─────────────────────┴──────────────────────────┴─────────────────────────────┴─────────────────────────┘
+```
+
+### 5.1 Unit of Measure (UoM) Conversion Engine to Standard SI
+
+The normalization engine converts all regional and domain-specific lab units into standard SI units before applying Acumatica QMS tolerance rules:
+
+| Inbound Raw UoM | Source Lab Region | Target SI UoM | Mathematical Conversion Algorithm | Parameter Application |
+| :--- | :--- | :--- | :--- | :--- |
+| **`% (m/m)`**, **`mass%`**, **`g/100g`** | Germany / Japan | **`% (w/w)`** | $\text{value} \times 1.0$ (1:1 direct equivalence) | Botanical marker assays, active potency |
+| **`mg/g`** (Fatty acids, Astaxanthin) | Norway | **`% (w/w)`** | $\text{value} / 10.0$ (e.g. $420\text{ mg/g} = 42.0\%$) | EPA, DHA, Astaxanthin concentrations |
+| **`g/kg`** | Germany | **`% (w/w)`** | $\text{value} / 10.0$ | High-potency extracts |
+| **`ppb`** ($\mu\text{g/kg}$) | Japan | **`ppm`** | $\text{value} / 1000.0$ (e.g. $24\text{ ppb} = 0.024\text{ ppm}$) | Trace elemental impurities (Pb, As, Cd, Hg) |
+| **`mg/kg`**, **`μg/g`** | Germany / Norway / JP | **`ppm`** | $\text{value} \times 1.0$ (1:1 direct equivalence) | Heavy metals, residual solvents |
+| **`KbE/g`** (Koloniebildende E.) | Germany | **`CFU/g`** | $\text{value} \times 1.0$ (1:1 direct equivalence) | TAMC (Gesamtkeimzahl), TYMC |
+| **`個/g`** (生菌数) | Japan | **`CFU/g`** | $\text{value} \times 1.0$ (1:1 direct equivalence) | TAMC, TYMC |
+| **`Billion CFU/g`** | Canada / USA | **`Billion CFU/g`** | Baseline Acumatica probiotic standard | Viable probiotic cell count |
+| **`mmol O2/kg`** | Norway | **`meq O2/kg`** | $\text{value} \times 2.0$ | Peroxide Value (PV) |
+| **`meq O2/kg`** | Norway | **`meq O2/kg`** | Baseline SI lipid oxidation unit | Peroxide Value (PV) |
+| **`TOTOX` / `p-AV`** | Norway | **`index`** | $2 \times \text{PV} + \text{p-AV}$ | Total Oxidation calculation |
+| **`deg (°)`** / **`度`** | Japan | **`deg (°)`** | Baseline specific optical rotation unit | Polarimetry $[\alpha]_D^{20}$ |
+
+---
+
+## 6. Parameter Normalization Dictionary (Multilingual Standard)
+
+| Canonical Analyte ID | English Synonyms | French Synonyms | German Synonyms | Japanese Synonyms | Norwegian Synonyms | Standard SI Unit |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| **`active_potency`** | Active Polyphenols, Anthocyanins, Withanolides, Curcuminoids, CoQ10, EPA/DHA | Teneur en polyphénols, Anthocyanes, Titre | Withanolid-Gesamtgehalt, Rosavine gesamt, Salidrosid | 定量法 (ユビデカレノン, L-テアニン), 含量 | Fettsyreinnhold (EPA, DHA), Rent Astaxantin | `% (w/w)` |
+| **`loss_on_drying`** | Loss on Drying, Moisture, LOD, Residue on Ignition | Perte au séchage, Humidité résiduelle | Trocknungsverlust (Ph. Eur. 2.2.32), Feuchtigkeitsgehalt | 強熱残分 (JP 2.44), 乾燥減量 (JP 2.41) | Tørketap, Fuktighetsinnhold | `% (w/w)` |
+| **`heavy_metal_lead`** | Lead, Pb, Elemental Lead | Plomb (Pb), Plomb élémentaire | Blei (Pb), Blei-Gehalt (DIN EN 15763) | 純度試験: 鉛 (Pb), 重金属 (Pbとして) | Bly (Pb), Blyinnhold | `ppm` |
+| **`heavy_metal_arsenic`** | Arsenic, As, Total Arsenic | Arsenic (As), Arsenic total | Arsen (As), Gesamtarsen | 純度試験: ヒ素 (As), ヒ素試験法 | Arsen totalt (As), Uorganisk arsen | `ppm` |
+| **`heavy_metal_cadmium`** | Cadmium, Cd | Cadmium (Cd) | Cadmium (Cd), Cadmium-Gehalt | 純度試験: カドミウム (Cd) | Kadmium (Cd) | `ppm` |
+| **`heavy_metal_mercury`** | Mercury, Hg, Total Mercury | Mercure (Hg), Mercure élémentaire | Quecksilber (Hg), Quecksilber-Gehalt | 純度試験: 水銀 (Hg) | Kvikksølv (Hg), Totalkvikksølv | `ppm` |
+| **`microbial_tamc`** | Total Aerobic Microbial Count, TAMC, APC | Dénombrement germes aérobies totaux | Gesamtkeimzahl (TAMC), Aerobe Keime | 生菌数試験: 一般生菌数 (TAMC) | Totalt kimtall (TAMC), Kimtall 30°C | `CFU/g` |
+| **`microbial_tymc`** | Total Combined Yeast & Mold, TYMC | Dénombrement levures et moisissures | Hefen und Schimmelpilze (TYMC) | 真菌数 (カビ・酵母数 / TYMC) | Gjær og muggsopp (TYMC) | `CFU/g` |
+| **`pathogen_e_coli`** | Escherichia coli (Absent in 10g) | Escherichia coli (Absence dans 10g) | E. coli (Nicht nachweisbar in 10g) | 大腸菌 (不検出 / 陰性) | Escherichia coli (Ikke påvist) | `text` |
+| **`pathogen_salmonella`** | Salmonella spp. (Absent in 25g) | Salmonella spp. (Absence dans 25g) | Salmonellen (Nicht nachweisbar in 25g) | サルモネラ (不検出 / 陰性) | Salmonella spp. (Ikke påvist) | `text` |
+| **`residual_solvents`** | Residual Solvents (Ethanol, Dioxins/PCBs) | Solvants résiduels (Éthanol) | Restlösemittel: Ethanol (Ph. Eur. 2.4.24) | 残留溶媒: エタノール (JP 2.46) | Dioksiner og dioksinlignende PCB | `ppm` / `pg TEQ/g` |

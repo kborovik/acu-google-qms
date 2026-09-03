@@ -62,8 +62,8 @@
       "shelf_life_days": 1095,
       "min_shelf_life_receiving_days": 730,
       "qms_inspection_plan_id": "QPLAN-BOT-ASH5",
-      "assigned_primary_lab": "LAB-GL-ANALYTICAL",
-      "assigned_secondary_lab": "LAB-PACIFIC-TEST",
+      "assigned_primary_lab": "LAB-EURO-PHYTO",
+      "assigned_secondary_lab": "LAB-GL-ANALYTICAL",
       "storage_conditions": "Store in tightly closed moisture-proof containers at 15-25°C."
     },
     {
@@ -83,8 +83,8 @@
       "shelf_life_days": 1095,
       "min_shelf_life_receiving_days": 730,
       "qms_inspection_plan_id": "QPLAN-BOT-RHOD3",
-      "assigned_primary_lab": "LAB-GL-ANALYTICAL",
-      "assigned_secondary_lab": "LAB-PACIFIC-TEST",
+      "assigned_primary_lab": "LAB-EURO-PHYTO",
+      "assigned_secondary_lab": "LAB-GL-ANALYTICAL",
       "storage_conditions": "Store protected from heat, light and moisture in cool dry storage."
     },
     {
@@ -104,8 +104,8 @@
       "shelf_life_days": 1460,
       "min_shelf_life_receiving_days": 900,
       "qms_inspection_plan_id": "QPLAN-BOT-CURC95",
-      "assigned_primary_lab": "LAB-GL-ANALYTICAL",
-      "assigned_secondary_lab": "LAB-PACIFIC-TEST",
+      "assigned_primary_lab": "LAB-PACIFIC-TEST",
+      "assigned_secondary_lab": "LAB-GL-ANALYTICAL",
       "storage_conditions": "Store in light-resistant drums with double PE liners in cool dry place."
     },
     {
@@ -146,8 +146,8 @@
       "shelf_life_days": 1095,
       "min_shelf_life_receiving_days": 730,
       "qms_inspection_plan_id": "QPLAN-API-COQ10",
-      "assigned_primary_lab": "LAB-GL-ANALYTICAL",
-      "assigned_secondary_lab": "LAB-PACIFIC-TEST",
+      "assigned_primary_lab": "LAB-TOKYO-BIO",
+      "assigned_secondary_lab": "LAB-GL-ANALYTICAL",
       "storage_conditions": "Store below 25°C in airtight containers protected from direct sunlight."
     },
     {
@@ -167,8 +167,8 @@
       "shelf_life_days": 1095,
       "min_shelf_life_receiving_days": 730,
       "qms_inspection_plan_id": "QPLAN-API-THEA98",
-      "assigned_primary_lab": "LAB-GL-ANALYTICAL",
-      "assigned_secondary_lab": "LAB-PACIFIC-TEST",
+      "assigned_primary_lab": "LAB-TOKYO-BIO",
+      "assigned_secondary_lab": "LAB-GL-ANALYTICAL",
       "storage_conditions": "Store at controlled room temperature 20-25°C in a dry place."
     },
     {
@@ -188,7 +188,7 @@
       "shelf_life_days": 730,
       "min_shelf_life_receiving_days": 540,
       "qms_inspection_plan_id": "QPLAN-LIP-OM370",
-      "assigned_primary_lab": "LAB-GL-ANALYTICAL",
+      "assigned_primary_lab": "LAB-FJORD-ANALYTICAL",
       "assigned_secondary_lab": "LAB-PACIFIC-TEST",
       "storage_conditions": "Store blanketed with inert nitrogen in epoxy-coated steel drums at 10-15°C."
     },
@@ -209,7 +209,7 @@
       "shelf_life_days": 730,
       "min_shelf_life_receiving_days": 540,
       "qms_inspection_plan_id": "QPLAN-LIP-ASTA10",
-      "assigned_primary_lab": "LAB-GL-ANALYTICAL",
+      "assigned_primary_lab": "LAB-FJORD-ANALYTICAL",
       "assigned_secondary_lab": "LAB-PACIFIC-TEST",
       "storage_conditions": "Store frozen/refrigerated below 4°C in light-shielded nitrogen-purged drums."
     }

@@ -1,0 +1,108 @@
+{
+  "document_metadata": {
+    "document_type": "Certificate of Analysis (CoA)",
+    "document_id": "COA-LAB-GL-2026-31920",
+    "issued_date": "2026-09-02",
+    "document_standard": "HEALTH_CANADA_CALA_ISO17025",
+    "primary_language": "en-CA",
+    "secondary_language": "fr-CA",
+    "acumatica_erp_mapping": {
+      "acumatica_po_number": "PO-073373",
+      "acumatica_receipt_number": "PR-029181",
+      "inventory_item_id": "RAW-ECH-EXT4",
+      "lot_serial_number": "LOT-ECH2659-849-R",
+      "vendor_id": "VEND-NORTH-BIO",
+      "testing_lab_id": "LAB-GL-ANALYTICAL"
+    }
+  },
+  "issuer_information": {
+    "laboratory_name": "Great Lakes Bio-Analytical Services Inc.",
+    "short_name": "Great Lakes Analytical",
+    "accreditation": "ISO/IEC 17025:2017 (CALA Scope #9481) / DEL #104928",
+    "address": "Mississauga, ON L5N 2W7, CA"
+  },
+  "product_information": {
+    "product_name": "Organic Echinacea Purpurea Extract 4% Polyphenols",
+    "botanical_source": "Echinacea purpurea (L.) Moench (Aerial)",
+    "lot_number": "LOT-ECH2659-849-R",
+    "batch_size_kg": 523.6,
+    "manufacturing_date": "2026-08-17",
+    "expiry_date": "2029-08-16",
+    "supplier_vendor_id": "VEND-NORTH-BIO",
+    "supplier_vendor_name": "Northern BioNutra Imports Corp.",
+    "health_canada_npn": "NPN-80029384"
+  },
+  "test_results": [
+    {
+      "step_nbr": 10,
+      "raw_parameter_name": "Active Polyphenols Content (Teneur en polyphénols)",
+      "canonical_parameter": "active_potency",
+      "test_method": "HPLC-DAD (USP Monograph)",
+      "specification_min": 4.0,
+      "specification_max": null,
+      "raw_measured_value": 4.26,
+      "raw_unit": "% (w/w)",
+      "normalized_si_value": 4.26,
+      "normalized_si_unit": "% (w/w)",
+      "conversion_applied": "% (w/w) -> % (w/w) (factor 1.0)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 20,
+      "raw_parameter_name": "Loss on Drying (Perte au séchage)",
+      "canonical_parameter": "loss_on_drying",
+      "test_method": "USP <731> (105°C, 2h)",
+      "specification_min": null,
+      "specification_max": 5.0,
+      "raw_measured_value": 3.76,
+      "raw_unit": "%",
+      "normalized_si_value": 3.76,
+      "normalized_si_unit": "% (w/w)",
+      "conversion_applied": "% -> % (w/w) (factor 1.0)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 30,
+      "raw_parameter_name": "Lead (Pb) / Plomb",
+      "canonical_parameter": "heavy_metal_lead",
+      "test_method": "ICP-MS (USP <2232>)",
+      "specification_min": null,
+      "specification_max": 0.5,
+      "raw_measured_value": 0.088,
+      "raw_unit": "ppm",
+      "normalized_si_value": 0.088,
+      "normalized_si_unit": "ppm",
+      "conversion_applied": "ppm -> ppm (factor 1.0)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 40,
+      "raw_parameter_name": "Total Aerobic Microbial Count (TAMC / DGAT)",
+      "canonical_parameter": "microbial_tamc",
+      "test_method": "USP <2021>",
+      "specification_min": null,
+      "specification_max": 10000,
+      "raw_measured_value": 391.02,
+      "raw_unit": "CFU/g",
+      "normalized_si_value": 391.02,
+      "normalized_si_unit": "CFU/g",
+      "conversion_applied": "CFU/g -> CFU/g (factor 1.0)",
+      "status": "PASS"
+    }
+  ],
+  "authorization": {
+    "signatory_name": "Dr. Ronald Henderson, Ph.D., C.Chem.",
+    "title": "Laboratory Director & Chief Chemist",
+    "approval_date": "2026-09-02T20:11:17.965375"
+  },
+  "evaluation_summary": {
+    "overall_status": "APPROVED",
+    "discrepancy_count": 0,
+    "reasons": []
+  },
+  "acumatica_action_directive": {
+    "auto_approve_lot": true,
+    "lot_status": "Released",
+    "create_ncr_ticket": false
+  }
+}

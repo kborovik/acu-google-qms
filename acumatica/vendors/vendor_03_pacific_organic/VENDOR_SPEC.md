@@ -17,6 +17,7 @@
 │ Health Canada Site Lic:  │ #304882 / Foreign Site Annex FSA-CA-BC-119284    │
 │ Quality Rating Tier:     │ Tier-1 Preferred (99.1% Historical Pass Rate)    │
 │ Average Lead Time:       │ 7 Business Days                                  │
+│ Designated Testing Lab:  │ Pacific Rim BioNutra Labs (LAB-PACIFIC-TEST)     │
 └──────────────────────────┴──────────────────────────────────────────────────┘
 ```
 
@@ -50,8 +51,12 @@ Pacific Organic Ingredients Ltd. supplies specialized botanical extracts and pro
 ## 4. Inbound Quality Governance & Cold-Chain Testing Routing
 
 1. **Analytical Testing Routing:**
-   * Curcumin 95%: Primary Lab **Great Lakes Bio-Analytical Services Inc.** (`LAB-GL-ANALYTICAL`) for Curcuminoid HPLC assay and residual solvents (ethanol).
-   * Probiotics 100B: Primary Lab **Pacific Rim BioNutra Testing Laboratories Ltd.** (`LAB-PACIFIC-TEST`) for viable plate enumeration (ISO 7889/20128) and non-lactic contaminant screens.
-2. **Cold-Chain Receiving Gate (`RAW-GUT-PRB100`):**
+   * Primary Laboratory: **Pacific Rim BioNutra Testing Laboratories Ltd.** (`LAB-PACIFIC-TEST` / SCC #8172) for viable plate enumeration (ISO 7889/20128), Curcuminoid HPLC assay, and USP <467> residual ethanol solvent testing.
+   * Secondary Laboratory: **Great Lakes Bio-Analytical Services Inc.** (`LAB-GL-ANALYTICAL`) for secondary ICP-MS elemental impurity checks.
+2. **Document Standard & Normalization:**
+   * Inbound Document: SCC & AOAC PTM / USP Standard Certificate (Bilingual English/French).
+   * Unit Normalization: $\text{Billion CFU/g} \rightarrow \text{Billion CFU/g (or } \times 10^9\text{ CFU/g)}$, $a_w \text{ (water activity)}$, $\text{ppm (ethanol)}$.
+   * Synonym Normalization: *Viable Probiotic Cell Count*, *Total Curcuminoids Purity*, *Water Activity (Aw)*, *Residual Solvents (Ethanol)*.
+3. **Cold-Chain Receiving Gate (`RAW-GUT-PRB100`):**
    * Receiving dock inspects TempTale logger upon truck arrival.
    * If transit temperature exceeded $8.0^\circ\text{C}$ for $> 4\text{ hours}$, lot is automatically locked in Quarantine with cold-chain breach NCR.

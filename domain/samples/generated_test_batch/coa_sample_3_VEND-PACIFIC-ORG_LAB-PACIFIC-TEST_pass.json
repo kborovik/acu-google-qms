@@ -1,0 +1,94 @@
+{
+  "document_metadata": {
+    "document_type": "Certificate of Analysis (CoA)",
+    "document_id": "COA-LAB-PA-2026-57680",
+    "issued_date": "2026-09-02",
+    "document_standard": "SCC_AOAC_PTM_USP",
+    "primary_language": "en-CA",
+    "secondary_language": "fr-CA",
+    "acumatica_erp_mapping": {
+      "acumatica_po_number": "PO-026434",
+      "acumatica_receipt_number": "PR-059565",
+      "inventory_item_id": "RAW-GUT-PRB100",
+      "lot_serial_number": "LOT-GUT2632-329-H",
+      "vendor_id": "VEND-PACIFIC-ORG",
+      "testing_lab_id": "LAB-PACIFIC-TEST"
+    }
+  },
+  "issuer_information": {
+    "laboratory_name": "Pacific Rim BioNutra Testing Laboratories Ltd.",
+    "short_name": "Pacific Rim Labs",
+    "accreditation": "ISO/IEC 17025:2017 (SCC Scope #8172) / AOAC-RI PTM #092101 / DEL #203819",
+    "address": "Burnaby, BC V5C 6A7, CA"
+  },
+  "product_information": {
+    "product_name": "Multi-Strain Probiotic Blend 100 Billion CFU/g",
+    "botanical_source": "L. acidophilus, B. lactis, L. plantarum, B. bifidum",
+    "lot_number": "LOT-GUT2632-329-H",
+    "batch_size_kg": 2372.5,
+    "manufacturing_date": "2026-07-16",
+    "expiry_date": "2029-07-15",
+    "supplier_vendor_id": "VEND-PACIFIC-ORG",
+    "supplier_vendor_name": "Pacific Organic Ingredients Ltd.",
+    "health_canada_npn": "NPN-80084920"
+  },
+  "test_results": [
+    {
+      "step_nbr": 10,
+      "raw_parameter_name": "Viable Probiotic Cell Count (Bactéries viables)",
+      "canonical_parameter": "active_potency",
+      "test_method": "ISO 7889 / ISO 20128",
+      "specification_min": 100.0,
+      "specification_max": null,
+      "raw_measured_value": 117.9,
+      "raw_unit": "Billion CFU/g",
+      "normalized_si_value": 117.9,
+      "normalized_si_unit": "Billion CFU/g",
+      "conversion_applied": "Billion CFU/g -> Billion CFU/g (factor 1.0)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 20,
+      "raw_parameter_name": "Water Activity (Activité de l'eau Aw)",
+      "canonical_parameter": "ph_value",
+      "test_method": "USP <922> Dewpoint",
+      "specification_min": null,
+      "specification_max": 0.2,
+      "raw_measured_value": 0.119,
+      "raw_unit": "Aw",
+      "normalized_si_value": 0.119,
+      "normalized_si_unit": "Aw",
+      "conversion_applied": "Aw -> Aw (factor 1.0)",
+      "status": "PASS"
+    },
+    {
+      "step_nbr": 30,
+      "raw_parameter_name": "Residual Ethanol (Solvants résiduels)",
+      "canonical_parameter": "residual_solvents",
+      "test_method": "USP <467> Headspace GC-MS",
+      "specification_min": null,
+      "specification_max": 5000,
+      "raw_measured_value": 334.77,
+      "raw_unit": "ppm",
+      "normalized_si_value": 334.77,
+      "normalized_si_unit": "ppm",
+      "conversion_applied": "ppm -> ppm (factor 1.0)",
+      "status": "PASS"
+    }
+  ],
+  "authorization": {
+    "signatory_name": "Dr. Fiona MacIntyre, Ph.D., RMCCM",
+    "title": "Laboratory Director & Chief Microbiologist",
+    "approval_date": "2026-09-02T20:11:17.965958"
+  },
+  "evaluation_summary": {
+    "overall_status": "APPROVED",
+    "discrepancy_count": 0,
+    "reasons": []
+  },
+  "acumatica_action_directive": {
+    "auto_approve_lot": true,
+    "lot_status": "Released",
+    "create_ncr_ticket": false
+  }
+}

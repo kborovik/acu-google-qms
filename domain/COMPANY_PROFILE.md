@@ -109,6 +109,6 @@ CanNordic runs **Acumatica Cloud ERP** as its core system of record across manuf
 
 ## 6. Standard Operating Procedures (SOPs) Referenced
 
-* **SOP-QA-104 (Rev 5):** *Inbound Raw Material Inspection, Sampling Protocols, and Certificate of Analysis Verification under Health Canada GMP.*
+* **SOP-QA-104 (Rev 5):** *Inbound Raw Material Inspection, Sampling Protocols, and Certificate of Analysis Verification under Health Canada GMP.* (See detailed requirements in [`domain/MANDATORY_SHIPPING_DOCUMENTS_SPEC.md`](MANDATORY_SHIPPING_DOCUMENTS_SPEC.md)).
 * **SOP-QA-208 (Rev 4):** *Out-of-Specification (OOS) Investigation, Quarantine Segregation, and Non-Conformance Reporting.*
 * **SOP-ERP-015 (Rev 3):** *Acumatica Lot & Serial Attribute Management, Quality Inspection Orders, and Release Gate Automation.*
