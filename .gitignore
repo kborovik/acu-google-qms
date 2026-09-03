@@ -7,3 +7,6 @@ __pycache__/
 *.tfstate.backup
 *.tfplan
 output/
+dist/
+build/
+*.egg-info/

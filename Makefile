@@ -1,5 +1,6 @@
 .PHONY: sync format lint typecheck test check clean \
 	tf-init tf-fmt tf-validate tf-plan tf-apply tf-destroy terraform \
+	generate-package package generate-batch build-package \
 	release major minor patch help
 
 UV ?= uv
@@ -33,8 +34,32 @@ test: .venv ## Run pytest
 check: lint typecheck test ## Run typecheck + lint + test
 
 clean: ## Clean caches/build
-	rm -rf dist build .ruff_cache .pytest_cache
+	rm -rf dist build *.egg-info .ruff_cache .pytest_cache
 	find . -type d -name __pycache__ -exec rm -rf {} + 2>/dev/null || true
+
+###############################################################################
+# Document Generation (docgen)
+###############################################################################
+
+DOCS_OUTDIR ?= output/shipping_docs
+DOCS_ITEM ?= RAW-ECH-EXT4
+DOCS_STATUS ?= pass
+PO_JSON ?=
+
+generate-package: .venv ## Generate full shipping document package (CoA, Packing Slip, BOL, Manifest)
+	@if [ -n "$(PO_JSON)" ]; then \
+		$(UV) run python -m docgen from-po --po-json "$(PO_JSON)" --status $(DOCS_STATUS) --outdir $(DOCS_OUTDIR); \
+	else \
+		$(UV) run python -m docgen generate-suite --inventory-id $(DOCS_ITEM) --status $(DOCS_STATUS) --outdir $(DOCS_OUTDIR); \
+	fi
+
+package: generate-package ## Alias for generate-package
+
+generate-batch: .venv ## Generate batch of document packages (COUNT=5)
+	$(UV) run python -m docgen batch --count $(or $(COUNT),5) --outdir $(DOCS_OUTDIR)
+
+build-package: .venv ## Build Python distribution packages (.tar.gz and .whl)
+	$(UV) build
 
 ###############################################################################
 # Terraform

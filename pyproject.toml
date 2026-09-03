@@ -17,6 +17,9 @@ dev = [
 [project.scripts]
 docgen = "docgen.cli:cli"
 
+[tool.setuptools.packages.find]
+include = ["agent*", "docgen*"]
+
 [tool.ruff]
 target-version = "py314"
 line-length = 88
